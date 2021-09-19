@@ -1,12 +1,15 @@
 .header{
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: white;
     nav{
-        padding: 10px 27px;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
     &__logo{
-        height: 3.5rem;
-        text-decoration: none;
+        height: 3rem;
         img{
             height: 100%;
             width: auto;
@@ -15,7 +18,7 @@
     &__logo_title{
         padding: 0.5rem 0 0 0.5rem;
         //font-family: 'Fleur De Leah', cursive;
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
         color: black;
     }
@@ -32,6 +35,89 @@
             &:not(:last-child){
                 margin-bottom: 4px;
             }
+            transition: all 0.2s ease-in-out;
+            transform-origin: 2px 2px;
+        }
+    }
+    &__links{
+        a{
+            position: relative;
+            font-size: $font-med;
+            color: $lighterBlue;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out;
+            &:not(:last-child){
+                margin-right: 32px;
+            }
+            &::before{
+                content: "";
+                display: block;
+                position: absolute;
+                height: 5px;
+                background: linear-gradient(90deg,$darkBlue,$lightPurple);
+                left: 0;
+                right: 0;
+                bottom: -22px;
+                opacity: 0;
+                transition: opacity 300ms ease-in-out;
+            }
+            &:hover{
+                color: $darkBlue;
+                &::before{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    &.open{
+            .header__menu{
+                >span:first-child{
+                    transform: rotate(45deg);
+                }
+                >span:nth-child(2){
+                    opacity: 0;
+                }
+                >span:last-child{
+                    transform: rotate(-45deg);
+                }
+             }
+        
+    }
+    .overlay{
+        display: block;
+        background-image: linear-gradient($lighterBlue,transparent);
+        position: fixed;
+        top: 63px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        visibility: hidden;
+    }
+    .fade-in{
+        visibility: visible;
+        animation: fade-in 0.3s ease-in-out forwards;
+    }
+    .fade-out{
+        visibility: visible;
+        animation: fade-out 0.3s ease-in-out forwards;
+        visibility: hidden;
+    }
+    &__overlay_menu{
+        display: block;
+        position: absolute;
+        top: 5rem;
+        width: calc(100% - 3rem);
+        height: max-content;
+        border-radius: 2px;
+        background-color: white;
+        left:50%;
+        padding: 1rem;
+        transform: translate(-50%);
+        a{
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
         }
     }
 }

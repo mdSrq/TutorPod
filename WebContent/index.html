@@ -12,24 +12,34 @@
     <title>Tutor Pod</title>
 </head>
 <body>
-    <header class="header">
-        <nav class="flex flex-jc-sb flex-ai-c">
-            <a href="/" class="header__logo flex flex-ai-c">
-                <img src="./images/TutorPod2.svg" alt="TutorPod">
+    <header class="header" id="header">
+        <nav class="container flex flex-jc-sb flex-ai-c">
+            <a href="/" class="header__logo flex flex-ai-c wide-for-mobile ">
+                <img src="./images/TutorPod1.svg" alt="TutorPod">
               <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span> </span>
             </a>
-            <a href="#" class="header__menu">
+            <a href="#" id="btnHamburger" class="header__menu hide-for-desktop">
                 <span></span>
                 <span></span>
                 <span></span>
             </a>
-            <div class="header__links">
+            <div class="header__links hide-for-mobile">
                 <a href="#">Home</a>
                 <a href="#">Apply to Teach</a>
                 <a href="#">Other1</a>
                 <a href="# ">Other2</a>
+                <a href="# ">Other3</a>
             </div>
+            <a href="#" class="button hide-for-mobile">Get Started</a>
         </nav>
+        <div class="overlay"></div>
+        <div class="header__overlay_menu">
+           <a href="http://">Home</a>
+           <a href="http://">Apply to Teach</a>
+           <a href="http://">Other1</a>
+           <a href="http://">Other2</a>
+           <a href="http://">Other3</a>
+        </div>
     </header>
     <main>
         <div class="grid">
