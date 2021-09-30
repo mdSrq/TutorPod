@@ -22,3 +22,19 @@
         opacity: 0;
     }
 }
+@keyframes highlight{
+    from{
+        width: 0;
+    }
+    to{
+        width: 100%;
+    }
+}
+@keyframes shiftGradient{
+    from{
+        background: linear-gradient(90deg,$darkBlue,$lightPurple);
+    }
+    to{
+        background: linear-gradient(90deg,$lightPurple,$darkBlue);
+    }
+}

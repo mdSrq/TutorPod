@@ -1,13 +1,17 @@
 const btnHamburger = document.querySelector("#btnHamburger");
 const header = document.querySelector("#header");
-const overlay = document.querySelector(".overlay");
+const toggleOn = document.querySelectorAll(".toggle-on");
 btnHamburger.addEventListener("click",function(){
     header.classList.toggle("open");
-    if(overlay.classList.contains("fade-in")){
-        overlay.classList.remove("fade-in");
-        overlay.classList.add("fade-out");
-    }else{
-        overlay.classList.remove("fade-out");
-        overlay.classList.add("fade-in");
-    }
+    toggleOn.forEach(element=>{
+        if(element.classList.contains("fade-in")){
+            element.classList.remove("fade-in");
+            element.classList.add("fade-out");
+            document.querySelector("body").style="overflow:none";
+        }else{
+            element.classList.remove("fade-out");
+            element.classList.add("fade-in");
+            document.querySelector("body").style="overflow:hidden";
+        }
+    })
 });

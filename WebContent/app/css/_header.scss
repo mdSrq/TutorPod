@@ -49,22 +49,19 @@
             &:not(:last-child){
                 margin-right: 32px;
             }
-            &::before{
-                content: "";
-                display: block;
-                position: absolute;
-                height: 5px;
-                background: linear-gradient(90deg,$darkBlue,$lightPurple);
-                left: 0;
-                right: 0;
-                bottom: -22px;
-                opacity: 0;
-                transition: opacity 300ms ease-in-out;
-            }
             &:hover{
                 color: $darkBlue;
                 &::before{
-                    opacity: 1;
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    height: 4px;
+                    background: linear-gradient(90deg,$darkBlue,$lightPurple);
+                    left: 0;
+                    right: 0;
+                    bottom: -10px;
+                    border-radius: 2px;
+                    animation: highlight ease-in-out 0.25s forwards;
                 }
             }
         }
@@ -103,21 +100,28 @@
         visibility: hidden;
     }
     &__overlay_menu{
-        display: block;
         position: absolute;
         top: 5rem;
         width: calc(100% - 3rem);
         height: max-content;
         border-radius: 2px;
         background-color: white;
+        color: $lighterBlue;
         left:50%;
         padding: 1rem;
         transform: translate(-50%);
+        visibility: hidden;
         a{
             display: block;
             width: 100%;
             text-align: center;
             padding: 1rem;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out;
+            &:active{
+                color: $darkBlue;
+            }
         }
+        
     }
 }
