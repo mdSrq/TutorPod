@@ -20,30 +20,9 @@
         border-radius: 1rem;
         height: max-content;
     }
-    &__cta{
-        font-size: 1.3rem;
-        margin-top: 1.2rem;
-        width: 100%;
-        font-weight: 700;
-        border-radius: 5px;
-        font-family: inherit;
-    }
     &__cta_search{
-        font-size: 1.1rem;
-        padding: 1rem;
-        padding-left: 3.3rem;
-        width: 100%;
-        position: relative;
         background-image: url("../../images/search.png");
-        background-repeat: no-repeat;
-        background-size: 1.2rem;
-        background-position: 1rem 1.2rem;
-        transition: all ease-in-out 0.15s;
         margin-top: 1.2rem;
-        &:focus{
-            transform: scale(1.005);
-            box-shadow: $shadow3;
-        }
     }
     &__sugesstion{
         a{

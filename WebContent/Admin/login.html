@@ -11,36 +11,16 @@
     <title>TutorPod Admin</title>
 </head>
 <body>
-    <header class="header" id="header">
-        <nav class="flex flex-jc-sb flex-ai-c">
-            <a href="#" id="btnHamburger" class="header__menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </a>
-            <div href="/" class="header__logo flex flex-ai-c ">
+    <section class="adminLogin flex flex-jc-c flex-ai-c">
+        <form class="adminLogin__form" action="#" method="POST">
+            <div class="header__logo adminLogin__form_header">
                 <img src="../images/TutorPod1.svg" alt="TutorPod">
               <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span> </span>
             </div>
-        </nav>
-    </header>
-    <section class="sidebar">
-        <div class="siderbar__user">
-            <div class="sidebar__user_avatar">
-                <img src="../images/avatar.png" alt="Admin">
-            </div>
-            <div class="sidebar_user_info">
-                <p>Admin Name</p>
-                <p><em>Administrator</em></p>
-            </div>
-
-        </div>
+            <input type="text" class="input-with-icon adminLogin__form_id" name="admin_id" id="admin_id" placeholder="Admin ID" required>
+            <input type="password" class="input-with-icon adminLogin__form_pass"  name="password" id="password" placeholder="Password" required>
+            <input type="submit" class="button flat-wide-button" value="Login">
+        </form>
     </section>
-    <main>
-
-    </main>
 </body>
-<script src="../app/js/script.js">
-
-</script>
 </html>

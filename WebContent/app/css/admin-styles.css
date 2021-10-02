@@ -325,44 +325,45 @@ input:focus {
   color: #23049D;
 }
 
-.hero {
+.header__logo {
   display: flex;
-  flex-flow: row-reverse wrap;
-  justify-content: space-around;
-  align-content: center;
-  min-height: 90vh;
-}
-.hero__illustration {
-  width: 50%;
-}
-.hero__illustration img {
-  width: 100%;
-  height: auto;
-}
-.hero__action_tile {
   text-align: center;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
-  width: 40%;
-  padding: 2rem 2.5rem;
-  border-radius: 1rem;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
+  justify-content: center;
+  width: 100%;
 }
-.hero__cta_search {
-  background-image: url("../../images/search.png");
-  margin-top: 1.2rem;
-}
-.hero__sugesstion a {
-  color: #222;
-}
-.hero__sugesstion a:hover {
-  color: #233E8B;
+.header nav {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-@media (max-width: 59.9375em) {
-  .hero__action_tile {
-    box-shadow: none;
-    padding: 0;
+.adminLogin {
+  background: linear-gradient(-45deg, #23049D 0%, #233E8B 50%, #AA2EE6 100%);
+  width: 100vw;
+  height: 100vh;
+}
+.adminLogin__form {
+  background-color: #fff;
+  width: 30rem;
+  padding: 2rem 3rem 3rem;
+  border-radius: 1rem;
+  box-shadow: rgba(45, 37, 122, 0.56) 0px 22px 70px 4px;
+  margin: 1rem;
+}
+.adminLogin__form_header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.adminLogin__form_id {
+  background-image: url(../../images/avatar.png);
+}
+.adminLogin__form_pass {
+  background-image: url(../../images/padlock.png);
+  margin-top: 1.2rem;
+}
+
+@media (max-width: 39.9375em) {
+  .adminLogin__form {
+    padding: 1.5rem;
   }
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=admin-styles.css.map */
