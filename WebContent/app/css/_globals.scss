@@ -11,12 +11,19 @@ a,a:visited,a:hover{
 body{
     margin: 0;
     padding: 0;
-    font-family: 'Oxygen', sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 1.125rem;
+    color: $dark;
 }
 .container{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+}
+@include breakpoint-down(medium){
+    .container{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
 }
 //Flexbox
 .flex{
@@ -31,6 +38,7 @@ body{
         align-items: center;
     }
 }
+//Button
 button,.button{
     padding: 0.875rem 2.1875rem;
     border-radius: 50px;
@@ -39,17 +47,27 @@ button,.button{
     background-image: linear-gradient(to right,$darkBlue 0%,$lightPurple 50%,$darkBlue 100%);
     border: none;
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease-in-out;
     &:hover{
         transform: scale(1.025);
         background-position: right center;
-        box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+        box-shadow: $shadow2;
     }
     &:active{
         transform: scale(0.95);
         background-position: left center;
     }
+}
+//Inputs
+input{
+    border: none;
+    outline: 0;
+    background-color: $white;
+    box-shadow: $shadow2;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
 }
 //Visibility 
 .hide-for-mobile{
@@ -66,6 +84,11 @@ button,.button{
 }
 .wide-for-mobile{
     @include breakpoint-down(medium){
-        width: 100%;
+        min-width: 100%;
     }
+}
+.thin-H1{
+    font-weight: normal;
+    font-size: 2rem;
+    line-height: 1.5;
 }
