@@ -3,11 +3,28 @@
     box-shadow: $shadow1;
     display: flex;
     flex-flow: row wrap;
+    align-content: flex-start;
     color: $white;
     background: linear-gradient(-45deg,$darkBlue 0%,$lightPurple 100%);
     padding-bottom: 1rem;
     height: 90.6vh;
     margin-top: -10px;
+    overflow-y: scroll;
+    scrollbar-color: auto;
+    scrollbar-width: thin;
+    &::-webkit-scrollbar {
+    width: 0.5rem;
+    }
+    &::-webkit-scrollbar-track {
+        background: $darkBlue;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $lightPurple;
+        border-radius: 0.2rem;
+        &:hover{
+            background: $lightPurple;
+        }
+    }
     ul{
         list-style: none;
         margin: 0;
@@ -42,7 +59,7 @@
         width: 100%;
         padding: 1rem 0;
         li{
-            padding: 0.3rem 0;
+            padding: 0.5rem 0;
             padding-left: 1.2rem;
         }
         &_title{
@@ -58,9 +75,9 @@
                 right: 0;
                 top: 0;
                 font-family: monospace;
-                padding: 0.2rem 1.5rem;
+                padding: 0.7rem 1.5rem;
                 font-weight: 700;
-                font-size: 1.5rem;
+                font-size: 1.2rem;
             }
         }
         &_items{
@@ -74,6 +91,6 @@
         
     }
     &__footer{
-        
+        position: sticky;
     }
 }
