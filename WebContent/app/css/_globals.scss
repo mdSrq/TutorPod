@@ -113,3 +113,15 @@ input{
     font-size: 2rem;
     line-height: 1.5;
 }
+.reveal{
+    animation: reveal ease-in-out 0.3s forwards;
+}
+.conceal{
+    animation: conceal ease-in-out 0.3s forwards;
+}
+.rotateBy90{
+    animation: rotateBy90 ease-in-out 0.3s forwards;
+}
+.rotateByNeg90{
+    animation: rotateByNeg90 ease-in-out 0.3s forwards;
+}
