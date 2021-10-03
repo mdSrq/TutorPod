@@ -1,25 +1,19 @@
 const btnHamburger = document.querySelector("#btnHamburger");
 const header = document.querySelector("#header");
-const toggleOn = document.querySelectorAll(".toggle-on");
-const dashboardDropdown = document.querySelectorAll(".sidebar__dropdown_title");
+const sidebardDropdown = document.querySelectorAll(".sidebar__dropdown_title");
 const sidebar = document.querySelector(".sidebar");
 btnHamburger.addEventListener("click",function(){
     header.classList.toggle("open");
-    toggleOn.forEach(element=>{
-        if(element.classList.contains("fade-in")){
-            element.classList.remove("fade-in");
-            element.classList.add("fade-out");
-            document.querySelector("body").style="overflow:none";
+        if(sidebar.classList.contains("slide-in")){
+            sidebar.classList.remove("slide-in");
+            sidebar.classList.add("slide-out");
         }else{
-            element.classList.remove("fade-out");
-            element.classList.add("fade-in");
-            document.querySelector("body").style="overflow:hidden";
+            sidebar.classList.remove("slide-out");
+            sidebar.classList.add("slide-in");
         }
-    })
 });
-dashboardDropdown.forEach(item=>{
+sidebardDropdown.forEach(item=>{
     item.addEventListener("click",()=>{
-        console.log("Shit");
         let arrow;
         item.childNodes.forEach(e=>{
             if(e.classList!=null){
@@ -27,16 +21,19 @@ dashboardDropdown.forEach(item=>{
             }
         });
         const links = item.nextSibling.nextSibling;
-        console.log(links);
-        console.log(arrow);
         if(links.classList.contains("reveal")){
+
             links.classList.remove("reveal");
             arrow.classList.remove("rotateBy90");
+
             links.classList.add("conceal");
             arrow.classList.add("rotateByNeg90");
+
         }else{
+
             links.classList.remove("conceal");
             arrow.classList.remove("rotateByNeg90");
+
             links.classList.add("reveal");
             arrow.classList.add("rotateBy90");
         }

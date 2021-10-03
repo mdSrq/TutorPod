@@ -67,3 +67,19 @@
         transform: rotate(0deg);
     }
 }
+@keyframes slide-in{
+    from{
+        left:-15rem;
+    }
+    to{
+        left:0;
+    }
+}
+@keyframes slide-out{
+    from{
+        left: 0;
+    }
+    to{
+        left: -15rem;
+    }
+}

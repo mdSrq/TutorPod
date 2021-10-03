@@ -136,6 +136,38 @@
     transform: rotate(0deg);
   }
 }
+@-webkit-keyframes slide-in {
+  from {
+    left: -15rem;
+  }
+  to {
+    left: 0;
+  }
+}
+@keyframes slide-in {
+  from {
+    left: -15rem;
+  }
+  to {
+    left: 0;
+  }
+}
+@-webkit-keyframes slide-out {
+  from {
+    left: 0;
+  }
+  to {
+    left: -15rem;
+  }
+}
+@keyframes slide-out {
+  from {
+    left: 0;
+  }
+  to {
+    left: -15rem;
+  }
+}
 html {
   font-size: 100%;
   box-sizing: border-box;
@@ -155,6 +187,7 @@ body {
   font-family: "Nunito", sans-serif;
   font-size: 1.125rem;
   color: #222;
+  position: relative;
 }
 
 .container {
@@ -277,6 +310,16 @@ input:focus {
 .rotateByNeg90 {
   -webkit-animation: rotateByNeg90 ease-in-out 0.3s forwards;
           animation: rotateByNeg90 ease-in-out 0.3s forwards;
+}
+
+.slide-in {
+  -webkit-animation: slide-in ease-in-out 0.3s forwards;
+          animation: slide-in ease-in-out 0.3s forwards;
+}
+
+.slide-out {
+  -webkit-animation: slide-out ease-in-out 0.3s forwards;
+          animation: slide-out ease-in-out 0.3s forwards;
 }
 
 .header {
@@ -446,6 +489,8 @@ input:focus {
   }
 }
 .sidebar {
+  position: absolute;
+  left: -15rem;
   width: 15rem;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
   display: flex;
@@ -453,12 +498,13 @@ input:focus {
   align-content: flex-start;
   color: #fff;
   background: linear-gradient(-45deg, #23049D 0%, #AA2EE6 100%);
-  padding-bottom: 1rem;
+  padding-bottom: 4.5rem;
   height: 90.6vh;
   margin-top: -10px;
   overflow-y: scroll;
   scrollbar-color: auto;
   scrollbar-width: thin;
+  position: relative;
 }
 .sidebar::-webkit-scrollbar {
   width: 0.5rem;
@@ -481,7 +527,6 @@ input:focus {
 .sidebar__user {
   width: 100%;
   display: inherit;
-  position: sticky;
   padding: 1.2rem;
 }
 .sidebar__user_avatar {
@@ -542,5 +587,32 @@ input:focus {
   font-size: 1rem;
 }
 .sidebar__footer {
-  position: sticky;
+  position: fixed;
+  width: 14.5rem;
+  height: 4rem;
+  bottom: 0;
+  background: linear-gradient(45deg, #23049D 0%, #233E8B 100%);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem;
+}
+.sidebar__footer_icon {
+  display: flex;
+  justify-content: center;
+  display: block;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  margin: 0.3rem;
+  padding: 0.7rem;
+  transition: all ease-in-out 0.2s;
+}
+.sidebar__footer_icon:hover {
+  transform: scale(1.02);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.sidebar__footer_icon img {
+  margin: 0.2rem;
+  max-height: 100%;
+  width: auto;
 }/*# sourceMappingURL=admin-styles.css.map */
