@@ -12,7 +12,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Nunito', sans-serif;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: $dark;
     position: relative;
 }
@@ -68,8 +68,21 @@ button,.button{
     border-radius: 5px;
     font-family: inherit;
 }
+.small-round-button{
+    font-size: 0.9rem;
+    font-weight: normal;
+    padding: 0.3rem 0.8rem;
+}
+.delete-button{
+    background-image: linear-gradient(90deg,red 0%,rgb(247, 99, 99) 50%,red 100%);
+    margin: 0.6rem;
+}
+.edit-button{
+    background-image: linear-gradient(to right,$lighterBlue 0%,$lightPurple 50%, $lighterBlue 100%);
+    margin: 0.6rem;
+}
 //Inputs
-input{
+input,select{
     border: none;
     outline: 0;
     background-color: $white;
@@ -113,6 +126,35 @@ input{
     font-weight: normal;
     font-size: 2rem;
     line-height: 1.5;
+}
+table{
+    border-collapse: collapse;
+    box-shadow: $shadow2;
+    border-radius: 1rem;
+    width: 100%;
+}
+caption{
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+}
+thead{
+    background: linear-gradient(150deg,$darkBlue,$lighterBlue);
+    border-radius: 1rem;
+}
+th{
+    color: $white;
+}
+th,td{
+    text-align: left;
+    padding: 0.5rem;
+}
+td{
+    text-align: center;
+}
+tbody tr:nth-child(even) {
+  background: #fafafa;
 }
 .reveal{
     animation: reveal ease-in-out 0.3s forwards;

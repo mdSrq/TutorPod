@@ -1,6 +1,7 @@
 .sidebar{
-    position: absolute;
+    position: fixed;
     left:-15rem;
+    z-index: 99;
     width: 15rem;
     box-shadow: $shadow1;
     display: flex;
@@ -8,15 +9,14 @@
     align-content: flex-start;
     color: $white;
     background: linear-gradient(-45deg,$darkBlue 0%,$lightPurple 100%);
-    padding-bottom: 4.5rem;
+    padding-bottom: 3.5rem;
     height: 90.6vh ;
     margin-top: -10px;
     overflow-y: scroll;
     scrollbar-color: auto;
     scrollbar-width: thin;
-    position: relative;
     &::-webkit-scrollbar {
-    width: 0.5rem;
+        width: 0.5rem;
     }
     &::-webkit-scrollbar-track {
         background: $darkBlue;
@@ -37,6 +37,7 @@
         width: 100%;
         display: inherit;
         padding: 1.2rem;
+        height: max-content;
         &_avatar{
             width: 4rem;
             background-color: $white;
@@ -59,7 +60,6 @@
     }
     &__dropdown{
         width: 100%;
-        padding: 1rem 0;
         li{
             padding: 0.5rem 0;
             padding-left: 1.2rem;
@@ -71,23 +71,40 @@
             &:not(:first-child){
                 border-top: 1px solid $lightPurple;
             }
+            a{
+                color: $white;
+            }
             &_arrow{
                 display: block;
                 position: absolute;
-                right: 0;
-                top: 0;
+                right: 1rem;
+                top: 0.3rem;
                 font-family: monospace;
-                padding: 0.7rem 1.5rem;
+                padding: 0.3rem 0.65rem ;
                 font-weight: 700;
                 font-size: 1.2rem;
+                border-radius: 50%;
+                &:hover{
+                    background-color: rgba($color: #000000, $alpha: 0.2);
+                }
             }
         }
         &_items{
             max-height: 0;
             overflow: hidden;
+            background-color: rgba($color: #000000, $alpha: 0.1);
             a{
                 color: $white;
                 font-size: 1rem;
+                display: block;
+                width: 100%;
+                height: 100%;
+                transition: all ease-in-out 0.2s;
+                &:hover{
+                    padding-left: 0.3rem;
+                    text-shadow: white 0px 0px 1px;
+                }
+                
             }
         }
         
@@ -95,18 +112,17 @@
     &__footer{
         position: fixed;
         width: 14.5rem;
-        height: 4rem;
+        height: 3rem;
         bottom: 0;
         background: linear-gradient(45deg,$darkBlue 0%,$lighterBlue 100%);
         display: flex;
         justify-content: space-around;
-        padding: 0.5rem;
         &_icon{
             display: flex;
             justify-content: center;
             display: block;
-            height: 3rem;
-            width: 3rem;
+            height: 2.8rem;
+            width: 2.8rem;
             border-radius: 50%;
             margin: 0.3rem;
             padding: 0.7rem;
