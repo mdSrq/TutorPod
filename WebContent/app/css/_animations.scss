@@ -38,3 +38,48 @@
         background: linear-gradient(90deg,$lightPurple,$darkBlue);
     }
 }
+@keyframes reveal{
+    from{
+        max-height: 0;
+    }
+    to{
+        max-height: 10rem;
+    }
+}
+@keyframes conceal{
+    from{
+        max-height: 10rem;
+    }
+    to{
+        max-height: 0;
+    }
+}
+@keyframes rotateBy90 {
+    to{
+        transform: rotate(90deg);
+    }
+}
+@keyframes rotateByNeg90{
+    from{
+        transform: rotate(90deg);
+    }
+    to{
+        transform: rotate(0deg);
+    }
+}
+@keyframes slide-in{
+    from{
+        left:-15rem;
+    }
+    to{
+        left:0;
+    }
+}
+@keyframes slide-out{
+    from{
+        left: 0;
+    }
+    to{
+        left: -15rem;
+    }
+}
