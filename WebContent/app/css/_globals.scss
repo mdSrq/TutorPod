@@ -41,6 +41,7 @@ body{
 }
 //Button
 button,.button{
+    display: block;
     padding: 0.875rem 2.1875rem;
     border-radius: 50px;
     cursor: pointer;
@@ -51,7 +52,7 @@ button,.button{
     font-weight: 700;
     transition: all 0.3s ease-in-out;
     box-shadow: $shadow2;
-    &:hover,&:focus{
+    &:hover{
         transform: scale(1.025);
         background-position: right center;
         box-shadow: $shadow3;
@@ -67,19 +68,29 @@ button,.button{
     width: 100%;
     border-radius: 5px;
     font-family: inherit;
+    &:hover,&:focus{
+        transform: scale(1.025);
+        background-position: right center;
+        box-shadow: $shadow3;
+    }
+    &:active{
+        transform: scale(0.95);
+        background-position: left center;
+    }
 }
 .small-round-button{
     font-size: 0.9rem;
     font-weight: normal;
     padding: 0.3rem 0.8rem;
+    margin: 0.3rem;
+    width: max-content;
+    flex: 1;
 }
 .delete-button{
     background-image: linear-gradient(90deg,red 0%,rgb(247, 99, 99) 50%,red 100%);
-    margin: 0.6rem;
 }
 .edit-button{
-    background-image: linear-gradient(to right,$lighterBlue 0%,$lightPurple 50%, $lighterBlue 100%);
-    margin: 0.6rem;
+    background-image: linear-gradient(to right,$darkBlue 0%,$lighterBlue 50%, $darkBlue 100%);
 }
 //Inputs
 input,select{
@@ -129,14 +140,14 @@ input,select{
 }
 table{
     border-collapse: collapse;
-    box-shadow: $shadow2;
+    box-shadow: $shadow1;
     border-radius: 1rem;
     width: 100%;
 }
-caption{
+caption,.caption{
     width: 100%;
     text-align: center;
-    padding: 0.5rem;
+    padding-bottom: 1rem;
     font-size: 1.2rem;
 }
 thead{
@@ -147,14 +158,37 @@ th{
     color: $white;
 }
 th,td{
-    text-align: left;
+    text-align: center;
     padding: 0.5rem;
 }
 td{
     text-align: center;
 }
 tbody tr:nth-child(even) {
-  background: #fafafa;
+  background: #d7e3f5;
+}
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: $lightPurple; /* Black background color */
+  color: $white; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 999; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: toast-in 0.5s, toast-out 0.5s 2.5s;
+  animation: toast-in 0.5s, toast-out 0.5s 2.5s;
 }
 .reveal{
     animation: reveal ease-in-out 0.3s forwards;

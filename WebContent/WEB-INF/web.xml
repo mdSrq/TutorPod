@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>TutorPod</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+	<display-name>TutorPod</display-name>
+	
+	<welcome-file-list>
+	    <welcome-file>index.html</welcome-file>
+	    <welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+  	<servlet>
+   		<servlet-name>admin-index</servlet-name>
+    	<jsp-file>/Admin/index.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>admin-index</servlet-name>
+	    <url-pattern>/Admin/Dashboard</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>admin-login</servlet-name>
+    	<jsp-file>/Admin/login.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>admin-login</servlet-name>
+	    <url-pattern>/Admin/Login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>add-course</servlet-name>
+    	<jsp-file>/Admin/add-course.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>add-course</servlet-name>
+	    <url-pattern>/Admin/AddCourse</url-pattern>
+	</servlet-mapping>
+	<servlet>
+   		<servlet-name>see-courses</servlet-name>
+    	<jsp-file>/Admin/see-courses.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-courses</servlet-name>
+	    <url-pattern>/Admin/SeeCourses</url-pattern>
+	</servlet-mapping>
 </web-app>
