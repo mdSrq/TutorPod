@@ -71,7 +71,7 @@ public class AdminController extends HttpServlet {
 						request.getSession().setAttribute("ADMIN", name);
 					    response.getWriter().write("Login Success");  
 					}else 
-						response.getWriter().write("Invalid Password");
+						response.getWriter().write("Wrong Password");
 				}else 
 					response.getWriter().write("Invalid Name");
 				break;

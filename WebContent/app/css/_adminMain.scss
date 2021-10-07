@@ -30,14 +30,10 @@
       margin: 0 auto;
     }
   }
-  &__form {
-    display: flex;
-    flex-flow: row wrap;
-    
-  }
   &__form,
   &__preview {
     background-color: $white;
+    position: relative;
     padding: 1.2rem;
     padding-bottom: 1.5rem;
     border-radius: 1rem;
@@ -52,6 +48,14 @@
       justify-items: center;
     }
   }
+  &__form {
+    display: flex;
+    flex-flow: row wrap;
+    &_wide{
+      flex: none;
+      width: 55%;
+    }
+  }
   &__table{
     width: 100%;
   }
@@ -59,7 +63,7 @@
 @include breakpoint-down(medium) {
     .main{
         flex-flow: column wrap;
-        &__form,&__preview{
+        &__form,&__preview,&__form_wide{
             flex: none;
             width: calc(100% - 2rem);
             margin: 1rem;

@@ -40,9 +40,11 @@ public class CourseController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
 		try {
-			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");
+			if(request.getParameter("cmd")==null)
+				out.write("wtf dude");
+			response.setContentType("text/plain");
 		    response.setCharacterEncoding("UTF-8");
 			switch(request.getParameter("cmd")) {
 			case "seeCourses":
@@ -57,19 +59,24 @@ public class CourseController extends HttpServlet {
 				else
 					out.write("Failed to delete");
 				break;
+			case"editCourse":
+				response.setContentType("application/json");
+				course_id =  Integer.parseInt(request.getParameter("course_id"));
+				couresesJSON = new Gson().toJson(courseDAO.getCourse(course_id));
+				out.write(couresesJSON);
+				break;
 			default:
 				response.getWriter().write("Invalid Request");
 			}
-			
 		}catch(Exception e) {
-			response.getWriter().write(e.toString());
+			out.write(e.getMessage());
 		}
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
 		try {
-			PrintWriter out = response.getWriter();
 			switch(request.getParameter("cmd")) {
 			case "addCourse":
 				String course_name = request.getParameter("course_name");
@@ -82,12 +89,24 @@ public class CourseController extends HttpServlet {
 				else
 					out.write("Failed to Add");
 				break;
+			case"editCourse":
+				int course_id =  Integer.parseInt(request.getParameter("course_id"));
+				course_name = request.getParameter("course_name");
+				name_abbr = request.getParameter("name_abbr");
+				duration_type = request.getParameter("duration_type");
+				duration =  Integer.parseInt(request.getParameter("duration"));
+				response.setContentType("text/plain");
+				if(courseDAO.updateCourse(new Course(course_id,course_name, name_abbr, duration_type, duration)))
+					out.write("Details Updated");
+				else
+					out.write("Failed to update details");
+				break;
 			default:
 				response.getWriter().print("Invalid Request");
 			}
 			
 		}catch(Exception e) {
-			e.printStackTrace(response.getWriter());
+			out.write(e.getMessage());
 		}
 	}
 

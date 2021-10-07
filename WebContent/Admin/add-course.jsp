@@ -17,8 +17,8 @@
                 <label for="duration_type">Duration Type</label>
                 <select name="duration_type" id="duration_type">
                     <option value="default" selected disabled>Select duration type</option>
-                    <option value="year">Year</option>
-                    <option value="sem">Semester</option>
+                    <option value="Year">Year</option>
+                    <option value="Semester">Semester</option>
                 </select>
             </div>
             <div class="form_group">
@@ -31,6 +31,7 @@
             </div>
         </form>
         <div class="main__preview">
+        <a href="./SeeCourses" class="button float-right-btn">See All Courses >></a>
             <table aria-label="Course Preview">
                 <caption> Recent Entries </caption>
                 <thead>
@@ -64,15 +65,6 @@ function fetchData() {
         	   $("tbody").empty();
         	   var data=""
         	   $.each(res, function(index, list) {   
-        		//    data += "<tr><td>"+(index+1)+"</td>"+
-        		//    		   "<td>"+list.course_name+"</td>"+
-        		//    		   "<td>"+list.name_abbr+"</td>"+
-        		//    		   "<td>"+list.duration_type+"</td>"+
-        		//    		   "<td>"+list.duration+"</td>"+
-        		//    		   "<td class=\"main__preview_action\">"+
-        		//    		   "<a href=\"./EditCourse?course_id="+list.course_id+"\" class=\"button small-round-button edit-button\">Edit</a>"+
-        		//    		   "<a href=\"../CourseController?cmd=deleteCourse&course_id="+list.course_id+"\" class=\"button small-round-button delete-button\">Delete</a>"+
-        		//    		   "</td></tr>";
         		   		$("<tr>").appendTo($("tbody"))                   
         	               .append($("<td>").text(index+1))        
         	               .append($("<td>").text(list.course_name))  
@@ -93,7 +85,6 @@ function fetchData() {
         	            				   )
         	            			); 
         	   });
-             // $("tbody").html(data);  
            }
        });
 }
@@ -102,7 +93,6 @@ function deleteCourse(course_id){
     	$.ajax({
     	    url: "../CourseController",
     	    data:"cmd=deleteCourse&course_id="+course_id,
-            processData: true,
     	    success: function(response) {
     	    	$("#snackbar").html(response); 
                 showToast();
@@ -117,11 +107,13 @@ $(document).on("submit", "#addCourseForm", function(event) {
         	$("#snackbar").html(response); 
             showToast();
             fetchData();
+            $form.trigger("reset");
     });  
     event.preventDefault();
 });
 $( document ).ajaxError(function(event, jqxhr, settings, thrownError ) {
-	  $("#snackbar").html(+jqxhr.responseText); 
+	$("#snackbar").html("Some error occured see the log"); 
+	  console.log(jqxhr.responseText+"\n"+thrownError);
 	    showToast(); 
 }); 
 </script>

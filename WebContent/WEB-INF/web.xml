@@ -33,6 +33,7 @@
 	    <servlet-name>add-course</servlet-name>
 	    <url-pattern>/Admin/AddCourse</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
    		<servlet-name>see-courses</servlet-name>
     	<jsp-file>/Admin/see-courses.jsp</jsp-file>
@@ -40,5 +41,14 @@
 	<servlet-mapping>
 	    <servlet-name>see-courses</servlet-name>
 	    <url-pattern>/Admin/SeeCourses</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>edit-course</servlet-name>
+    	<jsp-file>/Admin/edit-course.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>edit-course</servlet-name>
+	    <url-pattern>/Admin/EditCourse</url-pattern>
 	</servlet-mapping>
 </web-app>

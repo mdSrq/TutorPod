@@ -9,16 +9,16 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.TutorPod.model.Course;
+import com.TutorPod.model.Subject;
 
-public class CourseDAO {
+public class SubjectDAO {
 	private DataSource dataSource;
-	public CourseDAO(DataSource dataSource) {
+	public SubjectDAO(DataSource dataSource) {
 		super();
 		this.dataSource = dataSource;
 	}
-	public List<Course> getCourses() throws Exception{
-		List<Course> courses = new ArrayList<>();
+	public List<Subject> getSubjects() throws Exception{
+		List<Subject> subjects = new ArrayList<>();
 		
 		Connection Conn = null;
 		Statement Stmt = null;
@@ -27,7 +27,7 @@ public class CourseDAO {
 		try {
 			Conn = dataSource.getConnection();
 			
-			String sql = "select * from course order by course_id desc";
+			String sql = "select * from subject order by subject_id desc";
 			
 			Stmt = Conn.createStatement();
 			
@@ -37,48 +37,66 @@ public class CourseDAO {
 			// process result set
 			while (Rs.next()) {
 				
-				Course tempCourse = createCourse(Rs);
-				courses.add(tempCourse);				
+				Subject tempSubject = createSubject(Rs);
+				subjects.add(tempSubject);				
 			}
 			
-			return courses;		
+			return subjects;		
 		}
 		finally {
 			// close JDBC objects
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public Course getCourse(int course_id)throws Exception{
-		Course course = null;
+	public Subject getSubject(int subject_id)throws Exception{
+		Subject subject=null;
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "select * from course where course_id=?";
+			String sql = "select * from subject where subject_id=?";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setInt(1, course_id);
+			Stmt.setInt(1, subject_id);
 			Rs = Stmt.executeQuery();
 			if(Rs.next()) {
-				course = createCourse(Rs);
+				subject = createSubject(Rs);
 			}
-			return course;
+			return subject;
 		}finally {
 			// close JDBC objects
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public boolean addCourse(Course course)throws Exception{
+	public Subject getSubject(String subject_code)throws Exception{
+		Subject subject=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from subject where subject_code=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setString(1, subject_code);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				subject = createSubject(Rs);
+			}
+			return subject;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public boolean addSubject(Subject subject)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "insert into course(course_name,name_abbr,duration_type,duration) values(?,?,?,?) ";
+			String sql = "insert into subject(subject_name,subject_code) values(?,?) ";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setString(1, course.getCourse_name());
-			Stmt.setString(2, course.getName_abbr());
-			Stmt.setString(3, course.getDuration_type());
-			Stmt.setInt(4, course.getDuration());
+			Stmt.setString(1, subject.getSubject_name());
+			Stmt.setString(2, subject.getSubject_code());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else
@@ -88,18 +106,16 @@ public class CourseDAO {
 			close(Conn,Stmt,null);
 		}	
 	}
-	public boolean updateCourse(Course course)throws Exception{
+	public boolean updateSubject(Subject subject)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "update course set course_name=?, name_abbr=?, duration_type=?, duration=? where course_id=?";
+			String sql = "update subject set subject_name=?, subject_code=? where subject_id=? ";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setString(1, course.getCourse_name());
-			Stmt.setString(2, course.getName_abbr());
-			Stmt.setString(3, course.getDuration_type());
-			Stmt.setInt(4, course.getDuration());
-			Stmt.setInt(5, course.getCourse_id());
+			Stmt.setString(1, subject.getSubject_name());
+			Stmt.setString(2, subject.getSubject_code());
+			Stmt.setInt(3, subject.getSubject_id());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else
@@ -109,14 +125,14 @@ public class CourseDAO {
 			close(Conn,Stmt,null);
 		}	
 	}
-	public boolean deleteCourse(int course_id)throws Exception{
+	public boolean deleteSubject(int subject_id)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "delete from course where course_id=?";
+			String sql = "delete from subject where subject_id=?";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setInt(1, course_id);
+			Stmt.setInt(1, subject_id);
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else
@@ -145,14 +161,11 @@ public class CourseDAO {
 			exc.printStackTrace();
 		}
 	}
-	private Course createCourse(ResultSet Rs)throws Exception {
+	private Subject createSubject(ResultSet Rs)throws Exception {
+		int subject_id = Rs.getInt("subject_id");
+		String subject_name = Rs.getString("subject_name");
+		String subject_code = Rs.getString("subject_code");
 		
-		int course_id = Rs.getInt("course_id");
-		String course_name = Rs.getString("course_name");
-		String name_abbr = Rs.getString("name_abbr");
-		String duration_type = Rs.getString("duration_type");
-		int duration = Rs.getInt("duration");
-		
-		return new Course(course_id,course_name,name_abbr,duration_type,duration);
+		return new Subject(subject_id,subject_name,subject_code);
 	}
 }

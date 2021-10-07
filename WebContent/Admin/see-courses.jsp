@@ -16,28 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Bachelor Of Computer Application</td>
-                        <td>BCA</td>
-                        <td>Semester</td>
-                        <td>6</td>
-                        <td class="main__preview_action">
-                            <a href="#" class="button small-round-button edit-button">Edit</a>
-                            <a href="#" class="button small-round-button delete-button">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Bachelor Of Computer Application</td>
-                        <td>BCA</td>
-                        <td>Semester</td>
-                        <td>6</td>
-                        <td class="main__preview_action">
-                            <a href="#" class="button small-round-button edit-button">Edit</a>
-                            <a href="#" class="button small-round-button delete-button">Delete</a>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -52,19 +31,10 @@ function fetchData() {
            url:"../CourseController",
            data:"cmd=seeCourses",
            dataType:"json",
-           processData: true,
            success:function(res){
+        	   $("tbody").empty();
         	   var data=""
         	   $.each(res, function(index, list) {   
-        		//    data += "<tr><td>"+(index+1)+"</td>"+
-        		//    		   "<td>"+list.course_name+"</td>"+
-        		//    		   "<td>"+list.name_abbr+"</td>"+
-        		//    		   "<td>"+list.duration_type+"</td>"+
-        		//    		   "<td>"+list.duration+"</td>"+
-        		//    		   "<td class=\"main__preview_action\">"+
-        		//    		   "<a href=\"./EditCourse?course_id="+list.course_id+"\" class=\"button small-round-button edit-button\">Edit</a>"+
-        		//    		   "<a href=\"../CourseController?cmd=deleteCourse&course_id="+list.course_id+"\" class=\"button small-round-button delete-button\">Delete</a>"+
-        		//    		   "</td></tr>";
         		   		$("<tr>").appendTo($("tbody"))                   
         	               .append($("<td>").text(index+1))        
         	               .append($("<td>").text(list.course_name))  
@@ -85,21 +55,27 @@ function fetchData() {
         	            				   )
         	            			); 
         	   });
-             // $("tbody").html(data);  
            }
        });
 }
 function deleteCourse(course_id){
     if(confirm("Are you sure you want to delete this course? ")){ 
-    	$.post("../CourseController","cmd=deleteCourse&course_id="+course_id, function(response) {
-            	$("#snackbar").html(response); 
+    	$.ajax({
+    	    url: "../CourseController",
+    	    data:"cmd=deleteCourse&course_id="+course_id,
+            processData: true,
+    	    success: function(response) {
+    	    	$("#snackbar").html(response); 
                 showToast();
-        });
+                fetchData();
+    	    }
+    	});
     }
 }
 $( document ).ajaxError(function(event, jqxhr, settings, thrownError ) {
-	  $("#snackbar").html("ShitWentDown Ya'll "+jqxhr.responseText); 
+	  $("#snackbar").html("Some error occured see the log"); 
+	  console.log(jqxhr.responseText+"\n"+thrownError);
 	    showToast(); 
-}); 
+});  
 </script>
 <%@include file="footer.jsp" %>

@@ -22,9 +22,9 @@
             <input type="password" class="input-with-icon adminLogin__form_pass"  name="password" id="password" placeholder="Password" required>
             <input type="hidden" name="cmd" id="cmd" value="login">
             <input type="submit" class="button flat-wide-button" value="Login">
-            <div id="snackbar"></div>
         </form>
     </section>
+    <div id="snackbar"></div>
 </body>
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>

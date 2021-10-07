@@ -92,6 +92,32 @@ button,.button{
 .edit-button{
     background-image: linear-gradient(to right,$darkBlue 0%,$lighterBlue 50%, $darkBlue 100%);
 }
+.float-right-btn{
+    position: absolute;
+    top: 0.8rem;
+    right: 1.2rem;
+    box-shadow: none;
+    background-image: linear-gradient(90deg,$lightPurple 0%,$kindaPink 50%,$lightPurple 100%);
+    font-size: 1rem;
+    font-weight: normal;
+    padding: 0.5rem 1rem;
+    width: max-content;
+    border-radius: 0.2rem;
+    &:hover{
+        transform: scale(1);
+        background-position: right center;
+        box-shadow: none;
+    }
+    &:active{
+        transform: scale(0.95);
+        background-position: left center;
+    }
+    @include breakpoint-down(medium){
+        right: auto;
+        left: 1.2rem;
+    }
+}
+
 //Inputs
 input,select{
     border: none;
@@ -168,26 +194,22 @@ tbody tr:nth-child(even) {
   background: #d7e3f5;
 }
 #snackbar {
-  visibility: hidden; /* Hidden by default. Visible on click */
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: $lightPurple; /* Black background color */
-  color: $white; /* White text color */
-  text-align: center; /* Centered text */
-  border-radius: 2px; /* Rounded borders */
-  padding: 16px; /* Padding */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 999; /* Add a z-index if needed */
-  left: 50%; /* Center the snackbar */
-  bottom: 30px; /* 30px from the bottom */
+  visibility: hidden; 
+  min-width: 250px; 
+  background-color: $toast-color; 
+  box-shadow: $toast-shadow;
+  color: $white; 
+  text-align: center;
+  border-radius: 0.5rem; 
+  padding: 1rem; 
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 999; 
+  bottom: 30px; 
 }
-
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
 #snackbar.show {
-  visibility: visible; /* Show the snackbar */
-  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-  However, delay the fade out process for 2.5 seconds */
-  -webkit-animation: toast-in 0.5s, toast-out 0.5s 2.5s;
+  visibility: visible; 
   animation: toast-in 0.5s, toast-out 0.5s 2.5s;
 }
 .reveal{

@@ -9,7 +9,7 @@
             </div>
         </div>
         <ul class="sidebar__dropdown">
-            <li class="sidebar__dropdown_title"><a href="#">Dashboard</a></li>
+            <li class="sidebar__dropdown_title"><a href="./Dashboard">Dashboard</a></li>
         </ul>
         <ul class="sidebar__dropdown">
             <li class="sidebar__dropdown_title">Courses <span class="sidebar__dropdown_title_arrow">></span></li>

@@ -99,9 +99,10 @@
             </ul>
         </ul>
         <div class="sidebar__footer">
-            <a href="#" class="sidebar__footer_icon" title="TutorPod FrontEnd"><img src="../images/marketplace-vector.svg" alt="" srcset=""></a>
+            <span class="sidebar__footer_icon" title="TutorPod FrontEnd"><img src="../images/marketplace-vector.svg" alt="" srcset="" onclick="showToast()"></span>
             <a href="#" class="sidebar__footer_icon" title="Log Out"><img src="../images/logout-vector.svg" alt="" srcset=""></a>
         </div>
+        <div id="snackbar">Invalid Request</div>
     </section>
     <main class="main">
         <h1 class="main__heading">Add Course</h1>
@@ -132,7 +133,8 @@
             </div>
         </form>
         <div class="main__preview">
-            <table aria-label="Course Preview">
+            <a href="#" class="button float-right-btn">See All Courses >></a>
+            <table aria-label="Course Preview"> 
                 <caption> Recent Entries </caption>
                 <thead>
                     <tr>
@@ -209,6 +211,32 @@
                 </tbody>
             </table>
         </div>
+        <form action="#" method="POST" class="main__form main__form_wide">
+            <span class="caption">Enter Course Details</span>
+            <div class="form_group">
+                <label for="course_name">Course Name</label>
+                <input type="text" name="course_name" id="course_name" required placeholder="Enter course name ">
+            </div>
+            <div class="form_group">
+                <label for="name_abbr">Course Name Abbrivation</label>
+                <input type="text" name="name_abbr" id="name_abbr" required placeholder="Enter abbrivation e.g. BCA">
+            </div>
+            <div class="form_group">
+                <label for="duration_type">Duration Type</label>
+                <select name="duration_type" id="duration_type">
+                    <option value="default" selected disabled>Select duration type</option>
+                    <option value="year">Year</option>
+                    <option value="sem">Semester</option>
+                </select>
+            </div>
+            <div class="form_group">
+                <label for="duration">Duration</label>
+                <input type="number" name="duration" id="duration" required placeholder="Enter course duration e.g. 6">
+            </div>
+            <div class="form_group form_group_submit">
+                <input type="submit" class="button flat-wide-button" value="Add Course">
+            </div>
+        </form>
     </main>
     <footer>
         
