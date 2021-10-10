@@ -441,6 +441,8 @@ tbody tr:nth-child(even) {
   transform: translate(-50%);
   z-index: 999;
   bottom: 30px;
+  max-height: 70vh;
+  overflow-y: hidden;
 }
 
 #snackbar.show {
@@ -862,7 +864,7 @@ tbody tr:nth-child(even) {
   .main__form, .main__preview, .main__form_wide {
     flex: none;
     width: calc(100% - 2rem);
-    margin: 1rem;
+    margin: 0.5rem;
   }
   .main__form {
     flex-flow: column wrap;

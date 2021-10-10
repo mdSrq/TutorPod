@@ -48,7 +48,11 @@ public class CourseController extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 			switch(request.getParameter("cmd")) {
 			case "seeCourses":
-				String couresesJSON = new Gson().toJson(courseDAO.getCourses());
+				String couresesJSON = new Gson().toJson(courseDAO.getCourses("All"));
+			    out.write(couresesJSON);
+				break;
+			case "seeRecentCourses":
+				couresesJSON = new Gson().toJson(courseDAO.getCourses("Recent"));
 			    out.write(couresesJSON);
 				break;
 			case"deleteCourse":
@@ -69,7 +73,7 @@ public class CourseController extends HttpServlet {
 				response.getWriter().write("Invalid Request");
 			}
 		}catch(Exception e) {
-			out.write(e.getMessage());
+			e.printStackTrace(out);
 		}
 	}
 
@@ -106,7 +110,7 @@ public class CourseController extends HttpServlet {
 			}
 			
 		}catch(Exception e) {
-			out.write(e.getMessage());
+			e.printStackTrace(out);
 		}
 	}
 

@@ -68,20 +68,21 @@ public class CourseSubDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public List<CourseSub> getCourseSubByCourseId(int course_id)throws Exception{
+	public List<CourseSub> getCourseSubsBySubjectId(int subject_id)throws Exception{
 		List<CourseSub> courseSubs = new ArrayList<>();
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "select * from course_sub where course_id=?";
+			String sql = "select * from course_sub where subject_id=?";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setInt(1, course_id);
+			Stmt.setInt(1, subject_id);
 			Rs = Stmt.executeQuery();
-			while(Rs.next()) {
-				CourseSub tempCourseSub = createCourseSub(Rs);
-				courseSubs.add(tempCourseSub);
+			while (Rs.next()) {
+				
+				CourseSub tempSubject = createCourseSub(Rs);
+				courseSubs.add(tempSubject);				
 			}
 			return courseSubs;
 		}finally {

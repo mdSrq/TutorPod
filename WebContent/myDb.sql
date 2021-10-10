@@ -64,13 +64,14 @@ create table course( course_id int auto_increment primary key,
                     duration int not null
 					);
 create table subject(subject_id int auto_increment primary key,
-					subject_name varchar(30) unique not null,
+					subject_name varchar(50) unique not null,
                     subject_code varchar(10) unique not null
 					);
 create table course_sub(course_sub_id int auto_increment primary key,
 					course_id int not null,
                     duration_no int not null,
-                    subject_id int not null
+                    subject_id int not null,
+                    constraint UC_course_sub unique(course_id,subject_id)
 					);
 create table subject_info(subject_info_id int auto_increment primary key,
 					tutor_id int not null,

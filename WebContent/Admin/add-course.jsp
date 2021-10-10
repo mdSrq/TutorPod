@@ -54,21 +54,30 @@
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
-$(document).ready(fetchData);
+fetchData();
 function fetchData() {
     $.ajax({
            url:"../CourseController",
-           data:"cmd=seeCourses",
+           data:"cmd=seeRecentCourses",
            dataType:"json",
            processData: true,
            success:function(res){
+               if(res.length<1){
+                   $("thead").hide();
+                   $(".float-right-btn").hide();
+                   $(".main__preview").append("<p style=\"text-align:center\" id=\"NoData\">No Courses Found</p>"); 
+               }else{
+                   $("thead").show();
+                   $(".float-right-btn").show();
+                   $("#NoData").remove();
+               }
         	   $("tbody").empty();
         	   var data=""
-        	   $.each(res, function(index, list) {   
+        	   $.each(res, function(index, list) {  
         		   		$("<tr>").appendTo($("tbody"))                   
         	               .append($("<td>").text(index+1))        
         	               .append($("<td>").text(list.course_name))  
-        	               .append($("<td>").text(list.name_abbr)) 
+        	               .append($("<td>").text(list.name_abbr))  
         	               .append($("<td>").text(list.duration_type)) 
         	               .append($("<td>").text(list.duration)) 
         	               .append($("<td>").addClass("main__preview_action")
@@ -103,6 +112,11 @@ function deleteCourse(course_id){
 }
 $(document).on("submit", "#addCourseForm", function(event) {
     var $form = $(this);
+    if($("#duration_type").val()==null){
+        $("#snackbar").html("Select Duration Type");
+        showToast();
+        return false; 
+    }
     $.post($form.attr("action"), $form.serialize(), function(response) {
         	$("#snackbar").html(response); 
             showToast();

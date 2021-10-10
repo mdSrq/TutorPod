@@ -55,6 +55,11 @@ function fetchData() {
 }
 $(document).on("submit", "#editCourseForm", function(event) {
     var $form = $(this);
+    if($("#duration_type").val()==null){
+        $("#snackbar").html("Select Duration Type");
+        showToast();
+        return false; 
+    }
     $.post($form.attr("action"), $form.serialize(), function(response) {
         	$("#snackbar").html(response); 
             showToast();

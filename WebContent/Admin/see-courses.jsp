@@ -12,6 +12,7 @@
                         <th scope="...">Name Abbr</th>
                         <th scope="...">Duration Type</th>
                         <th scope="...">Duration</th>
+                        <th scope="...">Subjects</th>
                         <th scope="...">Action</th>
                     </tr>
                 </thead>
@@ -25,13 +26,20 @@
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
-$(document).ready(fetchData);
+fetchData();
 function fetchData() {
     $.ajax({
            url:"../CourseController",
            data:"cmd=seeCourses",
            dataType:"json",
            success:function(res){
+        	   if(res.length<1){
+                   $("thead").hide();
+                   $(".main__preview").append("<p style=\"text-align:center\" id=\"NoData\">No Courses Found</p>"); 
+               }else{
+                   $("thead").show();
+                   $("#NoData").remove();
+               }
         	   $("tbody").empty();
         	   var data=""
         	   $.each(res, function(index, list) {   
@@ -40,7 +48,8 @@ function fetchData() {
         	               .append($("<td>").text(list.course_name))  
         	               .append($("<td>").text(list.name_abbr)) 
         	               .append($("<td>").text(list.duration_type)) 
-        	               .append($("<td>").text(list.duration)) 
+        	               .append($("<td>").text(list.duration))
+        	               .append($("<td>").append($("<a>").attr({href:"#",onclick:"showSubjects()"})))
         	               .append($("<td>").addClass("main__preview_action")
         	            		   .append($("<a>").attr({
 					        	            			   href:"./EditCourse?course_id="+list.course_id,

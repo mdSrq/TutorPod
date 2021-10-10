@@ -17,7 +17,7 @@ public class CourseDAO {
 		super();
 		this.dataSource = dataSource;
 	}
-	public List<Course> getCourses() throws Exception{
+	public List<Course> getCourses(String selector) throws Exception{
 		List<Course> courses = new ArrayList<>();
 		
 		Connection Conn = null;
@@ -27,7 +27,11 @@ public class CourseDAO {
 		try {
 			Conn = dataSource.getConnection();
 			
-			String sql = "select * from course order by course_id desc";
+			String sql;
+			if(selector.equals("Recent"))
+				sql = "select * from course order by course_id desc limit 5";
+			else
+				sql = "select * from course order by course_id desc";
 			
 			Stmt = Conn.createStatement();
 			

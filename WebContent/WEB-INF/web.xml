@@ -51,4 +51,13 @@
 	    <servlet-name>edit-course</servlet-name>
 	    <url-pattern>/Admin/EditCourse</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>add-subject</servlet-name>
+    	<jsp-file>/Admin/add-subject.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>add-subject</servlet-name>
+	    <url-pattern>/Admin/AddSubject</url-pattern>
+	</servlet-mapping>
 </web-app>
