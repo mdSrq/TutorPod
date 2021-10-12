@@ -1,3 +1,4 @@
+<%if(session.getAttribute("ADMIN")!=null){ response.sendRedirect("./Dashboard"); }%> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,15 +13,38 @@
 </head>
 <body>
     <section class="adminLogin flex flex-jc-c flex-ai-c">
-        <form class="adminLogin__form" action="#" method="POST">
+        <form class="adminLogin__form" action="../AdminController" method="POST" id="login-form">
             <div class="header__logo adminLogin__form_header">
                 <img src="../images/TutorPod1.svg" alt="TutorPod">
               <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span> </span>
             </div>
-            <input type="text" class="input-with-icon adminLogin__form_id" name="admin_id" id="admin_id" placeholder="Admin ID" required>
+            <input type="text" class="input-with-icon adminLogin__form_id" name="name" id="name" placeholder="Admin Name" required>
             <input type="password" class="input-with-icon adminLogin__form_pass"  name="password" id="password" placeholder="Password" required>
+            <input type="hidden" name="cmd" id="cmd" value="login">
             <input type="submit" class="button flat-wide-button" value="Login">
         </form>
     </section>
+    <div id="snackbar"></div>
 </body>
+<script src="../app/js/jquery-3.6.0.min.js"></script>
+<script src="../app/js/admin-script.js"></script>
+<script>
+$(document).on("submit", "#login-form", function(event) {
+    var $form = $(this);
+    $.post($form.attr("action"), $form.serialize(), function(response) {
+		if(response.includes("Success")){
+			$(location).prop('href', './Dashboard');
+        }else{
+        	$("#snackbar").html(response); 
+            showToast();
+        }
+    });  
+    event.preventDefault();
+});
+$( document ).ajaxError(function(event, jqxhr, settings, thrownError ) {
+  $("#snackbar").html(jqxhr.responseText); 
+    showToast(); 
+}); 
+
+</script>
 </html>

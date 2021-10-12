@@ -13,44 +13,60 @@
     flex-flow: row wrap;
     width: 50%;
     padding: 0.5rem;
-    font-size: 0.95rem;
+    font-size: 1rem;
     label {
       display: block;
       width: 100%;
-      padding-bottom: 0.2rem;
+      padding-bottom: 0.4rem;
     }
     input,
     select {
       width: 100%;
-      font-size: 0.95rem;
+      font-size: 1rem;
+      padding: 1rem;
     }
     &_submit {
       width: 60%;
       margin: 0 auto;
     }
   }
-  &__form {
-    display: flex;
-    flex-flow: row wrap;
-    
-  }
   &__form,
   &__preview {
     background-color: $white;
+    position: relative;
     padding: 1.2rem;
+    padding-bottom: 1.5rem;
     border-radius: 1rem;
     box-shadow: $shadow1;
     margin: 1rem;
+    height: max-content;
     flex: 1;
+    &_action{
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      justify-items: center;
+    }
+  }
+  &__form {
+    display: flex;
+    flex-flow: row wrap;
+    &_wide{
+      flex: none;
+      width: 55%;
+    }
+  }
+  &__table{
+    width: 100%;
   }
 }
 @include breakpoint-down(medium) {
     .main{
         flex-flow: column wrap;
-        &__form,&__preview{
+        &__form,&__preview,&__form_wide{
             flex: none;
             width: calc(100% - 2rem);
-            margin: 1rem;
+            margin: 0.5rem;
         }
         &__form{
             flex-flow: column wrap;
@@ -68,11 +84,12 @@
             td {
                  width: min-content;
             }
-                overflow-x: scroll;
-                scrollbar-color: auto;
-                scrollbar-width: thin;
+            overflow-x: scroll;
+            scrollbar-color: auto;
+            scrollbar-width: thin;
             &::-webkit-scrollbar {
-                width: 0.2rem;
+                width: 0.5rem;
+                height: 0.5rem;
             }
             &::-webkit-scrollbar-track {
                 background: $darkBlue;
@@ -80,9 +97,6 @@
             &::-webkit-scrollbar-thumb {
                 background: $lightPurple;
                 border-radius: 0.1rem;
-                &:hover {
-                    background: $lightPurple;
-                }
             }
         }
     }

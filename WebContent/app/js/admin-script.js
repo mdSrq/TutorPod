@@ -1,8 +1,8 @@
-const btnHamburger = document.querySelector("#btnHamburger");
+const btnHamburgerr = document.querySelector("#btnHamburger");
 const header = document.querySelector("#header");
 const sidebardDropdown = document.querySelectorAll(".sidebar__dropdown_title");
 const sidebar = document.querySelector(".sidebar");
-btnHamburger.addEventListener("click",function(){
+btnHamburgerr.addEventListener("click",function(){
     header.classList.toggle("open");
         if(sidebar.classList.contains("slide-in")){
             sidebar.classList.remove("slide-in");
@@ -40,3 +40,13 @@ sidebardDropdown.forEach(item=>{
         
     })
 });
+function showToast() {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
