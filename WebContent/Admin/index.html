@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,12 @@
     <link rel="stylesheet" href="../app/css/admin-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">   
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <title>TutorPod Admin</title>
 </head>
+
 <body>
     <header class="header" id="header">
         <nav class="flex flex-jc-sb flex-ai-c">
@@ -20,7 +24,7 @@
             </a>
             <div href="/" class="header__logo flex flex-ai-c ">
                 <img src="../images/TutorPod1.svg" alt="TutorPod">
-              <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span> </span>
+                <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span> </span>
             </div>
         </nav>
     </header>
@@ -74,8 +78,9 @@
                 <li><a href="#">See All Bank Acc(s)</a></li>
             </ul>
         </ul>
-         <ul class="sidebar__dropdown acc_dropdown">
-            <li class="sidebar__dropdown_title">Withdraw Requests <span class="sidebar__dropdown_title_arrow">></span></li>
+        <ul class="sidebar__dropdown acc_dropdown">
+            <li class="sidebar__dropdown_title">Withdraw Requests <span class="sidebar__dropdown_title_arrow">></span>
+            </li>
             <ul class="sidebar__dropdown_items">
                 <li><a href="#">Pending Requests</a></li>
                 <li><a href="#">Approved Requests</a></li>
@@ -91,7 +96,8 @@
             </ul>
         </ul>
         <ul class="sidebar__dropdown acc_dropdown">
-            <li class="sidebar__dropdown_title">Account Settings <span class="sidebar__dropdown_title_arrow">></span></li>
+            <li class="sidebar__dropdown_title">Account Settings <span class="sidebar__dropdown_title_arrow">></span>
+            </li>
             <ul class="sidebar__dropdown_items">
                 <li><a href="#">Edit Password</a></li>
                 <li><a href="#">Add new Admin</a></li>
@@ -99,12 +105,38 @@
             </ul>
         </ul>
         <div class="sidebar__footer">
-            <span class="sidebar__footer_icon" title="TutorPod FrontEnd"><img src="../images/marketplace-vector.svg" alt="" srcset="" onclick="showToast()"></span>
-            <a href="#" class="sidebar__footer_icon" title="Log Out"><img src="../images/logout-vector.svg" alt="" srcset=""></a>
+            <span class="sidebar__footer_icon" title="TutorPod FrontEnd"><img src="../images/marketplace-vector.svg"
+                    alt="" srcset="" onclick="showToast()"></span>
+            <a href="#" class="sidebar__footer_icon" title="Log Out"><img src="../images/logout-vector.svg" alt=""
+                    srcset=""></a>
         </div>
         <div id="snackbar">Invalid Request</div>
     </section>
     <main class="main">
+        <div class="overlaydiv">
+            <div id="btnCross" class="header__menu cross">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <h1 class="main__heading">Subjects</h1>
+            <div class="main__table scrollable">
+                <table aria-label="Course Preview">
+                    <thead>
+                        <tr>
+                            <th scope="...">S.No.</th>
+                            <th scope="...">Year/Sem</th>
+                            <th scope="...">Subject Name</th>
+                            <th scope="...">Subject Code</th>
+                            <th scope="...">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <h1 class="main__heading">Add Course</h1>
         <form action="#" method="POST" class="main__form">
             <span class="caption">Enter Course Details</span>
@@ -134,7 +166,7 @@
         </form>
         <div class="main__preview">
             <a href="#" class="button float-right-btn">See All Courses >></a>
-            <table aria-label="Course Preview"> 
+            <table aria-label="Course Preview">
                 <caption> Recent Entries </caption>
                 <thead>
                     <tr>
@@ -238,14 +270,12 @@
             </div>
         </form>
     </main>
-    <div class="overlaydiv">
-        <h1 class="main__heading">Subjects</h1>
-    </div>
     <footer>
-        
+
     </footer>
 </body>
 <script src="../app/js/admin-script.js">
 
 </script>
+
 </html>

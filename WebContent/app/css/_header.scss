@@ -33,6 +33,7 @@
             height: 4px;
             border-radius: 2px;
             background: linear-gradient(90deg,$darkBlue,$lightPurple);
+            opacity: 1;
             &:not(:last-child){
                 margin-bottom: 4px;
             }

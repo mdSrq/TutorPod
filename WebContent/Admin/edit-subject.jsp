@@ -1,9 +1,12 @@
-<%if(session.getAttribute("ADMIN")==null){ response.sendRedirect("./Login"); }%> 
+<%
+	if(session.getAttribute("ADMIN")==null){ response.sendRedirect("./Login"); }
+	if(request.getParameter("course_sub_id")==null){response.sendRedirect("./Dashboard"); } 
+%>
 <%@include file="header.jsp" %>
 <%@include file="sidebar.jsp" %>
 <main class="main">
-        <h1 class="main__heading">Add Subject</h1>
-        <form action="../SubjectController" method="POST" class="main__form" id="editSubjectForm">
+        <h1 class="main__heading">Update Subject Details</h1>
+        <form action="../SubjectController" method="POST" class="main__form main__form_wide" id="editSubjectForm">
             <span class="caption">Enter Subject Details</span>
             <div class="form_group">
                 <label for="course_id">Course</label>
@@ -25,9 +28,11 @@
                 <label for="subject_code">Subject Code</label>
                 <input type="text" name="subject_code" id="subject_code" required placeholder="Enter subject code e.g. BCS012">
             </div>
+            <input type="hidden" name="course_sub_id" id="course_sub_id">
+            <input type="hidden" name="subject_id" id="subject_id">
             <input type="hidden" name="cmd" id="cmd" value="editSubject">
             <div class="form_group form_group_submit">
-                <input type="submit" class="button flat-wide-button" value="Add Subject">
+                <input type="submit" class="button flat-wide-button" value="Update Subject">
             </div>
         </form>
 </main>
@@ -35,8 +40,10 @@
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
-fetchSubjectData();
-fetchCourseData();
+$("document").ready(()=>{
+	fetchCourseData();
+	fetchSubjectData();
+});
 function fetchSubjectData() {
     $.ajax({
            url:"../SubjectController",
@@ -44,8 +51,14 @@ function fetchSubjectData() {
            dataType:"json",
            processData: true,
            success:function(res){
-        	  
-        	  
+        	  $("#course_id option[value=\""+res.course_id+"\"]").prop('selected', true);
+        	  loadDurations();
+        	  $("#duration_no option[value=\""+res.duration_no+"\"]").prop('selected', true);
+        	  $("#duration_no_label").text(res.duration_type);
+        	  $("#subject_name").val(res.subject_name);
+        	  $("#subject_code").val(res.subject_code);
+        	  $("#course_sub_id").val(res.course_sub_id);
+        	  $("#subject_id").val(res.subject_id);
            }
        });
 }
@@ -71,29 +84,18 @@ function fetchCourseData() {
        });
 }
 $("#course_id").change(function(){
-    var course_id = parseInt($("#course_id").val());
+    loadDurations();
+});
+function loadDurations(){
+	var course_id = parseInt($("#course_id").val());
     $("#duration_no_label").text(courseDurationTypeMap.get(course_id));
     $("#duration_no").empty();
     $("#duration_no").append($("<option>").attr({selected:true,disabled:true}).text("Select "+courseDurationTypeMap.get(course_id)));
     for(i=1;i<=courseDurationMap.get(course_id);i++){
         $("#duration_no").append($("<option>").val(i).text(i));
     }
-});
-function deleteSubject(course_sub_id,subject_id){
-    if(confirm("Are you sure you want to delete this course? ")){ 
-    	$.ajax({
-    	    url: "../SubjectController",
-    	    data:"cmd=deleteSubject&course_sub_id="+course_sub_id+"&subject_id="+subject_id,
-    	    success: function(response) {
-    	    	$("#snackbar").html(response); 
-                showToast();
-                fetchSubjectData();
-                fetchCourseData();
-    	    }
-    	});
-    }
 }
-$(document).on("submit", "#addSubjectForm", function(event) {
+$(document).on("submit", "#editSubjectForm", function(event) {
     var $form = $(this);
     if($("#course_id").val()==null){
         $("#snackbar").html("Select Course");
@@ -105,19 +107,11 @@ $(document).on("submit", "#addSubjectForm", function(event) {
         showToast();
         return false; 
     }
-    var courseValue = $("#course_id").val();
-    var courseText = $("#course_id").text();
-    var durationValue = $("#duration_no").val();
-    var durationLabel = $("#duration_no_label").text();
     $.post($form.attr("action"), $form.serialize(), function(response) {
         	$("#snackbar").html(response); 
             showToast();
-            fetchSubjectData();
             fetchCourseData();
-            $form.trigger("reset");
-            $("#course_id").val(courseValue).text(courseText);
-            $("#duration_no").val(durationValue).text(durationValue);
-            $("#duration_no_label").text(durationLabel);
+            fetchSubjectData();
     });  
     event.preventDefault();
 });

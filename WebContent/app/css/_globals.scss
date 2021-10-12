@@ -214,6 +214,83 @@ tbody tr:nth-child(even) {
   visibility: visible; 
   animation: toast-in 0.5s, toast-out 0.5s 2.5s;
 }
+.overlaydiv{
+    position: fixed;
+    visibility: hidden;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 99;
+    width: 60vw;
+    height: 70vh;
+    box-shadow: $shadow4;
+    background-color: $white;
+    border-radius: 1rem;
+    padding: 1.2rem;
+    padding-top: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    @include breakpoint-down(medium){
+        width: calc(100% - 2.4rem);
+        height: 80vh;
+        padding: 0 0.7rem 0.7rem 0.7rem;
+    }
+    .scrollable{
+        width: 100%;
+        position: static;
+        max-height: 52vh;
+        overflow-y:scroll;
+        scrollbar-color: auto;
+        scrollbar-width: thin;
+        @include breakpoint-down(medium){
+            max-height: 65vh;
+            overflow-y: visible;
+            overflow-x: scroll;
+        }
+        &::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+        &::-webkit-scrollbar-track {
+            background: $kindaPink;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: $lightPurple;
+            border-radius: 0.1rem;
+        }
+    }
+    .cross{
+        cursor: pointer;
+        width: max-content;
+        transition: all 0.3s ease-in-out;
+        position: absolute;
+        right: 1.2rem;
+        top: 1.5rem;
+        &:active{
+            transform: scale(0.92);
+        }
+        >span{
+            width: 30px;
+            height: 0.25rem;
+            transform-origin: 4px;
+        }
+        >span:first-child{
+            transform: rotate(45deg);
+            &:hover{
+                box-shadow: $shadow3;
+            }
+        }
+        >span:nth-child(2){
+             opacity: 0;
+        }
+        >span:last-child{
+            transform: rotate(-45deg);
+            &:hover{
+                box-shadow: $shadow3;
+            }
+        }
+    }
+}
 .reveal{
     animation: reveal ease-in-out 0.3s forwards;
 }
@@ -225,6 +302,16 @@ tbody tr:nth-child(even) {
 }
 .rotateByNeg90{
     animation: rotateByNeg90 ease-in-out 0.3s forwards;
+}
+.fade-in{
+    visibility: hidden;
+    animation: fade-in ease-in-out 0.3s forwards;
+    visibility: visible;
+}
+.fade-in{
+    visibility: visible;
+    animation: fade-in ease-in-out 0.3s forwards;
+    visibility: hidden;
 }
 .slide-in{
     animation: slide-in ease-in-out 0.3s forwards;

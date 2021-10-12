@@ -17,6 +17,7 @@
                 <li><a href="./AddCourse">Add Course</a></li>
                 <li><a href="./AddSubject">Add Subjects</a></li>
                 <li><a href="./SeeCourses">See Courses</a></li>
+                <li><a href="./SeeSubjects">See Subjects</a></li>
             </ul>
         </ul>
         <ul class="sidebar__dropdown">

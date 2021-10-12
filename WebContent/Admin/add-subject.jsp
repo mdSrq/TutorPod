@@ -31,7 +31,7 @@
             </div>
         </form>
         <div class="main__preview">
-        <a href="./SeeCourses" class="button float-right-btn">See All Subjects >></a>
+        <a href="./SeeSubjects" class="button float-right-btn">See All Subjects >></a>
             <table aria-label="Course Preview">
                 <caption> Recent Entries </caption>
                 <thead>
@@ -54,8 +54,10 @@
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
-fetchSubjectData();
-fetchCourseData();
+$("document").ready(()=>{
+	fetchCourseData();
+	fetchSubjectData();
+});
 function fetchSubjectData() {
     $.ajax({
            url:"../SubjectController",
@@ -120,14 +122,17 @@ function fetchCourseData() {
        });
 }
 $("#course_id").change(function(){
-    var course_id = parseInt($("#course_id").val());
+    loadDurations();
+});
+function loadDurations(){
+	var course_id = parseInt($("#course_id").val());
     $("#duration_no_label").text(courseDurationTypeMap.get(course_id));
     $("#duration_no").empty();
     $("#duration_no").append($("<option>").attr({selected:true,disabled:true}).text("Select "+courseDurationTypeMap.get(course_id)));
     for(i=1;i<=courseDurationMap.get(course_id);i++){
         $("#duration_no").append($("<option>").val(i).text(i));
     }
-});
+}
 function deleteSubject(course_sub_id,subject_id){
     if(confirm("Are you sure you want to delete this course? ")){ 
     	$.ajax({
@@ -137,7 +142,6 @@ function deleteSubject(course_sub_id,subject_id){
     	    	$("#snackbar").html(response); 
                 showToast();
                 fetchSubjectData();
-                fetchCourseData();
     	    }
     	});
     }
@@ -155,25 +159,20 @@ $(document).on("submit", "#addSubjectForm", function(event) {
         return false; 
     }
     var courseValue = $("#course_id").val();
-    var courseText = $("#course_id").text();
     var durationValue = $("#duration_no").val();
-    var durationLabel = $("#duration_no_label").text();
     $.post($form.attr("action"), $form.serialize(), function(response) {
         	$("#snackbar").html(response); 
             showToast();
             fetchSubjectData();
-            fetchCourseData();
-            $form.trigger("reset");
-            $("#course_id").val(courseValue).text(courseText);
-            $("#duration_no").val(durationValue).text(durationValue);
-            $("#duration_no_label").text(durationLabel);
+            $("#subject_name").val("");
+      	 	$("#subject_code").val(""); 
     });  
     event.preventDefault();
 });
 $( document ).ajaxError(function(event, jqxhr, settings, thrownError ) {
 	$("#snackbar").html("Some error occured see the log"); 
-	  console.log(jqxhr.responseText+"\n"+thrownError);
-	    showToast(); 
+	  console.log(thrownError+"\n"+jqxhr.responseText);
+	  showToast(); 
 }); 
 </script>
 <%@include file="footer.jsp" %>

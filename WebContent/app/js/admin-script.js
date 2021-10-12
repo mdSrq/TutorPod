@@ -1,8 +1,8 @@
-const btnHamburger = document.querySelector("#btnHamburger");
+const btnHamburgerr = document.querySelector("#btnHamburger");
 const header = document.querySelector("#header");
 const sidebardDropdown = document.querySelectorAll(".sidebar__dropdown_title");
 const sidebar = document.querySelector(".sidebar");
-btnHamburger.addEventListener("click",function(){
+btnHamburgerr.addEventListener("click",function(){
     header.classList.toggle("open");
         if(sidebar.classList.contains("slide-in")){
             sidebar.classList.remove("slide-in");

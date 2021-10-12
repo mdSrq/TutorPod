@@ -53,8 +53,19 @@ public class SubjectController extends HttpServlet {
 			switch(request.getParameter("cmd")) {
 			case "seeRecentSubjects":
 				response.setContentType("application/json");
-				String couresesJSON = new Gson().toJson(courseSubjectDAO.getCourseSubjects("Recent"));
-			    out.write(couresesJSON);
+				String responseJSON = new Gson().toJson(courseSubjectDAO.getCourseSubjects("Recent"));
+			    out.write(responseJSON);
+				break;
+			case "seeSubjects":
+				response.setContentType("application/json");
+				responseJSON = new Gson().toJson(courseSubjectDAO.getCourseSubjects("All"));
+			    out.write(responseJSON);
+				break;
+			case "seeCourseSubjects":
+				response.setContentType("application/json");
+				int course_id = Integer.parseInt(request.getParameter("course_id"));
+				responseJSON = new Gson().toJson(courseSubjectDAO.getCourseSubjectsByCourseId(course_id));
+			    out.write(responseJSON);
 				break;
 			case "deleteSubject":
 				int course_sub_id =  Integer.parseInt(request.getParameter("course_sub_id"));
@@ -64,6 +75,12 @@ public class SubjectController extends HttpServlet {
 					out.write("Deleted");
 				else
 					out.write("Failed to delete");
+				break;
+			case "editSubject":
+				response.setContentType("application/json");
+				course_sub_id =  Integer.parseInt(request.getParameter("course_sub_id")); 
+				responseJSON = new Gson().toJson(courseSubjectDAO.getCourseSubject(course_sub_id));
+			    out.write(responseJSON);
 				break;
 			default:
 				response.getWriter().write("Invalid Request");
@@ -100,7 +117,32 @@ public class SubjectController extends HttpServlet {
 				else
 					out.write("Failed to add subject");
 				break;
-					
+			case "editSubject":
+				course_id = Integer.parseInt(request.getParameter("course_id"));
+				duration_no = Integer.parseInt(request.getParameter("duration_no"));
+				subject_name = request.getParameter("subject_name");
+				subject_code = request.getParameter("subject_code");
+				int course_sub_id = Integer.parseInt(request.getParameter("course_sub_id"));
+				subject_id = Integer.parseInt(request.getParameter("subject_id"));
+				boolean subjectUpdated=false;
+				boolean courseSubUpdated=false;
+				if(subjectDAO.getSubject(subject_code)==null) {
+					subjectDAO.addSubject(new Subject(subject_name,subject_code));
+					if(courseSubDAO.getCourseSubsBySubjectId(subject_id).size()<=1)
+						subjectDAO.deleteSubject(subject_id);
+				}
+				else
+					subjectDAO.updateSubject(new Subject(subject_id,subject_name,subject_code));
+				subject_id = subjectDAO.getSubject(subject_code).getSubject_id();
+				subjectUpdated=true;
+				if(courseSubDAO.updateCourseSub(new CourseSub(course_sub_id,course_id,duration_no,subject_id)) ){
+					courseSubUpdated=true;
+				}
+				if(courseSubUpdated && subjectUpdated)
+					out.write("Subject Updated");
+				else
+					out.write("Failed to update subject");
+				break;
 			default:
 				response.getWriter().print("Invalid Request");
 			}

@@ -60,4 +60,22 @@
 	    <servlet-name>add-subject</servlet-name>
 	    <url-pattern>/Admin/AddSubject</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>edit-subject</servlet-name>
+    	<jsp-file>/Admin/edit-subject.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>edit-subject</servlet-name>
+	    <url-pattern>/Admin/EditSubject</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-subjects</servlet-name>
+    	<jsp-file>/Admin/see-subjects.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-subjects</servlet-name>
+	    <url-pattern>/Admin/SeeSubjects</url-pattern>
+	</servlet-mapping>
 </web-app>

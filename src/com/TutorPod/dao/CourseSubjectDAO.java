@@ -1,6 +1,7 @@
 package com.TutorPod.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -8,7 +9,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.TutorPod.model.CourseSub;
 import com.TutorPod.model.CourseSubject;
 
 public class CourseSubjectDAO {
@@ -57,7 +57,61 @@ public class CourseSubjectDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public List<CourseSubject> getCourseSubjectsByCourseId(int course_id) throws Exception{
+		List<CourseSubject> courseSubjects = new ArrayList<>();
+		
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from course_sub "
+					+ "inner join subject on course_sub.subject_id=subject.subject_id "
+					+ "inner join course on course_sub.course_id=course.course_id "
+					+ "where course_sub.course_id=? ";
+			
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, course_id);
+			Rs = Stmt.executeQuery();
+			
+			while (Rs.next()) {
+				CourseSubject tempSubject = createCourseSubject(Rs);
+				courseSubjects.add(tempSubject);				
+			}
+			
+			return courseSubjects;		
+		}
+		finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	
+	public CourseSubject getCourseSubject(int course_sub_id)throws Exception{
+		CourseSubject courseSubject=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from course_sub "
+					+ "inner join subject on course_sub.subject_id=subject.subject_id "
+					+ "inner join course on course_sub.course_id=course.course_id "
+					+ "where course_sub_id=? ";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, course_sub_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				courseSubject = createCourseSubject(Rs);
+			}
+			return courseSubject;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}	
 	public boolean deleteCourseSubject(int course_sub_id,int subject_id) throws Exception{
 		boolean courseSubProcessed = courseSubDAO.deleteCourseSub(course_sub_id);
 		boolean subjectProcessed=false;
