@@ -78,4 +78,31 @@
 	    <servlet-name>see-subjects</servlet-name>
 	    <url-pattern>/Admin/SeeSubjects</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>add-admin</servlet-name>
+    	<jsp-file>/Admin/add-admin.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>add-admin</servlet-name>
+	    <url-pattern>/Admin/AddAdmin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>edit-admin</servlet-name>
+    	<jsp-file>/Admin/edit-admin.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>edit-admin</servlet-name>
+	    <url-pattern>/Admin/EditAdmin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-admins</servlet-name>
+    	<jsp-file>/Admin/see-admins.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-admins</servlet-name>
+	    <url-pattern>/Admin/SeeAdmins</url-pattern>
+	</servlet-mapping>
 </web-app>

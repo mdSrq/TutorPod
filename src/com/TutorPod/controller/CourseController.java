@@ -43,7 +43,7 @@ public class CourseController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			if(request.getParameter("cmd")==null)
-				out.write("wtf dude");
+				out.write("request has no command");
 			response.setContentType("text/plain");
 		    response.setCharacterEncoding("UTF-8");
 			switch(request.getParameter("cmd")) {

@@ -68,9 +68,8 @@
         <ul class="sidebar__dropdown acc_dropdown">
             <li class="sidebar__dropdown_title">Account Settings <span class="sidebar__dropdown_title_arrow">></span></li>
             <ul class="sidebar__dropdown_items">
-                <li><a href="#">Edit Password</a></li>
-                <li><a href="#">Add new Admin</a></li>
-                <li><a href="#">Show All Admins</a></li>
+                <li><a href="./AddAdmin">Add new Admin</a></li>
+                <li><a href="./SeeAdmins">Show All Admins</a></li>
             </ul>
         </ul>
         <div class="sidebar__footer">
