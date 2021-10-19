@@ -2,7 +2,12 @@ create database tutorpod;
 use tutorpod;
 create table admin(admin_id int auto_increment primary key,
 					name varchar(20) unique not null,
-                    password varchar(20) not null
+                    password varchar(20) not null,
+					);
+create table admin_bank_acc(admin_bank_acc_id int auto_increment primary key,
+					admin_id int not null,
+					bank_acc_id int not null,
+					selected boolean default false
 					);
 create table user(user_id int auto_increment primary key,
 					fname varchar(25) not null,
@@ -38,7 +43,8 @@ create table bank_acc(bank_acc_id int auto_increment primary key,
 					bank_name varchar(20) not null,
                     acc_no varchar(20) unique not null,
                     holder_name varchar(30) not null,
-                    ifsc_code varchar(15) not null
+                    ifsc_code varchar(15) not null,
+                    balance long not null,
 					);
 create table achievement(achievement_id int auto_increment primary key,
 					achivement_type varchar(15) not null,
@@ -58,13 +64,13 @@ create table lang_info(lang_info_id int auto_increment primary key,
                     language_id int not null
 					);
 create table course( course_id int auto_increment primary key,
-					course_name varchar(40) not null unique,
-                    name_abbr varchar(6) not null unique,
+					course_name varchar(80) unique not null,
+                    name_abbr varchar(6) unique not null,
                     duration_type varchar(10) not null,
                     duration int not null
 					);
 create table subject(subject_id int auto_increment primary key,
-					subject_name varchar(50) unique not null,
+					subject_name varchar(80) not null,
                     subject_code varchar(10) unique not null
 					);
 create table course_sub(course_sub_id int auto_increment primary key,

@@ -105,4 +105,31 @@
 	    <servlet-name>see-admins</servlet-name>
 	    <url-pattern>/Admin/SeeAdmins</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>add-admin-bank-acc</servlet-name>
+    	<jsp-file>/Admin/add-admin-bank-acc.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>add-admin-bank-acc</servlet-name>
+	    <url-pattern>/Admin/AddAdminBankAcc</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>edit-admin-bank-acc</servlet-name>
+    	<jsp-file>/Admin/edit-admin-bank-acc.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>edit-admin-bank-acc</servlet-name>
+	    <url-pattern>/Admin/EditAdminBankAcc</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-admin-bank-acc</servlet-name>
+    	<jsp-file>/Admin/see-admin-bank-acc.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-admin-bank-acc</servlet-name>
+	    <url-pattern>/Admin/SeeAdminBankAcc</url-pattern>
+	</servlet-mapping>
 </web-app>

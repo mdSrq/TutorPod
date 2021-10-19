@@ -44,14 +44,15 @@ public class CourseController extends HttpServlet {
 		try {
 			if(request.getParameter("cmd")==null)
 				out.write("request has no command");
-			response.setContentType("text/plain");
 		    response.setCharacterEncoding("UTF-8");
 			switch(request.getParameter("cmd")) {
 			case "seeCourses":
+				response.setContentType("application/json");
 				String couresesJSON = new Gson().toJson(courseDAO.getCourses("All"));
 			    out.write(couresesJSON);
 				break;
 			case "seeRecentCourses":
+				response.setContentType("application/json");
 				couresesJSON = new Gson().toJson(courseDAO.getCourses("Recent"));
 			    out.write(couresesJSON);
 				break;
@@ -81,6 +82,8 @@ public class CourseController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		try {
+			if(request.getParameter("cmd")==null)
+				out.write("request has no command");
 			switch(request.getParameter("cmd")) {
 			case "addCourse":
 				String course_name = request.getParameter("course_name");

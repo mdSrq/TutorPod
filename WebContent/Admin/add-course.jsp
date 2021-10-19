@@ -54,7 +54,9 @@
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
+showLoading();
 fetchData();
+hideLoading();
 function fetchData() {
     $.ajax({
            url:"../CourseController",
@@ -99,10 +101,12 @@ function fetchData() {
 }
 function deleteCourse(course_id){
     if(confirm("Are you sure you want to delete this course? ")){ 
+    	showLoading();
     	$.ajax({
     	    url: "../CourseController",
     	    data:"cmd=deleteCourse&course_id="+course_id,
     	    success: function(response) {
+    	    	hideLoading();
     	    	$("#snackbar").html(response); 
                 showToast();
                 fetchData();
@@ -117,7 +121,9 @@ $(document).on("submit", "#addCourseForm", function(event) {
         showToast();
         return false; 
     }
+    showLoading();
     $.post($form.attr("action"), $form.serialize(), function(response) {
+    		hideLoading();
         	$("#snackbar").html(response); 
             showToast();
             fetchData();

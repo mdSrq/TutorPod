@@ -208,6 +208,22 @@
     opacity: 0;
   }
 }
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader /*Safari and Chrome*/ {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
 html {
   font-size: 100%;
   box-sizing: border-box;
@@ -302,6 +318,7 @@ button:active, .button:active {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  max-width: 5rem;
   flex: 1;
 }
 
@@ -447,8 +464,21 @@ tbody tr:nth-child(even) {
 
 #snackbar.show {
   visibility: visible;
-  -webkit-animation: toast-in 0.5s, toast-out 0.5s 2.5s;
-          animation: toast-in 0.5s, toast-out 0.5s 2.5s;
+  -webkit-animation: toast-in 0.4s, toast-out 0.5s 2.5s;
+          animation: toast-in 0.4s, toast-out 0.5s 2.5s;
+}
+
+#snackbar.show-loading {
+  visibility: visible;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  border-radius: 50%;
+  background-color: transparent;
+  -webkit-animation: toast-in 0.2s forwards;
+          animation: toast-in 0.2s forwards;
+  box-shadow: none;
+  overflow-x: hidden;
 }
 
 .overlaydiv {
@@ -535,6 +565,22 @@ tbody tr:nth-child(even) {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
+.loading {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 12px;
+  background-color: transparent;
+  border-left: 0.23rem solid #23049D;
+  border-right: 0.23rem solid #AA2EE6;
+  border-top: 0.23rem solid transparent;
+  border-bottom: 0.23rem solid transparent;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  animation: loader 1s infinite;
+  -webkit-animation: loader 1s infinite;
+}
+
 .reveal {
   -webkit-animation: reveal ease-in-out 0.3s forwards;
           animation: reveal ease-in-out 0.3s forwards;
@@ -581,6 +627,7 @@ tbody tr:nth-child(even) {
 
 .header {
   margin-bottom: 0.5rem;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 999;

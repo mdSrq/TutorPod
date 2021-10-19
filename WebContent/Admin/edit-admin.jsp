@@ -35,7 +35,9 @@
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
 $("document").ready(()=>{
+	showLoading();
 	fetchAdminData();
+	hideLoading();
 });
 function fetchAdminData() {
     $.ajax({
@@ -56,7 +58,9 @@ $(document).on("submit", "#editAdminForm", function(event) {
         showToast();
         return false; 
     }
+    showLoading();
     $.post($form.attr("action"), $form.serialize(), function(response) {
+    		hideLoading();
         	$("#snackbar").html(response); 
             showToast();
             $form.trigger("reset");

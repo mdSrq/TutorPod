@@ -70,7 +70,8 @@ public class CourseSubjectDAO {
 			String sql = "select * from course_sub "
 					+ "inner join subject on course_sub.subject_id=subject.subject_id "
 					+ "inner join course on course_sub.course_id=course.course_id "
-					+ "where course_sub.course_id=? ";
+					+ "where course_sub.course_id=? "
+					+ "order by course_sub.duration_no ASC, subject.subject_code ASC";
 			
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, course_id);

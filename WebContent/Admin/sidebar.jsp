@@ -4,7 +4,7 @@
                 <img src="../images/avatar.png" alt="Admin">
             </div>
             <div class="sidebar__user_info">
-                <span><strong>Admin Name</strong></span>
+                <span style="font-size:1.4rem"><strong><%=session.getAttribute("ADMIN")%></strong></span>
                 <span><em>Administrator</em></span>
             </div>
         </div>
@@ -44,9 +44,9 @@
         <ul class="sidebar__dropdown">
             <li class="sidebar__dropdown_title">Banks Accounts <span class="sidebar__dropdown_title_arrow">></span></li>
             <ul class="sidebar__dropdown_items">
-                <li><a href="#">Add Admin Bank Acc</a></li>
-                <li><a href="#">See Admins Bank Acc(s)</a></li>
-                <li><a href="#">See All Bank Acc(s)</a></li>
+                <li><a href="./AddAdminBankAcc">Add Admin Bank Acc</a></li>
+                <li><a href="./SeeAdminBankAcc">See Admins Bank Acc(s)</a></li> 
+                <li><a href="#">See User Bank Acc(s)</a></li>
             </ul>
         </ul>
          <ul class="sidebar__dropdown acc_dropdown">

@@ -41,8 +41,10 @@
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
 $("document").ready(()=>{
+	showLoading();
 	fetchCourseData();
 	fetchSubjectData();
+	hideLoading();
 });
 function fetchSubjectData() {
     $.ajax({
@@ -107,7 +109,9 @@ $(document).on("submit", "#editSubjectForm", function(event) {
         showToast();
         return false; 
     }
+    showLoading();
     $.post($form.attr("action"), $form.serialize(), function(response) {
+    		hideLoading();
         	$("#snackbar").html(response); 
             showToast();
             fetchCourseData();

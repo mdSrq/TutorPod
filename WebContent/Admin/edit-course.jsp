@@ -38,7 +38,9 @@
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
+showLoading();
 $(document).ready(fetchData());
+hideLoading();
 function fetchData() {
     $.ajax({
            url:"../CourseController",
@@ -60,8 +62,10 @@ $(document).on("submit", "#editCourseForm", function(event) {
         showToast();
         return false; 
     }
+    showLoading();
     $.post($form.attr("action"), $form.serialize(), function(response) {
-        	$("#snackbar").html(response); 
+    		hideLoading();
+    		$("#snackbar").html(response); 
             showToast();
             fetchData();
             $form.trigger("reset");

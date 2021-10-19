@@ -23,7 +23,9 @@
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
 $("document").ready(()=>{
+	showLoading();
 	fetchAdminData();
+	hideLoading();
 });
 function fetchAdminData() {
     $.ajax({

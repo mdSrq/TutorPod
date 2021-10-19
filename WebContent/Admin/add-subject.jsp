@@ -55,8 +55,10 @@
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
 $("document").ready(()=>{
+	showLoading();
 	fetchCourseData();
 	fetchSubjectData();
+	hideLoading();
 });
 function fetchSubjectData() {
     $.ajax({
@@ -135,10 +137,12 @@ function loadDurations(){
 }
 function deleteSubject(course_sub_id,subject_id){
     if(confirm("Are you sure you want to delete this course? ")){ 
+    	showLoading();
     	$.ajax({
     	    url: "../SubjectController",
     	    data:"cmd=deleteSubject&course_sub_id="+course_sub_id+"&subject_id="+subject_id,
     	    success: function(response) {
+    	    	hideLoading();
     	    	$("#snackbar").html(response); 
                 showToast();
                 fetchSubjectData();
@@ -158,9 +162,11 @@ $(document).on("submit", "#addSubjectForm", function(event) {
         showToast();
         return false; 
     }
+    showLoading();
     var courseValue = $("#course_id").val();
     var durationValue = $("#duration_no").val();
     $.post($form.attr("action"), $form.serialize(), function(response) {
+    		hideLoading();
         	$("#snackbar").html(response); 
             showToast();
             fetchSubjectData();

@@ -84,6 +84,7 @@ button,.button{
     padding: 0.3rem 0.8rem;
     margin: 0.3rem;
     width: max-content;
+    max-width: 5rem;
     flex: 1;
 }
 .delete-button{
@@ -212,7 +213,16 @@ tbody tr:nth-child(even) {
 }
 #snackbar.show {
   visibility: visible; 
-  animation: toast-in 0.5s, toast-out 0.5s 2.5s;
+  animation: toast-in 0.4s, toast-out 0.5s 2.5s;
+}
+#snackbar.show-loading{
+    visibility: visible;
+    min-width: max-content;
+    border-radius: 50%;
+    background-color: transparent;
+    animation: toast-in 0.2s forwards;
+    box-shadow: none;
+    overflow-x: hidden;
 }
 .overlaydiv{
     position: fixed;
@@ -290,6 +300,25 @@ tbody tr:nth-child(even) {
             }
         }
     }
+}
+.loading {
+   display: block;
+   width: 2.5rem;
+   height: 2.5rem;
+   font-size: 12px;
+   
+   background-color: transparent;
+
+   border-left: 0.23rem solid $darkBlue;
+   border-right: 0.23rem solid $lightPurple;
+   border-top:  0.23rem solid transparent;
+   border-bottom:  0.23rem solid transparent;
+   
+   border-radius: 100%;  
+   -webkit-border-radius: 100%;  
+   
+   animation: loader 1s infinite;
+   -webkit-animation: loader 1s infinite;
 }
 .reveal{
     animation: reveal ease-in-out 0.3s forwards;

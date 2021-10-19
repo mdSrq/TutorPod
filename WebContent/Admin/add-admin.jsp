@@ -44,7 +44,9 @@
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
 $("document").ready(()=>{
+	showLoading();
 	fetchAdminData();
+	hideLoading();
 });
 function fetchAdminData() {
     $.ajax({
@@ -78,11 +80,13 @@ function fetchAdminData() {
        });
 }
 function deleteAdmin(admin_id){
+	showLoading();
     if(confirm("Are you sure you want to delete this course? ")){ 
     	$.ajax({
     	    url: "../AdminController",
     	    data:"cmd=deleteAdmin&admin_id="+admin_id,
     	    success: function(response) {
+    	    	hideLoading();
     	    	$("#snackbar").html(response); 
                 showToast();
                 fetchAdminData();
@@ -97,9 +101,12 @@ $(document).on("submit", "#addAdminForm", function(event) {
         showToast();
         return false; 
     }
+    showLoading();
     $.post($form.attr("action"), $form.serialize(), function(response) {
+    		hideLoading();
         	$("#snackbar").html(response); 
             showToast();
+            $form.trigger("reset");
             fetchAdminData();
     });  
     event.preventDefault();
