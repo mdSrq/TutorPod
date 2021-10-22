@@ -113,3 +113,22 @@
    0% { -webkit-transform: rotate(0deg); }
    100% { -webkit-transform: rotate(360deg); }
 }
+@keyframes tick-selected-stem {
+    0%{
+        height: 0;
+    }
+    50%{
+        height: 0;
+    }
+    100%{
+        height: 1.5rem;
+    }
+}
+@keyframes tick-selected-kick {
+    from{
+        width: 0;
+    }
+    to{
+        width: 0.93rem;
+    }
+}

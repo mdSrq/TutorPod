@@ -41,10 +41,11 @@ create table address(address_id int auto_increment primary key,
 					);
 create table bank_acc(bank_acc_id int auto_increment primary key,
 					bank_name varchar(20) not null,
-                    acc_no varchar(20) unique not null,
+                    acc_no varchar(20) not null,
                     holder_name varchar(30) not null,
                     ifsc_code varchar(15) not null,
                     balance long not null,
+                    constraint UC_bank_acc unique(bank_name,acc_no,ifsc_code)
 					);
 create table achievement(achievement_id int auto_increment primary key,
 					achivement_type varchar(15) not null,

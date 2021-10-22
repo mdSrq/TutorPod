@@ -59,10 +59,12 @@ function fetchBankAccData() {
         	               .append($("<td>").text(list.ifsc_code)) 
         	               .append($("<td>").text(list.balance))
         	               .append($("<td>").append($("<a>").attr({href:"#",onclick:"showTransactions("+list.bank_acc_id+")"}).text("See Transactions")))
-        	               .append($("<td>").text(list.selected))
+        	               .append($("<td>").append($("<span>").attr({class:"checkmark",
+        	            	   										  id:"checkmark_"+list.admin_bank_acc_id,
+        	            	   										  onclick:"selectBankAccount("+list.admin_bank_acc_id+")"})))
         	               .append($("<td>").addClass("main__preview_action")
         	            		   .append($("<a>").attr({
-					        	            			   href:"./EditAdminBankAcc?admin_bank_acc_id="+list.admin_bank_acc_id,
+					        	            			   href:"./EditAdminBankAcc?="+list.admin_bank_acc_id,
 					        	            			   class:"button small-round-button edit-button",
 					        	            			 }).text("Edit")
 					        	          )
@@ -73,6 +75,8 @@ function fetchBankAccData() {
         	            					   			}).text("Delete")
         	            				   )
         	            		  ); 
+        		   		if(list.selected)
+        		   			$("#checkmark_"+list.admin_bank_acc_id).addClass("checkmark_selected");
         	   });
            }
        });
@@ -92,6 +96,24 @@ function deleteAcc(admin_bank_acc_id){
     	    }
     	});
     }
+}
+function selectBankAccount(admin_bank_acc_id){
+	if(confirm("All the payments made by users will now be credited to selected account. Continue?")){
+		showLoading();
+		$.ajax({
+    	    url: "../BankAccountController",
+    	    data:"cmd=selectAdminBankAccount&admin_bank_acc_id="+admin_bank_acc_id,
+    	    success: function(response) {
+    	    	hideLoading();
+    	    	$("#snackbar").html(response); 
+    	    	console.log(response);
+                showToast();
+				if($(".checkmark_selected")!=null)
+               		$(".checkmark_selected").removeClass("checkmark_selected");
+				$("#checkmark_"+admin_bank_acc_id).addClass("checkmark_selected");
+    	    }
+    	});
+	}
 }
 $( document ).ajaxError(function(event, jqxhr, settings, thrownError ) {
 	$("#snackbar").html("Some error occured see the log"); 

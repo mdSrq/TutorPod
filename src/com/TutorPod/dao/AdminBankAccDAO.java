@@ -96,6 +96,25 @@ public class AdminBankAccDAO {
 			close(Conn,Stmt,Rs);
 		}
 	}
+	public boolean selectBankAcc(int admin_bank_acc_id)throws Exception{
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		try {
+		Conn = dataSource.getConnection();
+		Stmt = Conn.prepareStatement("update admin_bank_acc set selected=false where selected=true");
+		Stmt.execute();
+		Stmt.close();
+		String sql = "update admin_bank_acc set selected=true where admin_bank_acc_id=?";
+		Stmt = Conn.prepareStatement(sql);
+		Stmt.setInt(1, admin_bank_acc_id);
+		if(Stmt.executeUpdate()>0)
+			return true;
+		else 
+			return false;
+		}finally {
+			close(Conn,Stmt,null);
+		}
+	}
 	public boolean deleteBankAcc(int admin_bank_acc_id)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;

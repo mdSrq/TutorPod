@@ -320,6 +320,53 @@ tbody tr:nth-child(even) {
    animation: loader 1s infinite;
    -webkit-animation: loader 1s infinite;
 }
+.checkmark {
+    display:inline-block;
+    width: 2rem;
+    height:2rem;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+    cursor: pointer;
+    &_selected{
+        cursor: auto;
+        &::before{
+            background-color: transparent;
+            background: linear-gradient(45deg,$darkBlue,$lightPurple);
+            animation: tick-selected-stem ease-in 0.2s forwards;
+        }
+        &::after{
+            background-color: transparent;
+            background: linear-gradient(-45deg,$darkBlue,$lightPurple);
+            animation: tick-selected-kick ease-in 0.1s forwards;
+        }
+    }
+}
+.checkmark:before {
+    content: "";
+    position: absolute;
+    width:0.35rem;
+    height:1.5rem;
+    background-color:$kindaPink;
+    left:11px;
+    bottom:2px;
+}
+.checkmark:after {
+    content:"";
+    position: absolute;
+    width:0.93rem;
+    height:0.35rem;
+    background-color:$kindaPink;
+    left:0.1rem;
+    top:1.53rem;
+}
+.dropdown-arrow{
+    display: inline-block;
+    transform: rotate(90deg);
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.5rem;
+}
 .reveal{
     animation: reveal ease-in-out 0.3s forwards;
 }

@@ -224,6 +224,44 @@
     -webkit-transform: rotate(360deg);
   }
 }
+@-webkit-keyframes tick-selected-stem {
+  0% {
+    height: 0;
+  }
+  50% {
+    height: 0;
+  }
+  100% {
+    height: 1.5rem;
+  }
+}
+@keyframes tick-selected-stem {
+  0% {
+    height: 0;
+  }
+  50% {
+    height: 0;
+  }
+  100% {
+    height: 1.5rem;
+  }
+}
+@-webkit-keyframes tick-selected-kick {
+  from {
+    width: 0;
+  }
+  to {
+    width: 0.93rem;
+  }
+}
+@keyframes tick-selected-kick {
+  from {
+    width: 0;
+  }
+  to {
+    width: 0.93rem;
+  }
+}
 html {
   font-size: 100%;
   box-sizing: border-box;
@@ -581,6 +619,59 @@ tbody tr:nth-child(even) {
   -webkit-animation: loader 1s infinite;
 }
 
+.checkmark {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  /* IE 9 */
+  /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+.checkmark_selected {
+  cursor: auto;
+}
+.checkmark_selected::before {
+  background-color: transparent;
+  background: linear-gradient(45deg, #23049D, #AA2EE6);
+  -webkit-animation: tick-selected-stem ease-in 0.2s forwards;
+          animation: tick-selected-stem ease-in 0.2s forwards;
+}
+.checkmark_selected::after {
+  background-color: transparent;
+  background: linear-gradient(-45deg, #23049D, #AA2EE6);
+  -webkit-animation: tick-selected-kick ease-in 0.1s forwards;
+          animation: tick-selected-kick ease-in 0.1s forwards;
+}
+
+.checkmark:before {
+  content: "";
+  position: absolute;
+  width: 0.35rem;
+  height: 1.5rem;
+  background-color: #FF79CD;
+  left: 11px;
+  bottom: 2px;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  width: 0.93rem;
+  height: 0.35rem;
+  background-color: #FF79CD;
+  left: 0.1rem;
+  top: 1.53rem;
+}
+
+.dropdown-arrow {
+  display: inline-block;
+  transform: rotate(90deg);
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.5rem;
+}
+
 .reveal {
   -webkit-animation: reveal ease-in-out 0.3s forwards;
           animation: reveal ease-in-out 0.3s forwards;
@@ -692,6 +783,14 @@ tbody tr:nth-child(even) {
   border-radius: 2px;
   -webkit-animation: highlight ease-in-out 0.25s forwards;
           animation: highlight ease-in-out 0.25s forwards;
+}
+.header__links_dropdown:hover::before {
+  visibility: hidden;
+}
+.header__links_dropdown:hover .dropdown-arrow {
+  transition: all ease-in-out 0.2s;
+  position: relative;
+  top: 0.1rem;
 }
 .header.open .header__menu > span:first-child {
   transform: rotate(45deg);

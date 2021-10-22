@@ -71,6 +71,13 @@ public class BankAccountController extends HttpServlet {
 				responseJSON = new Gson().toJson(adminBankAccountDAO.getAdminBankAccount(admin_bank_acc_id));
 				out.write(responseJSON);
 				break;
+			case"selectAdminBankAccount":
+				admin_bank_acc_id = Integer.parseInt(request.getParameter("admin_bank_acc_id"));
+				if(adminBankAccDAO.selectBankAcc(admin_bank_acc_id))
+					out.write("Bank Account Selected");
+				else
+					out.write("Failed to select bank account");
+				break;
 			default:
 				out.write("Invalid Request");
 			}
