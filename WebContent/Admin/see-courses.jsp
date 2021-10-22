@@ -50,7 +50,9 @@
 <script src="../app/js/jquery-3.6.0.min.js"></script>
 <script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
+showLoading();
 fetchData();
+hideLoading();
 function fetchData() {
     $.ajax({
            url:"../CourseController",
@@ -92,12 +94,14 @@ function fetchData() {
        });
 }
 function showSubjects(course_id) {
+	showLoading();
     $.ajax({
            url:"../SubjectController",
            data:"cmd=seeCourseSubjects&course_id="+course_id,
            dataType:"json",
            processData: true,
            success:function(res){
+        	   hideLoading();
                if(res.length<1){
                    $("#popup_table thead").hide();
                    $(".scrollable").append("<p style=\"text-align:center\" id=\"NoData\">No Subjects Found in this course</p>"); 
@@ -136,10 +140,12 @@ function showSubjects(course_id) {
 }
 function deleteSubject(course_sub_id,subject_id,course_id){
     if(confirm("Are you sure you want to delete this course? ")){ 
+    	showLoading();
     	$.ajax({
     	    url: "../SubjectController",
     	    data:"cmd=deleteSubject&course_sub_id="+course_sub_id+"&subject_id="+subject_id,
     	    success: function(response) {
+    	    	hideLoading();
     	    	$("#snackbar").html(response); 
                 showToast();
                 showSubjects(course_id);

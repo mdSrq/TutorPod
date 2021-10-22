@@ -17,7 +17,7 @@ public class AdminDAO {
 		super();
 		this.dataSource = dataSource;
 	}
-	public List<Admin> getAdmins() throws Exception{
+	public List<Admin> getAdmins(String selector) throws Exception{
 		List<Admin> admins = new ArrayList<>();
 		
 		Connection Conn = null;
@@ -29,6 +29,9 @@ public class AdminDAO {
 			
 			String sql = "select * from admin order by admin_id desc";
 			
+			if(selector.equals("Recent"))
+				sql +=" limit 5";
+			
 			Stmt = Conn.createStatement();
 			
 			// execute query
@@ -38,7 +41,8 @@ public class AdminDAO {
 			while (Rs.next()) {
 				
 				Admin tempAdmin = createAdmin(Rs);
-				admins.add(tempAdmin);				
+				tempAdmin.setPassword("********");
+				admins.add(tempAdmin);
 			}
 			
 			return admins;		
@@ -116,6 +120,24 @@ public class AdminDAO {
 			Stmt.setString(1, admin.getName());
 			Stmt.setString(2, admin.getPassword());
 			Stmt.setInt(3, admin.getAdmin_id());
+			if(Stmt.executeUpdate()>0)
+				return true;
+			else
+				return false;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,null);
+		}	
+	}
+	public boolean updatePassword(Admin admin)throws Exception{
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "update admin set password=? where admin_id=? ";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setString(1, admin.getPassword());
+			Stmt.setInt(2, admin.getAdmin_id());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else

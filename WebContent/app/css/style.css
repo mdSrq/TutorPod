@@ -208,6 +208,60 @@
     opacity: 0;
   }
 }
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader /*Safari and Chrome*/ {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes tick-selected-stem {
+  0% {
+    height: 0;
+  }
+  50% {
+    height: 0;
+  }
+  100% {
+    height: 1.5rem;
+  }
+}
+@keyframes tick-selected-stem {
+  0% {
+    height: 0;
+  }
+  50% {
+    height: 0;
+  }
+  100% {
+    height: 1.5rem;
+  }
+}
+@-webkit-keyframes tick-selected-kick {
+  from {
+    width: 0;
+  }
+  to {
+    width: 0.93rem;
+  }
+}
+@keyframes tick-selected-kick {
+  from {
+    width: 0;
+  }
+  to {
+    width: 0.93rem;
+  }
+}
 html {
   font-size: 100%;
   box-sizing: border-box;
@@ -302,6 +356,7 @@ button:active, .button:active {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  max-width: 5rem;
   flex: 1;
 }
 
@@ -447,8 +502,21 @@ tbody tr:nth-child(even) {
 
 #snackbar.show {
   visibility: visible;
-  -webkit-animation: toast-in 0.5s, toast-out 0.5s 2.5s;
-          animation: toast-in 0.5s, toast-out 0.5s 2.5s;
+  -webkit-animation: toast-in 0.4s, toast-out 0.5s 2.5s;
+          animation: toast-in 0.4s, toast-out 0.5s 2.5s;
+}
+
+#snackbar.show-loading {
+  visibility: visible;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  border-radius: 50%;
+  background-color: transparent;
+  -webkit-animation: toast-in 0.2s forwards;
+          animation: toast-in 0.2s forwards;
+  box-shadow: none;
+  overflow-x: hidden;
 }
 
 .overlaydiv {
@@ -535,6 +603,75 @@ tbody tr:nth-child(even) {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
+.loading {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 12px;
+  background-color: transparent;
+  border-left: 0.23rem solid #23049D;
+  border-right: 0.23rem solid #AA2EE6;
+  border-top: 0.23rem solid transparent;
+  border-bottom: 0.23rem solid transparent;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  animation: loader 1s infinite;
+  -webkit-animation: loader 1s infinite;
+}
+
+.checkmark {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  /* IE 9 */
+  /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+.checkmark_selected {
+  cursor: auto;
+}
+.checkmark_selected::before {
+  background-color: transparent;
+  background: linear-gradient(45deg, #23049D, #AA2EE6);
+  -webkit-animation: tick-selected-stem ease-in 0.2s forwards;
+          animation: tick-selected-stem ease-in 0.2s forwards;
+}
+.checkmark_selected::after {
+  background-color: transparent;
+  background: linear-gradient(-45deg, #23049D, #AA2EE6);
+  -webkit-animation: tick-selected-kick ease-in 0.1s forwards;
+          animation: tick-selected-kick ease-in 0.1s forwards;
+}
+
+.checkmark:before {
+  content: "";
+  position: absolute;
+  width: 0.35rem;
+  height: 1.5rem;
+  background-color: #FF79CD;
+  left: 11px;
+  bottom: 2px;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  width: 0.93rem;
+  height: 0.35rem;
+  background-color: #FF79CD;
+  left: 0.1rem;
+  top: 1.53rem;
+}
+
+.dropdown-arrow {
+  display: inline-block;
+  transform: rotate(90deg);
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.5rem;
+}
+
 .reveal {
   -webkit-animation: reveal ease-in-out 0.3s forwards;
           animation: reveal ease-in-out 0.3s forwards;
@@ -581,6 +718,7 @@ tbody tr:nth-child(even) {
 
 .header {
   margin-bottom: 0.5rem;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 999;
@@ -645,6 +783,14 @@ tbody tr:nth-child(even) {
   border-radius: 2px;
   -webkit-animation: highlight ease-in-out 0.25s forwards;
           animation: highlight ease-in-out 0.25s forwards;
+}
+.header__links_dropdown:hover::before {
+  visibility: hidden;
+}
+.header__links_dropdown:hover .dropdown-arrow {
+  transition: all ease-in-out 0.2s;
+  position: relative;
+  top: 0.1rem;
 }
 .header.open .header__menu > span:first-child {
   transform: rotate(45deg);

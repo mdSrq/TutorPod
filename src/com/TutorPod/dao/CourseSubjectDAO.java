@@ -6,18 +6,23 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.sql.DataSource;
 
+import com.TutorPod.model.Course;
 import com.TutorPod.model.CourseSubject;
+import com.TutorPod.model.CourseSubjects;
 
 public class CourseSubjectDAO {
 	private DataSource dataSource;
+	private CourseDAO courseDAO;
 	private CourseSubDAO courseSubDAO;
 	private SubjectDAO subjectDAO;
 	public CourseSubjectDAO(DataSource dataSource) {
 		super();
 		this.dataSource = dataSource;
+		courseDAO = new CourseDAO(dataSource);
 		courseSubDAO = new CourseSubDAO(dataSource);
 		subjectDAO = new SubjectDAO(dataSource);
 	}
@@ -70,7 +75,8 @@ public class CourseSubjectDAO {
 			String sql = "select * from course_sub "
 					+ "inner join subject on course_sub.subject_id=subject.subject_id "
 					+ "inner join course on course_sub.course_id=course.course_id "
-					+ "where course_sub.course_id=? ";
+					+ "where course_sub.course_id=? "
+					+ "order by course_sub.duration_no ASC, subject.subject_code ASC";
 			
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, course_id);
@@ -112,6 +118,16 @@ public class CourseSubjectDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}	
+	public List<CourseSubjects> getCourseSubjects()throws Exception{
+		List<CourseSubjects> courseSubjects = new ArrayList<>();
+		ListIterator<Course> courses = courseDAO.getCourses("All").listIterator();
+		while(courses.hasNext()) {
+			int course_id = courses.next().getCourse_id();
+			List<CourseSubject> subjects = getCourseSubjectsByCourseId(course_id);
+			courseSubjects.add(new CourseSubjects(course_id, subjects));
+		}
+		return courseSubjects;
+	}
 	public boolean deleteCourseSubject(int course_sub_id,int subject_id) throws Exception{
 		boolean courseSubProcessed = courseSubDAO.deleteCourseSub(course_sub_id);
 		boolean subjectProcessed=false;

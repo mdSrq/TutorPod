@@ -3,7 +3,6 @@
 	<display-name>TutorPod</display-name>
 	
 	<welcome-file-list>
-	    <welcome-file>index.html</welcome-file>
 	    <welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
@@ -77,5 +76,59 @@
 	<servlet-mapping>
 	    <servlet-name>see-subjects</servlet-name>
 	    <url-pattern>/Admin/SeeSubjects</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>add-admin</servlet-name>
+    	<jsp-file>/Admin/add-admin.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>add-admin</servlet-name>
+	    <url-pattern>/Admin/AddAdmin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>edit-admin</servlet-name>
+    	<jsp-file>/Admin/edit-admin.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>edit-admin</servlet-name>
+	    <url-pattern>/Admin/EditAdmin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-admins</servlet-name>
+    	<jsp-file>/Admin/see-admins.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-admins</servlet-name>
+	    <url-pattern>/Admin/SeeAdmins</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>add-admin-bank-acc</servlet-name>
+    	<jsp-file>/Admin/add-admin-bank-acc.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>add-admin-bank-acc</servlet-name>
+	    <url-pattern>/Admin/AddAdminBankAcc</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>edit-admin-bank-acc</servlet-name>
+    	<jsp-file>/Admin/edit-admin-bank-acc.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>edit-admin-bank-acc</servlet-name>
+	    <url-pattern>/Admin/EditAdminBankAcc</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-admin-bank-acc</servlet-name>
+    	<jsp-file>/Admin/see-admin-bank-acc.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-admin-bank-acc</servlet-name>
+	    <url-pattern>/Admin/SeeAdminBankAcc</url-pattern>
 	</servlet-mapping>
 </web-app>
