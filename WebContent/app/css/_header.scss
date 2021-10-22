@@ -1,141 +1,177 @@
-.header{
-    margin-bottom: 0.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 999;
+.header {
+  margin-bottom: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: white;
+  box-shadow: $shadow5;
+  nav {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  &__logo {
+    height: 3rem;
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+  &__logo_title {
+    padding: 0.5rem 0 0 0.5rem;
+    //font-family: 'Fleur De Leah', cursive;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: black;
+  }
+  &__logo_title_part {
+    color: $darkBlue;
+  }
+  &__menu {
+    > span {
+      display: block;
+      width: 26px;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, $darkBlue, $lightPurple);
+      opacity: 1;
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+      transition: all 0.2s ease-in-out;
+      transform-origin: 2px 2px;
+    }
+  }
+  &__links {
+    a {
+      position: relative;
+      font-size: $font-med;
+      color: $dark;
+      font-weight: 600;
+      transition: color 0.3s ease-in-out;
+      &:not(:last-child) {
+        margin-right: 32px;
+      }
+      &:hover {
+        color: $darkBlue;
+        &::before {
+          content: "";
+          display: block;
+          position: absolute;
+          height: 4px;
+          background: linear-gradient(90deg, $darkBlue, $lightPurple);
+          left: 0;
+          right: 0;
+          bottom: -10px;
+          border-radius: 2px;
+          animation: highlight ease-in-out 0.25s forwards;
+        }
+      }
+    }
+    &_dropdown {
+      &:hover {
+        &::before {
+          visibility: hidden;
+        }
+        .dropdown-arrow {
+          transition: all ease-in-out 0.2s;
+          position: relative;
+          top: 0.1rem;
+        }
+      }
+    }
+  }
+  &.open {
+    .header__menu {
+      > span:first-child {
+        transform: rotate(45deg);
+      }
+      > span:nth-child(2) {
+        opacity: 0;
+      }
+      > span:last-child {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+  .overlay {
+    display: block;
+    background-image: linear-gradient(
+      $darkBlue 0%,
+      $lighterBlue 50%,
+      transparent 100%
+    );
+    position: fixed;
+    top: 63px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    visibility: hidden;
+  }
+  .fade-in {
+    visibility: visible;
+    animation: fade-in 0.3s ease-in-out forwards;
+  }
+  .fade-out {
+    visibility: visible;
+    animation: fade-out 0.3s ease-in-out forwards;
+    visibility: hidden;
+  }
+  &__overlay_menu {
+    position: absolute;
+    top: 5rem;
+    width: calc(100% - 3rem);
+    height: max-content;
+    border-radius: 2px;
     background-color: white;
-    box-shadow: $shadow5;
-    nav{
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
+    left: 50%;
+    padding: 1rem;
+    transform: translate(-50%);
+    visibility: hidden;
+    box-shadow: $shadow1;
+    a {
+      display: block;
+      color: $dark;
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
+      font-weight: 600;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: $darkBlue;
+      }
     }
-    &__logo{
-        height: 3rem;
-        img{
-            height: 100%;
-            width: auto;
+  }
+  .overlaydiv {
+    display: flex;
+    flex-flow: column wrap;
+    .signup-form {
+      overflow-x: hidden;
+      overflow-y: hidden;
+      width: 85%;
+      margin: 0 auto;
+      box-shadow: $shadow1;
+      border-radius: 1rem;
+      .tab-selector {
+        width: 100%;
+        height: 20%;
+        background-color: $lightBlue;
+        display: flex;
+        &_signin,
+        &_signup {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+          height: 100%;
+          text-align: center;
+          padding: 1rem;
         }
+      }
+      .signin,
+      .signup {
+        width: 80%;
+        margin: 2rem auto;
+      }
     }
-    &__logo_title{
-        padding: 0.5rem 0 0 0.5rem;
-        //font-family: 'Fleur De Leah', cursive;
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: black;
-    }
-     &__logo_title_part{
-         color: $darkBlue;
-     }
-    &__menu{
-        >span{
-            display: block;
-            width: 26px;
-            height: 4px;
-            border-radius: 2px;
-            background: linear-gradient(90deg,$darkBlue,$lightPurple);
-            opacity: 1;
-            &:not(:last-child){
-                margin-bottom: 4px;
-            }
-            transition: all 0.2s ease-in-out;
-            transform-origin: 2px 2px;
-        }
-    }
-    &__links{
-        a{
-            position: relative;
-            font-size: $font-med;
-            color: $dark;
-            font-weight: 600;
-            transition: color 0.3s ease-in-out;
-            &:not(:last-child){
-                margin-right: 32px;
-            }
-            &:hover{
-                color: $darkBlue;
-                &::before{
-                    content: "";
-                    display: block;
-                    position: absolute;
-                    height: 4px;
-                    background: linear-gradient(90deg,$darkBlue,$lightPurple);
-                    left: 0;
-                    right: 0;
-                    bottom: -10px;
-                    border-radius: 2px;
-                    animation: highlight ease-in-out 0.25s forwards;
-                }
-            }
-        }
-        &_dropdown{
-            &:hover{
-                &::before{
-                    visibility: hidden;
-                }
-                .dropdown-arrow{
-                    transition: all ease-in-out 0.2s;
-                    position: relative;
-                    top: 0.1rem;
-                }
-            }
-        }
-    }
-    &.open{
-            .header__menu{
-                >span:first-child{
-                    transform: rotate(45deg);
-                }
-                >span:nth-child(2){
-                    opacity: 0;
-                }
-                >span:last-child{
-                    transform: rotate(-45deg);
-                }
-             }
-        
-    }
-    .overlay{
-        display: block;
-        background-image: linear-gradient($darkBlue 0%,$lighterBlue 50%,transparent 100%);
-        position: fixed;
-        top: 63px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        visibility: hidden;
-    }
-    .fade-in{
-        visibility: visible;
-        animation: fade-in 0.3s ease-in-out forwards;
-    }
-    .fade-out{
-        visibility: visible;
-        animation: fade-out 0.3s ease-in-out forwards;
-        visibility: hidden;
-    }
-    &__overlay_menu{
-        position: absolute;
-        top: 5rem;
-        width: calc(100% - 3rem);
-        height: max-content;
-        border-radius: 2px;
-        background-color: white;
-        left:50%;
-        padding: 1rem;
-        transform: translate(-50%);
-        visibility: hidden;
-        box-shadow: $shadow1;
-        a{
-            display: block;
-            color: $dark;
-            width: 100%;
-            text-align: center;
-            padding: 1rem;
-            font-weight: 600;
-            transition: color 0.3s ease-in-out;
-            &:hover{
-                color: $darkBlue;
-            }
-        }
-    }
+  }
 }

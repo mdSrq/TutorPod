@@ -1,30 +1,35 @@
-.adminLogin{
-    background: linear-gradient(-45deg,$darkBlue 0%,$lighterBlue 50%,$lightPurple 100%);
-    width: 100vw;
-    height: 100vh;
-    &__form{
-        background-color: $white;
-        width: 30rem;
-        padding: 2rem 3rem 3rem;
-        border-radius: 1rem;
-        box-shadow: $shadow4;
-        margin: 1rem;
-        &_header{
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.2rem;
-        }
-        &_id{
-            background-image: url(../../images/avatar.png);
-        }
-        &_pass{
-            background-image: url(../../images/padlock.png);
-            margin-top: 1.2rem;
-        }
+.adminLogin {
+  background: linear-gradient(
+    -45deg,
+    $darkBlue 0%,
+    $lighterBlue 50%,
+    $lightPurple 100%
+  );
+  width: 100vw;
+  height: 100vh;
+  &__form {
+    background-color: $white;
+    width: 30rem;
+    padding: 2rem 3rem 3rem;
+    border-radius: 1rem;
+    box-shadow: $shadow4;
+    margin: 1rem;
+    &_header {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.2rem;
     }
+    &_id {
+      background-image: url(../../images/avatar.png);
+    }
+    &_pass {
+      background-image: url(../../images/padlock.png);
+      margin-top: 1.2rem;
+    }
+  }
 }
-@include breakpoint-down(small){
-    .adminLogin__form{
-        padding: 1.5rem;
-    }
+@include breakpoint-down(small) {
+  .adminLogin__form {
+    padding: 1.5rem;
+  }
 }

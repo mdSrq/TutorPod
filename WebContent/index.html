@@ -29,7 +29,7 @@
                 <a href="# ">Other2</a>
                 <a href="# ">Other3</a>
             </div>
-            <a href="#" class="button hide-for-mobile">Sign Up</a>
+            <a href="#" id="signin-btn" class="button hide-for-mobile">Sign In</a>
         </nav>
         <div class="overlay toggle-on"></div>
         <div class="header__overlay_menu hide-for-desktop toggle-on" >
@@ -38,6 +38,31 @@
            <a href="http://">Other1</a>
            <a href="http://">Other2</a>
            <a href="http://">Other3</a>
+        </div>
+        <div class="overlaydiv">
+            <h1 class="thin-H1">Welcome</h1>
+            <div id="btnCross" class="header__menu cross">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="scrollable signup-form">
+                <div class="tab-selector">
+                    <span class="tab-selector_signin">Sign In</span>
+                    <span class="tab-selector_signup">Create New Account</span>
+                </div>
+                <div class="signin">
+                    <form action="#">
+                        <input type="text" class="input-with-icon user_id" name="name" id="name" placeholder="Username or email address" required>
+                        <input type="password" class="input-with-icon user_pass"  name="password" id="password" placeholder="Password" required>
+                        <input type="hidden" name="cmd" id="cmd" value="login">
+                        <input type="submit" class="button flat-wide-button" value="Sign In">
+                    </form>
+                </div>
+                <div class="signup">
+                    
+                </div>
+            </div>
         </div>
     </header>
     <main>
@@ -67,8 +92,17 @@
     <footer>
         
     </footer>
-    <script src="./app/js/script.js">
-
+    <script src="./app/js/script.js"></script>
+    <script src="./app/js/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#signin-btn").click(function (){
+            $(".overlaydiv").css("animation","fade-in ease-in 0.3s forwards");
+            $(".overlaydiv").css("visibility","visible");
+        });
+        $("#btnCross").click(function (){
+            $(".overlaydiv").css("animation","fade-out ease-in 0.3s forwards");
+            $(".overlaydiv").css("visibility","hidden");
+        });
     </script>
 </body>
 </html>

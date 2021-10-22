@@ -1,134 +1,164 @@
-@keyframes fade-in{
-    from{
-        opacity: 0;
-        visibility: hidden;
-    }
-    1%{
-        visibility: visible;
-    }
-    to{
-        opacity: 1;
-    }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  1% {
+    visibility: visible;
+  }
+  to {
+    opacity: 1;
+  }
 }
-@keyframes fade-out{
-    from{
-        visibility: visible;
-        opacity: 1;
-    }
-    99%{
-        visibility: hidden;
-    }
-    to{
-        opacity: 0;
-    }
+@keyframes fade-out {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  99% {
+    visibility: hidden;
+  }
+  to {
+    opacity: 0;
+  }
 }
-@keyframes highlight{
-    from{
-        width: 0;
-    }
-    to{
-        width: 100%;
-    }
+@keyframes highlight {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
-@keyframes shiftGradient{
-    from{
-        background: linear-gradient(90deg,$darkBlue,$lightPurple);
-    }
-    to{
-        background: linear-gradient(90deg,$lightPurple,$darkBlue);
-    }
+@keyframes shiftGradient {
+  from {
+    background: linear-gradient(90deg, $darkBlue, $lightPurple);
+  }
+  to {
+    background: linear-gradient(90deg, $lightPurple, $darkBlue);
+  }
 }
-@keyframes reveal{
-    from{
-        max-height: 0;
-    }
-    to{
-        max-height: 10rem;
-    }
+@keyframes reveal {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 10rem;
+  }
 }
-@keyframes conceal{
-    from{
-        max-height: 10rem;
-    }
-    to{
-        max-height: 0;
-    }
+@keyframes conceal {
+  from {
+    max-height: 10rem;
+  }
+  to {
+    max-height: 0;
+  }
 }
 @keyframes rotateBy90 {
-    to{
-        transform: rotate(90deg);
-    }
+  to {
+    transform: rotate(90deg);
+  }
 }
-@keyframes rotateByNeg90{
-    from{
-        transform: rotate(90deg);
-    }
-    to{
-        transform: rotate(0deg);
-    }
+@keyframes rotateByNeg90 {
+  from {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
-@keyframes slide-in{
-    from{
-        left:-15rem;
-    }
-    to{
-        left:0;
-    }
+@keyframes slide-in {
+  from {
+    left: -15rem;
+  }
+  to {
+    left: 0;
+  }
 }
-@keyframes slide-out{
-    from{
-        left: 0;
-    }
-    to{
-        left: -15rem;
-    }
+@keyframes slide-out {
+  from {
+    left: 0;
+  }
+  to {
+    left: -15rem;
+  }
 }
 @-webkit-keyframes toast-in {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @keyframes toast-in {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes toast-out {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 @keyframes toast-out {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
-@keyframes loader
-{
-   0% { transform: rotate(0deg); }
-   100% { transform: rotate(360deg); }
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-@-webkit-keyframes loader /*Safari and Chrome*/
-{
-   0% { -webkit-transform: rotate(0deg); }
-   100% { -webkit-transform: rotate(360deg); }
+@-webkit-keyframes loader /*Safari and Chrome*/ {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 @keyframes tick-selected-stem {
-    0%{
-        height: 0;
-    }
-    50%{
-        height: 0;
-    }
-    100%{
-        height: 1.5rem;
-    }
+  0% {
+    height: 0;
+  }
+  50% {
+    height: 0;
+  }
+  100% {
+    height: 1.5rem;
+  }
 }
 @keyframes tick-selected-kick {
-    from{
-        width: 0;
-    }
-    to{
-        width: 0.93rem;
-    }
+  from {
+    width: 0;
+  }
+  to {
+    width: 0.93rem;
+  }
 }

@@ -1,397 +1,434 @@
-html{
-    font-size: 100%;
-    box-sizing: border-box;
+html {
+  font-size: 100%;
+  box-sizing: border-box;
 }
-*,*::before,*::after{
-    box-sizing: inherit;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
-a,a:visited,a:hover{
-    text-decoration: none;
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
 }
-body{
-    margin: 0;
-    padding: 0;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
-    color: $dark;
-    position: relative;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: $dark;
+  position: relative;
 }
-.container{
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+.container {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
-@include breakpoint-down(medium){
-    .container{
+@include breakpoint-down(medium) {
+  .container {
     padding-left: 1rem;
     padding-right: 1rem;
-}
+  }
 }
 //Flexbox
-.flex{
-    display: flex;
-    &-jc-sb{
-        justify-content: space-between;
-    }
-    &-jc-c{
-        justify-content: center;
-    }
-    &-ai-c{
-        align-items: center;
-    }
+.flex {
+  display: flex;
+  &-jc-sb {
+    justify-content: space-between;
+  }
+  &-jc-c {
+    justify-content: center;
+  }
+  &-ai-c {
+    align-items: center;
+  }
 }
 //Button
-button,.button{
-    display: block;
-    padding: 0.875rem 2.1875rem;
-    border-radius: 50px;
-    cursor: pointer;
-    background-size: 200% auto;
-    background-image: linear-gradient(to right,$darkBlue 0%,$lightPurple 50%,$darkBlue 100%);
-    border: none;
-    color: white;
-    font-weight: 700;
-    transition: all 0.3s ease-in-out;
-    box-shadow: $shadow2;
-    &:hover{
-        transform: scale(1.025);
-        background-position: right center;
-        box-shadow: $shadow3;
-    }
-    &:active{
-        transform: scale(0.95);
-        background-position: left center;
-    }
+button,
+.button {
+  display: block;
+  padding: 0.875rem 2.1875rem;
+  border-radius: 50px;
+  cursor: pointer;
+  background-size: 200% auto;
+  background-image: linear-gradient(
+    to right,
+    $darkBlue 0%,
+    $lightPurple 50%,
+    $darkBlue 100%
+  );
+  border: none;
+  color: white;
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+  box-shadow: $shadow2;
+  &:hover {
+    transform: scale(1.025);
+    background-position: right center;
+    box-shadow: $shadow3;
+  }
+  &:active {
+    transform: scale(0.95);
+    background-position: left center;
+  }
 }
-.flat-wide-button{
-    font-size: 1.3rem;
-    margin-top: 1.2rem;
-    width: 100%;
-    border-radius: 5px;
-    font-family: inherit;
-    &:hover,&:focus{
-        transform: scale(1.025);
-        background-position: right center;
-        box-shadow: $shadow3;
-    }
-    &:active{
-        transform: scale(0.95);
-        background-position: left center;
-    }
+.flat-wide-button {
+  font-size: 1.3rem;
+  margin-top: 1.2rem;
+  width: 100%;
+  border-radius: 5px;
+  font-family: inherit;
+  &:hover,
+  &:focus {
+    transform: scale(1.025);
+    background-position: right center;
+    box-shadow: $shadow3;
+  }
+  &:active {
+    transform: scale(0.95);
+    background-position: left center;
+  }
 }
-.small-round-button{
-    font-size: 0.9rem;
-    font-weight: normal;
-    padding: 0.3rem 0.8rem;
-    margin: 0.3rem;
-    width: max-content;
-    max-width: 5rem;
-    flex: 1;
+.small-round-button {
+  font-size: 0.9rem;
+  font-weight: normal;
+  padding: 0.3rem 0.8rem;
+  margin: 0.3rem;
+  width: max-content;
+  max-width: 5rem;
+  flex: 1;
 }
-.delete-button{
-    background-image: linear-gradient(90deg,red 0%,rgb(247, 99, 99) 50%,red 100%);
+.delete-button {
+  background-image: linear-gradient(
+    90deg,
+    red 0%,
+    rgb(247, 99, 99) 50%,
+    red 100%
+  );
 }
-.edit-button{
-    background-image: linear-gradient(to right,$darkBlue 0%,$lighterBlue 50%, $darkBlue 100%);
+.edit-button {
+  background-image: linear-gradient(
+    to right,
+    $darkBlue 0%,
+    $lighterBlue 50%,
+    $darkBlue 100%
+  );
 }
-.float-right-btn{
-    position: absolute;
-    top: 0.8rem;
-    right: 1.2rem;
+.float-right-btn {
+  position: absolute;
+  top: 0.8rem;
+  right: 1.2rem;
+  box-shadow: none;
+  background-image: linear-gradient(
+    90deg,
+    $lightPurple 0%,
+    $kindaPink 50%,
+    $lightPurple 100%
+  );
+  font-size: 1rem;
+  font-weight: normal;
+  padding: 0.5rem 1rem;
+  width: max-content;
+  border-radius: 0.2rem;
+  &:hover {
+    transform: scale(1);
+    background-position: right center;
     box-shadow: none;
-    background-image: linear-gradient(90deg,$lightPurple 0%,$kindaPink 50%,$lightPurple 100%);
-    font-size: 1rem;
-    font-weight: normal;
-    padding: 0.5rem 1rem;
-    width: max-content;
-    border-radius: 0.2rem;
-    &:hover{
-        transform: scale(1);
-        background-position: right center;
-        box-shadow: none;
-    }
-    &:active{
-        transform: scale(0.95);
-        background-position: left center;
-    }
-    @include breakpoint-down(medium){
-        right: auto;
-        left: 1.2rem;
-    }
+  }
+  &:active {
+    transform: scale(0.95);
+    background-position: left center;
+  }
+  @include breakpoint-down(medium) {
+    right: auto;
+    left: 1.2rem;
+  }
 }
 
 //Inputs
-input,select{
-    border: none;
-    outline: 0;
-    background-color: $white;
-    box-shadow: $shadow2;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: all ease-in-out 0.15s;
-    &:focus{
-        transform: scale(1.005);
-        box-shadow: $shadow3;
-    }
+input,
+select {
+  border: none;
+  outline: 0;
+  background-color: $white;
+  box-shadow: $shadow2;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all ease-in-out 0.15s;
+  &:focus {
+    transform: scale(1.005);
+    box-shadow: $shadow3;
+  }
 }
-.input-with-icon{
-    font-size: 1.1rem;
-    padding: 1rem;
-    padding-left: 3.3rem;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: 1.2rem;
-    background-position: 1rem 1.2rem;
+.input-with-icon {
+  font-size: 1.1rem;
+  padding: 1rem;
+  padding-left: 3.3rem;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: 1.2rem;
+  background-position: 1rem 1.2rem;
 }
-//Visibility 
-.hide-for-mobile{
-    // hide for tablet and mobile
-    @include breakpoint-down(medium){
-        display: none;
-    }
+.user_id {
+  background-image: url(../../images/avatar.png);
 }
-.hide-for-desktop{
-    // hide for desktop viewport widths
-    @include breakpoint-up(large){
-        display: none;
-    }
+.user_pass {
+  background-image: url(../../images/padlock.png);
+  margin-top: 1.2rem;
 }
-.wide-for-mobile{
-    @include breakpoint-down(medium){
-        min-width: 100%;
-    }
+//Visibility
+.hide-for-mobile {
+  // hide for tablet and mobile
+  @include breakpoint-down(medium) {
+    display: none;
+  }
 }
-.thin-H1{
-    font-weight: normal;
-    font-size: 2rem;
-    line-height: 1.5;
+.hide-for-desktop {
+  // hide for desktop viewport widths
+  @include breakpoint-up(large) {
+    display: none;
+  }
 }
-table{
-    border-collapse: collapse;
-    box-shadow: $shadow1;
-    border-radius: 1rem;
-    width: 100%;
+.wide-for-mobile {
+  @include breakpoint-down(medium) {
+    min-width: 100%;
+  }
 }
-caption,.caption{
-    width: 100%;
-    text-align: center;
-    padding-bottom: 1rem;
-    font-size: 1.2rem;
+.thin-H1 {
+  font-weight: normal;
+  font-size: 2rem;
+  line-height: 1.5;
+  text-align: center;
 }
-thead{
-    background: linear-gradient(150deg,$darkBlue,$lighterBlue);
-    border-radius: 1rem;
+table {
+  border-collapse: collapse;
+  box-shadow: $shadow1;
+  border-radius: 1rem;
+  width: 100%;
 }
-th{
-    color: $white;
+caption,
+.caption {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
 }
-th,td{
-    text-align: center;
-    padding: 0.5rem;
+thead {
+  background: linear-gradient(150deg, $darkBlue, $lighterBlue);
+  border-radius: 1rem;
 }
-td{
-    text-align: center;
+th {
+  color: $white;
+}
+th,
+td {
+  text-align: center;
+  padding: 0.5rem;
+}
+td {
+  text-align: center;
 }
 tbody tr:nth-child(even) {
-  background: #d7e3f5;
+  background: $lightBlue;
 }
 #snackbar {
-  visibility: hidden; 
-  min-width: 250px; 
-  background-color: $toast-color; 
+  visibility: hidden;
+  min-width: 250px;
+  background-color: $toast-color;
   box-shadow: $toast-shadow;
-  color: $white; 
+  color: $white;
   text-align: center;
-  border-radius: 0.5rem; 
-  padding: 1rem; 
+  border-radius: 0.5rem;
+  padding: 1rem;
   position: fixed;
   left: 50%;
   transform: translate(-50%);
-  z-index: 999; 
-  bottom: 30px; 
+  z-index: 9999;
+  bottom: 30px;
   max-height: 70vh;
   overflow-y: hidden;
 }
 #snackbar.show {
-  visibility: visible; 
+  visibility: visible;
   animation: toast-in 0.4s, toast-out 0.5s 2.5s;
 }
-#snackbar.show-loading{
-    visibility: visible;
-    min-width: max-content;
-    border-radius: 50%;
-    background-color: transparent;
-    animation: toast-in 0.2s forwards;
-    box-shadow: none;
-    overflow-x: hidden;
+#snackbar.show-loading {
+  visibility: visible;
+  min-width: max-content;
+  border-radius: 50%;
+  background-color: transparent;
+  animation: toast-in 0.2s forwards;
+  box-shadow: none;
+  overflow-x: hidden;
 }
-.overlaydiv{
-    position: fixed;
-    visibility: hidden;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%);
-    z-index: 99;
-    width: 60vw;
-    height: 70vh;
-    box-shadow: $shadow4;
-    background-color: $white;
-    border-radius: 1rem;
-    padding: 1.2rem;
-    padding-top: 0;
-    overflow: hidden;
+.overlaydiv {
+  position: fixed;
+  visibility: hidden;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 99;
+  width: 60vw;
+  height: 80vh;
+  box-shadow: $shadow4;
+  background-color: $white;
+  border-radius: 1rem;
+  padding: 1.2rem;
+  padding-top: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  @include breakpoint-down(medium) {
+    width: calc(100% - 2.4rem);
+    height: 80vh;
+    padding: 0 0.7rem 0.7rem 0.7rem;
+  }
+  .scrollable {
+    width: 100%;
+    position: static;
+    max-height: 65vh;
+    overflow-y: scroll;
+    scrollbar-color: auto;
+    scrollbar-width: thin;
+    @include breakpoint-down(medium) {
+      max-height: 65vh;
+      overflow-y: visible;
+      overflow-x: scroll;
+    }
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+    &::-webkit-scrollbar-track {
+      background: $kindaPink;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $lightPurple;
+      border-radius: 0.1rem;
+    }
+  }
+  .cross {
+    cursor: pointer;
+    width: max-content;
     transition: all 0.3s ease-in-out;
-    @include breakpoint-down(medium){
-        width: calc(100% - 2.4rem);
-        height: 80vh;
-        padding: 0 0.7rem 0.7rem 0.7rem;
+    position: absolute;
+    right: 1.2rem;
+    top: 1.5rem;
+    &:active {
+      transform: scale(0.92);
     }
-    .scrollable{
-        width: 100%;
-        position: static;
-        max-height: 52vh;
-        overflow-y:scroll;
-        scrollbar-color: auto;
-        scrollbar-width: thin;
-        @include breakpoint-down(medium){
-            max-height: 65vh;
-            overflow-y: visible;
-            overflow-x: scroll;
-        }
-        &::-webkit-scrollbar {
-            width: 0.5rem;
-            height: 0.5rem;
-        }
-        &::-webkit-scrollbar-track {
-            background: $kindaPink;
-        }
-        &::-webkit-scrollbar-thumb {
-            background: $lightPurple;
-            border-radius: 0.1rem;
-        }
+    > span {
+      width: 30px;
+      height: 0.25rem;
+      transform-origin: 4px;
     }
-    .cross{
-        cursor: pointer;
-        width: max-content;
-        transition: all 0.3s ease-in-out;
-        position: absolute;
-        right: 1.2rem;
-        top: 1.5rem;
-        &:active{
-            transform: scale(0.92);
-        }
-        >span{
-            width: 30px;
-            height: 0.25rem;
-            transform-origin: 4px;
-        }
-        >span:first-child{
-            transform: rotate(45deg);
-            &:hover{
-                box-shadow: $shadow3;
-            }
-        }
-        >span:nth-child(2){
-             opacity: 0;
-        }
-        >span:last-child{
-            transform: rotate(-45deg);
-            &:hover{
-                box-shadow: $shadow3;
-            }
-        }
+    > span:first-child {
+      transform: rotate(45deg);
+      &:hover {
+        box-shadow: $shadow3;
+      }
     }
+    > span:nth-child(2) {
+      opacity: 0;
+    }
+    > span:last-child {
+      transform: rotate(-45deg);
+      &:hover {
+        box-shadow: $shadow3;
+      }
+    }
+  }
 }
 .loading {
-   display: block;
-   width: 2.5rem;
-   height: 2.5rem;
-   font-size: 12px;
-   
-   background-color: transparent;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 12px;
 
-   border-left: 0.23rem solid $darkBlue;
-   border-right: 0.23rem solid $lightPurple;
-   border-top:  0.23rem solid transparent;
-   border-bottom:  0.23rem solid transparent;
-   
-   border-radius: 100%;  
-   -webkit-border-radius: 100%;  
-   
-   animation: loader 1s infinite;
-   -webkit-animation: loader 1s infinite;
+  background-color: transparent;
+
+  border-left: 0.23rem solid $darkBlue;
+  border-right: 0.23rem solid $lightPurple;
+  border-top: 0.23rem solid transparent;
+  border-bottom: 0.23rem solid transparent;
+
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+
+  animation: loader 1s infinite;
+  -webkit-animation: loader 1s infinite;
 }
 .checkmark {
-    display:inline-block;
-    width: 2rem;
-    height:2rem;
-    -ms-transform: rotate(45deg); /* IE 9 */
-    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
-    transform: rotate(45deg);
-    cursor: pointer;
-    &_selected{
-        cursor: auto;
-        &::before{
-            background-color: transparent;
-            background: linear-gradient(45deg,$darkBlue,$lightPurple);
-            animation: tick-selected-stem ease-in 0.2s forwards;
-        }
-        &::after{
-            background-color: transparent;
-            background: linear-gradient(-45deg,$darkBlue,$lightPurple);
-            animation: tick-selected-kick ease-in 0.1s forwards;
-        }
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+  cursor: pointer;
+  &_selected {
+    cursor: auto;
+    &::before {
+      background-color: transparent;
+      background: linear-gradient(45deg, $darkBlue, $lightPurple);
+      animation: tick-selected-stem ease-in 0.2s forwards;
     }
+    &::after {
+      background-color: transparent;
+      background: linear-gradient(-45deg, $darkBlue, $lightPurple);
+      animation: tick-selected-kick ease-in 0.1s forwards;
+    }
+  }
 }
 .checkmark:before {
-    content: "";
-    position: absolute;
-    width:0.35rem;
-    height:1.5rem;
-    background-color:$kindaPink;
-    left:11px;
-    bottom:2px;
+  content: "";
+  position: absolute;
+  width: 0.35rem;
+  height: 1.5rem;
+  background-color: $kindaPink;
+  left: 11px;
+  bottom: 2px;
 }
 .checkmark:after {
-    content:"";
-    position: absolute;
-    width:0.93rem;
-    height:0.35rem;
-    background-color:$kindaPink;
-    left:0.1rem;
-    top:1.53rem;
+  content: "";
+  position: absolute;
+  width: 0.93rem;
+  height: 0.35rem;
+  background-color: $kindaPink;
+  left: 0.1rem;
+  top: 1.53rem;
 }
-.dropdown-arrow{
-    display: inline-block;
-    transform: rotate(90deg);
-    font-weight: bold;
-    font-family: monospace;
-    font-size: 1.5rem;
+.dropdown-arrow {
+  display: inline-block;
+  transform: rotate(90deg);
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.5rem;
 }
-.reveal{
-    animation: reveal ease-in-out 0.3s forwards;
+.reveal {
+  animation: reveal ease-in-out 0.3s forwards;
 }
-.conceal{
-    animation: conceal ease-in-out 0.3s forwards;
+.conceal {
+  animation: conceal ease-in-out 0.3s forwards;
 }
-.rotateBy90{
-    animation: rotateBy90 ease-in-out 0.3s forwards;
+.rotateBy90 {
+  animation: rotateBy90 ease-in-out 0.3s forwards;
 }
-.rotateByNeg90{
-    animation: rotateByNeg90 ease-in-out 0.3s forwards;
+.rotateByNeg90 {
+  animation: rotateByNeg90 ease-in-out 0.3s forwards;
 }
-.fade-in{
-    visibility: hidden;
-    animation: fade-in ease-in-out 0.3s forwards;
-    visibility: visible;
+.fade-in {
+  visibility: hidden;
+  animation: fade-in ease-in-out 0.3s forwards;
+  visibility: visible;
 }
-.fade-in{
-    visibility: visible;
-    animation: fade-in ease-in-out 0.3s forwards;
-    visibility: hidden;
+.fade-in {
+  visibility: visible;
+  animation: fade-in ease-in-out 0.3s forwards;
+  visibility: hidden;
 }
-.slide-in{
-    animation: slide-in ease-in-out 0.3s forwards;
+.slide-in {
+  animation: slide-in ease-in-out 0.3s forwards;
 }
-.slide-out{
-    animation: slide-out ease-in-out 0.3s forwards;
+.slide-out {
+  animation: slide-out ease-in-out 0.3s forwards;
 }

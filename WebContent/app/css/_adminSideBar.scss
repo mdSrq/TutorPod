@@ -1,141 +1,139 @@
-.sidebar{
+.sidebar {
+  position: fixed;
+  left: -15rem;
+  z-index: 99;
+  width: 15rem;
+  box-shadow: $shadow1;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  color: $white;
+  background: linear-gradient(-45deg, $darkBlue 0%, $lightPurple 100%);
+  padding-bottom: 3.5rem;
+  height: 90.6vh;
+  margin-top: -10px;
+  overflow-y: scroll;
+  scrollbar-color: auto;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: $darkBlue;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $lightPurple;
+    border-radius: 0.2rem;
+    &:hover {
+      background: $lightPurple;
+    }
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  &__user {
+    width: 100%;
+    display: inherit;
+    padding: 1.2rem;
+    height: max-content;
+    &_avatar {
+      width: 4rem;
+      background-color: $white;
+      border-radius: 50%;
+      height: max-content;
+      padding: 0.3rem 0.5rem;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    &_info {
+      width: max-content;
+      padding: 0.5rem 1rem;
+      span {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+  &__dropdown {
+    width: 100%;
+    li {
+      padding: 0.5rem 0;
+      padding-left: 1.2rem;
+    }
+    &_title {
+      cursor: pointer;
+      position: relative;
+      border-bottom: 1px solid $lightPurple;
+      &:not(:first-child) {
+        border-top: 1px solid $lightPurple;
+      }
+      a {
+        color: $white;
+      }
+      &_arrow {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        top: 0.3rem;
+        font-family: monospace;
+        padding: 0.3rem 0.65rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        border-radius: 50%;
+        &:hover {
+          background-color: rgba($color: #000000, $alpha: 0.2);
+        }
+      }
+    }
+    &_items {
+      max-height: 0;
+      overflow: hidden;
+      background-color: rgba($color: #000000, $alpha: 0.1);
+      a {
+        color: $white;
+        font-size: 1rem;
+        display: block;
+        width: 100%;
+        height: 100%;
+        transition: all ease-in-out 0.2s;
+        &:hover {
+          padding-left: 0.3rem;
+          text-shadow: white 0px 0px 1px;
+        }
+      }
+    }
+  }
+  &__footer {
     position: fixed;
-    left:-15rem;
-    z-index: 99;
-    width: 15rem;
-    box-shadow: $shadow1;
+    width: 14.5rem;
+    height: 3rem;
+    bottom: 0;
+    background: linear-gradient(45deg, $darkBlue 0%, $lighterBlue 100%);
     display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-    color: $white;
-    background: linear-gradient(-45deg,$darkBlue 0%,$lightPurple 100%);
-    padding-bottom: 3.5rem;
-    height: 90.6vh ;
-    margin-top: -10px;
-    overflow-y: scroll;
-    scrollbar-color: auto;
-    scrollbar-width: thin;
-    &::-webkit-scrollbar {
-        width: 0.5rem;
+    justify-content: space-around;
+    &_icon {
+      display: flex;
+      justify-content: center;
+      display: block;
+      height: 2.8rem;
+      width: 2.8rem;
+      border-radius: 50%;
+      margin: 0.3rem;
+      padding: 0.7rem;
+      transition: all ease-in-out 0.2s;
+      &:hover {
+        transform: scale(1.02);
+        background-color: rgba($color: #000000, $alpha: 0.2);
+      }
+      img {
+        margin: 0.2rem;
+        max-height: 100%;
+        width: auto;
+      }
     }
-    &::-webkit-scrollbar-track {
-        background: $darkBlue;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: $lightPurple;
-        border-radius: 0.2rem;
-        &:hover{
-            background: $lightPurple;
-        }
-    }
-    ul{
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-    &__user{
-        width: 100%;
-        display: inherit;
-        padding: 1.2rem;
-        height: max-content;
-        &_avatar{
-            width: 4rem;
-            background-color: $white;
-            border-radius: 50%;
-            height: max-content;
-            padding: 0.3rem 0.5rem;
-            img{
-                width: 100%;
-                height: auto;
-            }
-        }
-        &_info{
-            width: max-content;
-            padding: 0.5rem 1rem;
-            span{
-                display: block;
-                width: 100%; 
-            }
-        }
-    }
-    &__dropdown{
-        width: 100%;
-        li{
-            padding: 0.5rem 0;
-            padding-left: 1.2rem;
-        }
-        &_title{
-            cursor: pointer;
-            position: relative;
-            border-bottom: 1px solid $lightPurple;
-            &:not(:first-child){
-                border-top: 1px solid $lightPurple;
-            }
-            a{
-                color: $white;
-            }
-            &_arrow{
-                display: block;
-                position: absolute;
-                right: 1rem;
-                top: 0.3rem;
-                font-family: monospace;
-                padding: 0.3rem 0.65rem ;
-                font-weight: 700;
-                font-size: 1.2rem;
-                border-radius: 50%;
-                &:hover{
-                    background-color: rgba($color: #000000, $alpha: 0.2);
-                }
-            }
-        }
-        &_items{
-            max-height: 0;
-            overflow: hidden;
-            background-color: rgba($color: #000000, $alpha: 0.1);
-            a{
-                color: $white;
-                font-size: 1rem;
-                display: block;
-                width: 100%;
-                height: 100%;
-                transition: all ease-in-out 0.2s;
-                &:hover{
-                    padding-left: 0.3rem;
-                    text-shadow: white 0px 0px 1px;
-                }
-                
-            }
-        }
-        
-    }
-    &__footer{
-        position: fixed;
-        width: 14.5rem;
-        height: 3rem;
-        bottom: 0;
-        background: linear-gradient(45deg,$darkBlue 0%,$lighterBlue 100%);
-        display: flex;
-        justify-content: space-around;
-        &_icon{
-            display: flex;
-            justify-content: center;
-            display: block;
-            height: 2.8rem;
-            width: 2.8rem;
-            border-radius: 50%;
-            margin: 0.3rem;
-            padding: 0.7rem;
-            transition: all ease-in-out 0.2s;
-            &:hover{
-                    transform: scale(1.02);
-                    background-color: rgba($color: #000000, $alpha: 0.2);
-            }
-            img{
-                margin: 0.2rem;
-                max-height: 100%;
-                width: auto;
-            }
-        }
-    }
+  }
 }
