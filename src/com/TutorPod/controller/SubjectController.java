@@ -67,6 +67,11 @@ public class SubjectController extends HttpServlet {
 				responseJSON = new Gson().toJson(courseSubjectDAO.getCourseSubjectsByCourseId(course_id));
 			    out.write(responseJSON);
 				break;
+			case "seeCourseAndSubjects":
+				response.setContentType("application/json");
+				responseJSON = new Gson().toJson(courseSubjectDAO.getCourseSubjects());
+			    out.write(responseJSON);
+				break;
 			case "deleteSubject":
 				int course_sub_id =  Integer.parseInt(request.getParameter("course_sub_id"));
 				int subject_id =  Integer.parseInt(request.getParameter("subject_id"));

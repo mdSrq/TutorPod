@@ -30,51 +30,19 @@
             <div class="header__links hide-for-mobile">
                 <a href="#" class="underlined header__links_dropdown">Subjects <span class="dropdown-arrow">></span></a>
                 <a href="#" class="underlined">Apply to Teach</a>
-                <a href="#" class="underlined">Other1</a>
-                <a href="#" class="underlined">Other2</a>
-                <a href="#" class="underlined">Other3</a>
+                <a href="#" class="underlined">Search Tutors</a>
+                <a href="#" class="underlined">Study Resources</a>
                 <div class="nav-dd">
-                    <ul class="nav-dd_courses">
-                        <li class="nav-dd_course"><a href="#">BCA</a>
-                            <ul class="nav-dd_course_durations">
-                                <li class="nav-dd_course_duration"><a href="#">Semester 1</a>
-                                    <ul class="nav-dd_course_duration_subjects">
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software</a></li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Basic Mathematics</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software Lab</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Business Organization</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">English</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-dd_course_duration"><a href="#">Semester 2</a>
-                                    <ul class="nav-dd_course_duration_subjects">
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software</a></li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Basic Mathematics</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software Lab</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Business Organization</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">English</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-dd_course_duration"><a href="#">Semester 3</a>
-                                    <ul class="nav-dd_course_duration_subjects">
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software</a></li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Basic Mathematics</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software Lab</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Business Organization</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">English</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-dd_course_duration"><a href="#">Semester 4</a>
-                                    <ul class="nav-dd_course_duration_subjects">
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software</a></li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Basic Mathematics</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Computer Basics and PC Software Lab</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">Business Organization</a> </li>
-                                        <li class="nav-dd_course_duration_subject"><a href="#">English</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+                    <ul class="nav-dd_courses scrollable">
+                        <li class="nav-dd_course" onclick="dropDurations(1)">BCA</li>
+                    </ul>
+                    <ul class="nav-dd_durations">
+                        <li class="nav-dd_duration course_1">Semester 1</li>
+                        
+                    </ul>
+                    <ul class="nav-dd_subjects">
+                        <li class="nav-dd_subject course_1">Semester 1</li>
+                        
                     </ul>
                 </div>
             </div>
@@ -167,8 +135,8 @@
         </div>
     </main>
     <footer></footer>
-    <script src="./app/js/script.js"></script>
     <script src="./app/js/jquery-3.6.0.min.js"></script>
+	<script src="./app/js/script.js"></script>
     <script>
         $(document).ready(showSignIn);
         $("#signinBtn").click(showSignInDiv);
@@ -178,9 +146,11 @@
         $(".tab-selector_signup").click(showSignUp);
         $(".header__links_dropdown").hover(()=>{
             $(".nav-dd").css("display","block");
+            $(".nav-dd_courses").css("display","block");
         });
         $(".nav-dd").hover(()=>{
             $(".nav-dd").removeAttr("style");
+            $(".nav-dd_courses").removeAttr("style");
         })
         function showSignInDiv() {
             $("body").css("overflow-y","hidden");
@@ -221,6 +191,56 @@
                         $form.trigger("reset");
                 });  
                 event.preventDefault();
+        });
+        $(document).on("submit", "#signinForm", function(event) {
+            var $form = $(this);
+            if($("#gender").val()==null){
+                $("#snackbar").html("Select a gender");
+                showToast();
+                return false; 
+            }
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function(response) {
+                    hideLoading();
+                    $("#snackbar").html(response); 
+                    showToast();
+                    console.log(response);
+                    fetchBankAccData();
+                    $form.trigger("reset");
+            });  
+            event.preventDefault();
+   		});
+        $.ajax({
+    	    url: "./SubjectController",
+    	    data:"cmd=seeCourseAndSubjects",
+    	    success: function(response) {
+				console.log(response);
+				$.each(response, function(i, courses){
+                            $(".nav-dd_courses").append($("<li>").addClass("nav-dd_course")
+                                .append($("<a>").attr({
+                                    onclick:"dropDurations("+courses.courseSubjects[0].course_id+")"
+                                }).text(courses.courseSubjects[0].name_abbr) ));
+                        
+                        for(var k=0;k<courses.courseSubjects[0].duration;k++){
+                            $("<li>").addClass("nav-dd_duration nav-dd_duration_"+courses.courseSubjects[0].course_id).appendTo($(".nav-dd_durations"))
+                                .append($("<a>").attr({
+                                    onclick:"dropSubjects("+courses.courseSubjects[0].course_id+","+(k+1)+")"
+                                }).text(courses.courseSubjects[0].duration_type+" "+(k+1))); 
+                        }
+					$.each(courses.courseSubjects,function(j,subjects){
+                           $("<li>").addClass("nav-dd_subject nav-dd_subject_"+subjects.course_id+"_"+subjects.duration_no).appendTo($(".nav-dd_subjects"))
+                                .append($("<a>").attr({
+                                    href:"./TutorController?cmd=searchBySubject&course_id="+subjects.course_id+"&duration_no="+subjects.duration_no+"&subject_id="+subjects.subject_id,                                   
+                                }).text(subjects.subject_code+" - "+subjects.subject_name));
+                    });
+				});
+    	    }
+    	});
+        function dropDurations(course_id){
+
+        }
+        $( document ).ajaxError(function(event, jqxhr, settings, thrownError ) {
+        	  console.log(jqxhr.responseText+"\n"+thrownError);
         });
     </script>
 </body>

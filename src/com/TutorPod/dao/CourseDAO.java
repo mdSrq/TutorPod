@@ -30,6 +30,8 @@ public class CourseDAO {
 			String sql;
 			if(selector.equals("Recent"))
 				sql = "select * from course order by course_id desc limit 5";
+			else if(selector.equals("NameSorted"))
+				sql = "select * from course order by name_abbr ";
 			else
 				sql = "select * from course order by course_id desc";
 			

@@ -68,114 +68,9 @@
         }
       }
     }
-    .nav-dd{
-      background-color: $white;
-      box-shadow: $shadow2;
-      border-radius: 0.25rem;
-      position: absolute;
-      width: 10rem;
-      max-height: 85vh;
-      overflow-y: hidden;
-      top: 3rem;
-      left: 0;
-      display: none;
-      &:hover{
-        display: block;
-      }
-      ul,li{
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      li{
-        padding: 0.5rem 1rem;
-      }
-      a{
-        color: $dark;
-        display: inline-block;
-        width: 96.5%;
-        height: 100%;
-      }
-      &_course{
-        border-radius: 0.25rem;
-        position: relative;
-        &:first-child{
-          border-top: 0.5rem;
-        }
-        &:last-child{
-          border-bottom: 0.5rem;
-        }
-        &:hover,&:active{
-          background-color: $lightBlue;
-          .nav-dd_course_durations{
-            display: block;
-          }
-          &::after{
-            right: 0.8rem;
-          }
-        }
-        &::after{
-          content: ">";
-          font-weight: bold;
-          font-family: monospace;
-          font-size: 1.2rem;
-          position: absolute;
-          right: 1rem;
-          transition: all ease-in-out 0.2s;
-        }
-      }
-      &_course_durations{
-        position: absolute;
-        top: 0;
-        left: 10rem;
-        width: 10rem;
-        background-color: $white;
-        box-shadow: $shadow2;
-        border-radius: 0.5rem;
-        display: none;
-        padding: 2rem;
-        .nav-dd_course_duration{
-          border-radius: 0.25rem;
-            &:hover,&:active{
-              background-color: $lightBlue;
-              .nav-dd_course_duration_subjects{
-                display: block;
-              }
-              &:after{
-                right: 0.8rem;
-              }
-            }
-            &::after{
-            content: ">";
-            font-weight: bold;
-            font-family: monospace;
-            font-size: 1.2rem;
-            position: absolute;
-            right: 1rem;
-            transition: all ease-in-out 0.2s;
-          }
-        }
-      }
-      &_course_duration_subjects{
-        display: none;
-        position: absolute;
-        width: 10rem;
-        padding: 1rem;
-        top: 0;
-        left: 10rem;
-        background-color: $white;
-        box-shadow: $shadow2;
-        border-radius: 0.5rem;
-      }
-      &_course_duration_subject{
-        border-radius: 0.25rem;
-        &:hover{
-          background-color: $lightBlue;
-        }
-      }
-    }
     &_dropdown {
       position: relative;
+      font-size: 1.5rem;
       &:hover {
         &::before {
           visibility: hidden;
@@ -183,7 +78,105 @@
         .dropdown-arrow {
           transition: all ease-in-out 0.2s;
           position: relative;
-          top: 0.1rem;
+          top: 0rem;
+        }
+      }
+      &:active{
+        .dropdown-arrow{
+          color: $lightPurple;
+          top: 0.3rem;
+        }
+      }
+    }
+    .nav-dd{
+      position: absolute;
+      top: 3rem;
+      left: 0;
+      max-height: 85vh;
+      display: none;
+      &:hover{
+        display: block;
+      }
+      ul,li{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      &_courses,&_durations,&_subjects{
+        display: none;
+        position: absolute;
+        top: 0;
+        background-color: $white;
+        box-shadow: $shadow2;
+        width: 11rem;
+        border-radius: 0.25rem;
+        &:hover{
+          display: block;
+        }
+      }
+      &_duration,&_subject{
+        display: none;
+      }
+      &_course,&_duration,&_subject{
+        position: static;
+        a{
+          color: $dark;
+          display: inline-block;
+          padding: 0.5rem 1rem;
+          width: 97%;
+          cursor: pointer;
+        }
+        &:hover{
+          background-color: $lightBlue;
+          border-radius: 0.25rem;
+        }
+      }
+      &_courses{
+        overflow-y: auto;
+      }
+      &_durations{
+        top: 0;
+        left: 11rem;
+      }
+      &_subjects{
+        top: 0;
+        left: 22rem;
+        width: max-content;
+        max-height: 85vh;
+        max-width: 20rem;
+        overflow-y: auto;
+      }
+      &_subject{
+        a{
+          color: $dark;
+          width: 100%;
+          &:hover{
+            color: $darkBlue;
+          }
+        }
+      }
+      &_course,&_duration{
+        position: relative;
+        &::after{
+          position: absolute;
+          top: 0.3rem;
+          right: 1rem;
+          content: ">";
+          font-weight: bold;
+          font-family: monospace;
+          font-size: 1.5rem;
+          transition: all ease-in-out 0.2s;
+        }
+        &:hover{
+          &::after{
+            color: $darkBlue;
+          }
+        }
+        &:active{
+          &::after{
+            color: $lightPurple;
+            right: 0.7rem;
+          }
         }
       }
     }

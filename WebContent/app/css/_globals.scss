@@ -5,7 +5,7 @@ html {
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 a,
 a:visited,
@@ -403,7 +403,7 @@ tbody tr:nth-child(even) {
 .scrollable {
     width: 100%;
     max-height: 65vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-color: auto;
     scrollbar-width: thin;
     @include breakpoint-down(medium) {
