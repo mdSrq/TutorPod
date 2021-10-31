@@ -62,6 +62,26 @@ public class UserDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public User getUser(String username)throws Exception{
+		User user=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from user where username = binary ?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setString(1, username);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				user = createUser(Rs);
+			}
+			return user;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	public User getRecentUser()throws Exception{
 		User user=null;
 		Connection Conn = null;
@@ -81,6 +101,7 @@ public class UserDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	
 	public boolean addUser(User user)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;

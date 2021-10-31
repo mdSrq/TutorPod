@@ -36,22 +36,57 @@
                 <a href="#" class="underlined">Study Resources</a>
                 <div class="nav-dd" tabindex="99">
                     <ul class="nav-dd_courses scrollable">
+                    	<li><a href="#" class="dropdown-caption">Select Course</a> </li>
                     </ul>
                     <ul class="nav-dd_durations">
+                   		<li><a href="#" class="dropdown-caption">Select Year/Sem</a> </li>
                     </ul>
                     <ul class="nav-dd_subjects scrollable">
+                    	<li><a href="#" class="dropdown-caption">Select Subject</a> </li>
                     </ul>
                 </div>
             </div>
+            <%if(session.getAttribute("USER")!=null) {%>
+            <div class="header-controls">
+            	<div class="header-controls__home">
+            		<a href="./"><img src="./images/home.png"></a>
+            	</div>
+            	<div class="header-controls__menu">
+            		<a href="./"><img src="./images/menu.png"></a>
+            	</div>
+                <div class="header-controls__notifications">
+                <a href="#"> 
+                    <div class="notification_bell">
+                        <img src="./images/bell.png" alt="notification-icon">
+                        <span class="notification_badge"><span>2</span></span>
+                    </div> 
+                </a>
+                </div>
+                <div class="header-controls__user-profile">
+                    <div class="avatar">
+                        <img src="./images/user.png" alt="profile-pic">
+                    </div>
+                    <div class="header-controls__user-profile_dropdown" tabindex="98">
+                        <a href="#">Dashboard</a>
+                        <a href="#">My Students</a>
+                        <a href="#">Lessons</a>
+                        <a href="#">Settings</a>
+                        <a href="./UserController?cmd=logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+            <%}else{ %>
             <a href="#" class="button hide-for-mobile" id="signinBtn">Sign In</a>
+            <%}%>
         </nav>
         <div class="overlay toggle-on"></div>
         <div class="header__overlay_menu hide-for-desktop toggle-on">
-            <a href="http://">Home</a>
             <a href="http://">Apply to Teach</a>
-            <a href="http://">Other1</a>
-            <a href="http://">Other2</a>
+            <a href="#">Search Tutors</a>
+            <a href="#">Study Resources</a>
+            <%if(session.getAttribute("USER")==null){ %>
             <a href="#" id="signinBtnNav">Sign In</a>
+            <%} %>
         </div>
         <div class="overlaydiv">
             <div id="btnCross" class="header__menu cross">
@@ -115,6 +150,15 @@
         $("#btnCross").click(hideSignInDiv);
         $(".tab-selector_signin").click(showSignIn);
         $(".tab-selector_signup").click(showSignUp);
+        $(".header-controls__user-profile").click(()=>{
+            $(".header-controls__user-profile_dropdown").css("display", "block")
+            	.focus();
+            $("<div>").addClass("overlay-background").appendTo($("body"));
+            });
+            $(".header-controls__user-profile_dropdown").focusout(()=>{
+            	$(".header-controls__user-profile_dropdown").removeAttr("style");
+            	$(".overlay-background").remove();
+            });
         $(".header__links_dropdown").click(() => {
             $(".nav-dd").css("display", "block");
             $(".nav-dd_courses").css("display", "block");
@@ -199,6 +243,7 @@
             $(".nav-dd_durations").css("display", "block");
             removeAllDurations();
             removeAllSubjects();
+            $(".nav-dd_subjects").removeAttr("style");
             $(".nav-dd_duration_" + course_id)
                 .each(function (i, duration) {
                     duration.style = "display:block";
@@ -242,6 +287,7 @@
                 showToast();
                 console.log(response);
                 $form.trigger("reset");
+                location.reload();
             });
             event.preventDefault();
         });
@@ -253,8 +299,10 @@
                 $("#snackbar").html(response);
                 showToast();
                 console.log(response);
-                fetchBankAccData();
                 $form.trigger("reset");
+                if(response.includes("Success")){
+                    location.reload();
+                }
             });
             event.preventDefault();
         });

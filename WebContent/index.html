@@ -46,7 +46,28 @@
                     </ul>
                 </div>
             </div>
-            <a href="#" class="button hide-for-mobile" id="signinBtn">Sign In</a>
+            <div class="header-controls">
+                <div class="header-controls__notifications">
+                <a href="#"> 
+                    <div class="notification_bell">
+                        <img src="./images/bell.png" alt="notification-icon">
+                        <span class="notification_badge"><span>2</span></span>
+                    </div> 
+                </a>
+                </div>
+                <div class="header-controls__user-profile">
+                    <div class="avatar">
+                        <img src="./images/user.png" alt="profile-pic">
+                    </div>
+                    <div class="header-controls__user-profile_dropdown">
+                        <a href="#">Dashboard</a>
+                        <a href="#">My Students</a>
+                        <a href="#">Lessons</a>
+                        <a href="#">Settings</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
         </nav>
         <div class="overlay toggle-on"></div>
         <div class="header__overlay_menu hide-for-desktop toggle-on">
@@ -144,6 +165,12 @@
         $("#btnCross").click(hideSignInDiv);
         $(".tab-selector_signin").click(showSignIn);
         $(".tab-selector_signup").click(showSignUp);
+        $(".header-controls__user-profile").click(()=>{
+        $(".header-controls__user-profile_dropdown").css("display", "block");
+        });
+        $(".header-controls__user-profile_dropdown").hover(()=>{
+        	$(".header-controls__user-profile_dropdown").removeAttr("style");
+        });
         $(".header__links_dropdown").hover(()=>{
             $(".nav-dd").css("display","block");
             $(".nav-dd_courses").css("display","block");

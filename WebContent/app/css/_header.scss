@@ -90,7 +90,7 @@
     }
     .nav-dd{
       position: absolute;
-      top: 3rem;
+      top: 3.1rem;
       left: 0;
       max-height: 85vh;
       display: none;
@@ -101,6 +101,10 @@
         list-style: none;
         padding: 0;
         margin: 0;
+      }
+      .dropdown-caption{
+        background-color: #eee;
+        color: grey;
       }
       &_courses,&_durations,&_subjects{
         display: none;
@@ -113,19 +117,19 @@
         &:hover{
           display: block;
         }
+        a{
+          color: $dark;
+          display: inline-block;
+          padding: 0.5rem 1rem;
+          width: 100%;
+          cursor: pointer;
+        }
       }
       &_duration,&_subject{
         display: none;
       }
       &_course,&_duration,&_subject{
         position: static;
-        a{
-          color: $dark;
-          display: inline-block;
-          padding: 0.5rem 1rem;
-          width: 97%;
-          cursor: pointer;
-        }
         &:hover{
           background-color: $lightBlue;
           border-radius: 0.25rem;
@@ -156,26 +160,28 @@
         }
       }
       &_course,&_duration{
-        position: relative;
-        &::after{
-          position: absolute;
-          top: 0.3rem;
-          right: 1rem;
-          content: ">";
-          font-weight: bold;
-          font-family: monospace;
-          font-size: 1.5rem;
-          transition: all ease-in-out 0.2s;
-        }
-        &:hover{
-          &::after{
-            color: $darkBlue;
+        a{
+          position: relative;
+            &::after{
+            position: absolute;
+            top: 0.3rem;
+            right: 1rem;
+            content: ">";
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 1.5rem;
+            transition: all ease-in-out 0.2s;
           }
-        }
-        &:active{
-          &::after{
-            color: $lightPurple;
-            right: 0.7rem;
+          &:hover{
+            &::after{
+              color: $darkBlue;
+            }
+          }
+          &:active{
+            &::after{
+              color: $lightPurple;
+              right: 0.7rem;
+            }
           }
         }
       }
@@ -316,9 +322,114 @@
       
     }
   }
+  .header-controls{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+    width: 6rem;
+    span{
+      display: block;
+    }
+    &__notifications{
+      a{
+        display: block;
+        margin: auto;
+      }
+    }
+    &__user-profile{
+      position: relative;
+      &_dropdown{
+        display: none;
+        position: absolute;
+        top: 3.1rem;
+        width: max-content;
+        right: 0;
+        background-color: $white;
+        box-shadow: $shadow2;
+        outline: 0;
+        padding: 0.5rem 0;
+        border-radius: 0.2rem;
+        a{
+          display: block;
+          padding: 0.5rem 1rem;
+          padding-right: 3rem;
+          color: $dark;
+          &:hover{
+            background-color: $lightBlue;
+            color: $darkBlue;
+          }
+        }
+        &:hover{
+          display: block;
+        }
+      }
+    }
+    &__home,&__menu{
+      display: none;
+      height: 1.5rem;
+      img{
+        height: 100%;
+        width: auto;
+        filter: invert(1);
+      }
+    }
+  }
 }
 @include breakpoint-down(medium) {
+  body{
+    padding-bottom: 5rem;
+  }
   .header{
+    flex-wrap:wrap-reverse;
+    .header-controls{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      width: 100%;
+      background: #0037B4;
+      box-shadow: $shadow8;
+      padding: 0.55rem;
+      &__notifications{
+        .notification_bell{
+          height: 1.5rem;
+          img{
+            filter: invert(1);
+          }
+        }
+        .notification_badge{
+          font-size: 0.5rem;
+          width: 0.9rem;
+          background-color: $lightBlue;
+          color: $darkBlue;
+        }
+      }
+      &__user-profile{
+        position: static;
+        .avatar{
+          border: none;
+          padding: 0;
+          height: 1.7rem;
+          img{
+            background-color: $white;
+            padding: 0.1rem;
+          }
+        }
+        &_dropdown{
+          bottom: 3rem;
+          top: auto;
+          width: calc(100% - 1rem);
+          right: 0;
+          left: 50%;
+          transform: translate(-50%);
+        }
+      }
+      &__home,&__menu{
+        display: block;
+      }
+    }
     .overlaydiv{
       .signup-form{
         width: 100%;
