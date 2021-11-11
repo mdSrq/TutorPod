@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./app/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    <title>Tutor Pod Dashboard</title>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <nav class="container flex flex-jc-sb flex-ai-c">
+            <a href="/" class="header__logo flex flex-ai-c">
+                <img src="./images/TutorPod1.svg" alt="TutorPod" />
+                <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span>
+                </span>
+            </a>
+            <a href="#" id="btnHamburger" class="header__menu hide-for-desktop">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+            <div class="header__links hide-for-mobile">
+                <a href="#" class="underlined header__links_dropdown">Subjects <span class="dropdown-arrow">></span></a>
+                <a href="#" class="underlined">Apply to Teach</a>
+                <a href="#" class="underlined">Search Tutors</a>
+                <a href="#" class="underlined">Study Resources</a>
+                <div class="nav-dd" tabindex="99">
+                    <ul class="nav-dd_courses scrollable">
+                        <li><a href="#" class="dropdown-caption">Select Course</a></li>
+                    </ul>
+                    <ul class="nav-dd_durations">
+                        <li><a href="#" class="dropdown-caption">Select Year/Sem</a></li>
+                    </ul>
+                    <ul class="nav-dd_subjects scrollable">
+                        <li><a href="#" class="dropdown-caption">Select Subject</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="header-controls__home">
+                    <a href="./"><img src="./images/home.png" alt="" /></a>
+                </div>
+                <div class="header-controls__menu">
+                    <a href="#"><img src="./images/menu.png" alt="" /></a>
+                </div>
+                <div class="header-controls__notifications">
+                    <a href="#">
+                        <div class="notification_bell">
+                            <img src="./images/bell.png" alt="notification-icon" />
+                            <span class="notification_badge"><span>2</span></span>
+                        </div>
+                    </a>
+                    <div class="notifications scrollable">
+                        <div class="notifications__header">
+                            <span class="notifications__header_title">Notifications</span>
+                            <a href="#" class="notifications__header_link_l">Mark all as seen</a>
+                            <a href="#" class="notifications__header_link_r">See all</a>
+                        </div>
+                        <div class="notifications__body">
+                            <a href="#" class="notifications__item">
+                                <span class="notifications__item_text notifications__item_unseen">Welcome to
+                                    TutorPod</span>
+                                <span class="notifications__item_time">2min ago</span>
+                            </a>
+                            <a href="#" class="notifications__item">
+                                <span class="notifications__item_text notifications__item_unseen">Your class is about to
+                                    start please be prepared with all
+                                    the materials neended for class.</span>
+                                <span class="notifications__item_time">2min ago</span>
+                            </a>
+                            <a href="#" class="notifications__item">
+                                <span class="notifications__item_text notifications__item_unseen">Welcome to
+                                    TutorPod</span>
+                                <span class="notifications__item_time">2min ago</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-controls__user-profile">
+                    <div class="avatar">
+                        <img src="./images/user.png" alt="profile-pic" />
+                    </div>
+                    <div class="header-controls__user-profile_dropdown" tabindex="98">
+                        <a href="#">Dashboard</a>
+                        <a href="#">My Students</a>
+                        <a href="#">Lessons</a>
+                        <a href="#">Settings</a>
+                        <a href="./UserController?cmd=logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="overlay toggle-on"></div>
+        <div class="header__overlay_menu hide-for-desktop toggle-on">
+            <a href="http://">Apply to Teach</a>
+            <a href="#">Search Tutors</a>
+            <a href="#">Study Resources</a>
+        </div>
+        <div class="overlaydiv">
+            <div id="btnCross" class="header__menu cross">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="signup-form">
+                <div class="scrollable signup-container">
+                    <div class="tab-selector">
+                        <span href="#" class="tab-selector_signin">Sign In</span>
+                        <span href="#" class="tab-selector_signup">New Account</span>
+                    </div>
+                    <div class="signin">
+                        <form action="./UserController" method="post" id="signinForm">
+                            <div class="form-unit form-unit-full">
+                                <label for="usernameSignIn">Username</label>
+                                <input type="text" class="input-with-icon user_id" name="username" id="usernameSignIn"
+                                    placeholder="Username or email address" required />
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="passwordSignIn">Password</label>
+                                <input type="password" class="input-with-icon user_pass" name="password"
+                                    id="passwordSignIn" placeholder="Password" required />
+                            </div>
+                            <input type="hidden" name="cmd" id="cmd" value="signin" />
+                            <input type="submit" class="button flat-wide-button" value="Sign In" />
+                        </form>
+                        <p><a href="#">Forgot Password ?</a></p>
+                    </div>
+                    <div class="signup">
+                        <form action="./UserController" method="post" id="signupForm">
+                            <div class="form-unit form-unit-full">
+                                <label for="username">Username</label>
+                                <input type="text" class="input-with-icon user_id" name="username" id="username"
+                                    placeholder="Enter Username" required />
+                            </div>
+                            <div class="form-unit-half-container">
+                                <div class="form-unit form-unit-half">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" class="input-with-icon user_name user_fname" name="fname"
+                                        id="fname" placeholder="Enter First Name" required />
+                                </div>
+                                <div class="form-unit form-unit-half">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" class="input-with-icon user_name user_lname" name="lname"
+                                        id="lname" placeholder="Enter Last Name" required />
+                                </div>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="password">Password</label>
+                                <input type="password" class="input-with-icon user_pass" name="password" id="password"
+                                    placeholder="Enter Password" required />
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="gender">Gender</label>
+                                <select name="gender" id="gender" class="input-with-icon user_gender">
+                                    <option value="default" selected disabled>
+                                        Select Gender
+                                    </option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="email_id">Email ID</label>
+                                <input type="text" class="input-with-icon user_email" name="email_id" id="email_id"
+                                    placeholder="Enter Email Adderss" required />
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="mobile_no">Mobile Number</label>
+                                <input type="tel" class="input-with-icon user_tel" name="mobile_no" id="mobile_no"
+                                    placeholder="Enter Mobile Number" required />
+                            </div>
+                            <input type="hidden" name="cmd" id="cmd" value="signup" />
+                            <input type="submit" class="button flat-wide-button" value="Sign Up" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="flex-container">
+        <aside class="sidebar">
+            <div class="sidebar__body">
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/dashboard.png" alt="" />
+                    </div>
+                    Dashboard
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/settings.png" alt="" />
+                    </div>
+                    Account Settings
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/calendar.png" alt="" />
+                    </div>
+                    Availability Calendar
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/document.png" alt="" />
+                    </div>
+                    Lessons
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/notes.png" alt="" />
+                    </div>
+                    Lesson Notes
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/group.png" alt="" />
+                    </div>
+                    Students
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/group.png" alt="" />
+                    </div>
+                    Teachers
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/order.png" alt="" />
+                    </div>
+                    Orders
+                </a>
+                <a href="#" class="sidebar__link">
+                    <div class="sidebar__link_icon">
+                        <img src="./images/wallet.png" alt="" />
+                    </div>
+                    Wallet
+                </a>
+            </div>
+        </aside>
+        <main class="main">
+            <h1 class="main__heading">Account Settings</h1>
+            <div class="main__acc-forms-container">
+                <div class="tab-selector scrollable">
+                    <span href="#" class="tab-selector_tab tab-selector_selected">Personal Info</span>
+                    <span href="#" class="tab-selector_tab">Password</span>
+                    <span href="#" class="tab-selector_tab tab-selector_exclamation">Bank Account</span>
+                    <span href="#" class="tab-selector_tab tab-selector_error">Bio</span>
+                </div>
+                <div class="main__container_inner">
+                    <div class="main__container_inner_photo">
+                        <div class="main__container_inner_photo_img">
+                            <img src="./images/user.png" alt="Photo of user" />
+                        </div>
+                        <form action="#" method="post" class="main__container_inner_photo_buttons">
+                            <input type="file" name="photo" id="photo" style="display: none" />
+                            <button type="submit" name="submit" class="button flat-wide-button">
+                                Change Photo
+                            </button>
+                            <button href="#" class="button flat-wide-button delete-button" id="removePhotoBtn">
+                                Remove Photo
+                            </button>
+                        </form>
+                    </div>
+                    <div class="main__form-container">
+                        <h2 class="main__sub-heading">Account Details</h2>
+                        <form action="./UserController" method="post" class="main__form"
+                            id="personal-info-form">
+                            <div class="form-unit form-unit-full">
+                                <label for="username">Username</label>
+                                <input type="text" class="input-with-icon user_id" name="username" id="username"
+                                    placeholder="Enter Username" required />
+                            </div>
+                            <div class="form-unit-half-container">
+                                <div class="form-unit form-unit-half">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" class="input-with-icon user_name user_fname" name="fname"
+                                        id="fname" placeholder="Enter First Name" required />
+                                </div>
+                                <div class="form-unit form-unit-half">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" class="input-with-icon user_name user_lname" name="lname"
+                                        id="lname" placeholder="Enter Last Name" required />
+                                </div>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="gender">Gender</label>
+                                <select name="gender" id="gender" class="input-with-icon user_gender">
+                                    <option value="default" selected disabled>
+                                        Select Gender
+                                    </option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="email_id">Email ID</label>
+                                <input type="text" class="input-with-icon user_email" name="email_id" id="email_id"
+                                    placeholder="Enter Email Adderss" required />
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="mobile_no">Mobile Number</label>
+                                <input type="tel" class="input-with-icon user_tel" name="mobile_no" id="mobile_no"
+                                    placeholder="Enter Mobile Number" required />
+                            </div>
+                            <input type="hidden" name="cmd" id="cmd" value="signup" />
+                            <input type="submit" class="button flat-wide-button" value="Save Changes" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

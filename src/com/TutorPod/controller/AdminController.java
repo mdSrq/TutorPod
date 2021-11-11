@@ -104,7 +104,7 @@ public class AdminController extends HttpServlet {
 					response.getWriter().write("Invalid Name");
 				break;
 			case "addAdmin":
-				name = request.getParameter("name");
+				name = request.getParameter("name").strip();
 				password = request.getParameter("password");
 				if(adminDAO.addAdmin(new Admin(name,password)))
 					response.getWriter().write("Admin Added");
@@ -113,7 +113,7 @@ public class AdminController extends HttpServlet {
 				break;
 			case "editAdmin":
 				int admin_id = Integer.parseInt(request.getParameter("admin_id"));
-				name = request.getParameter("name");
+				name = request.getParameter("name").strip();
 				password = request.getParameter("password");
 				String new_password = request.getParameter("new-password");
 				admin = adminDAO.getAdmin(admin_id);

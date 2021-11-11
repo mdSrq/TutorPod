@@ -3,7 +3,10 @@ const header = document.querySelector("#header");
 const toggleOn = document.querySelectorAll(".toggle-on");
 const dashboardDropdown = document.querySelectorAll(".sidebar__dropdown_title");
 const sidebar = document.querySelector(".sidebar");
-btnHamburger.addEventListener("click",function(){
+const overlay = document.querySelector(".overlay");
+btnHamburger.addEventListener("click",showNavDropdown);
+overlay.addEventListener("click",showNavDropdown);
+function showNavDropdown(){
     header.classList.toggle("open");
     toggleOn.forEach(element=>{
         if(element.classList.contains("fade-in")){
@@ -16,7 +19,7 @@ btnHamburger.addEventListener("click",function(){
             document.querySelector("body").style="overflow:hidden";
         }
     })
-});
+}
 dashboardDropdown.forEach(item=>{
     item.addEventListener("click",()=>{
         console.log("Shit");
@@ -43,3 +46,24 @@ dashboardDropdown.forEach(item=>{
         
     })
 });
+function showToast() {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+function showLoading(){
+    const snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML="<span></span>";
+    const snackbar_span = document.querySelector("#snackbar > span");
+    snackbar_span.classList.add("loading");
+    snackbar.classList.add("show-loading");
+}
+function hideLoading(){ 
+    const snackbar = document.getElementById("snackbar");
+    snackbar.classList.remove("show-loading");
+}

@@ -1,12 +1,12 @@
-.header{
-    &__logo{
-        display: flex;
-        text-align: center;
-        justify-content: center;
-        width: 100%;
-    }
-    nav{
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+.header {
+  &__logo {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+  nav {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

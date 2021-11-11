@@ -45,7 +45,7 @@ public class BankAccDAO {
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "select * from bank_acc where bank_ac_id=? ";
+			String sql = "select * from bank_acc where bank_acc_id=? ";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, bank_acc_no);
 			Rs = Stmt.executeQuery();

@@ -14,10 +14,10 @@ create table user(user_id int auto_increment primary key,
                     lname varchar(25),
                     username varchar(20) unique not null,
                     password varchar(20) not null,
-                    email_id varchar(40) not null,
-                    mobile_no varchar(13) not null,
+                    email_id varchar(255) unique not null,
+                    mobile_no varchar(13) unique not null,
                     gender enum('Male','Female','Other') not null,
-                    photo varchar(20),
+                    photo varchar(60),
                     profile_status varchar(20) not null,
                     joining_date date not null,
                     tutor_id int ,
@@ -144,5 +144,12 @@ create table review(review_id int auto_increment primary key,
                     tutor_id int not null
 					);
 create table notification(notification_id int auto_increment primary key,
-					notification varchar(20) not null
+					notification varchar(150) not null,
+                    link varchar(100) not null,
+                    datetime datetime not null,
+                    user_id int,
+                    tutor_id int,
+                    seen boolean not null,
+                    clicked boolean not null,
+                    CHECK ((user_id IS NULL OR tutor_id IS NULL) AND (user_id IS NOT NULL OR tutor_id IS NOT NULL))
 					);

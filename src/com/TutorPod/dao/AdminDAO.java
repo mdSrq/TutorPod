@@ -59,7 +59,7 @@ public class AdminDAO {
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "select * from admin where name=?";
+			String sql = "select * from admin where name= binary ?";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setString(1, name);
 			Rs = Stmt.executeQuery();

@@ -5,7 +5,14 @@
 	<welcome-file-list>
 	    <welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
+	<context-param>
+  		<param-name>upload.location</param-name>
+  		<param-value>C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\TutorPod_Photos\\Users</param-value>
+  	</context-param>
+	<context-param>
+  		<param-name>usersphoto.location</param-name>
+  		<param-value>/TutorPod_Photos/Users/</param-value>
+  </context-param>
   	<servlet>
    		<servlet-name>admin-index</servlet-name>
     	<jsp-file>/Admin/index.jsp</jsp-file>
@@ -130,5 +137,23 @@
 	<servlet-mapping>
 	    <servlet-name>see-admin-bank-acc</servlet-name>
 	    <url-pattern>/Admin/SeeAdminBankAcc</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>dashboard</servlet-name>
+    	<jsp-file>/dashboard.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>dashboard</servlet-name>
+	    <url-pattern>/Dashboard</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>account-settings</servlet-name>
+    	<jsp-file>/account-settings.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>account-settings</servlet-name>
+	    <url-pattern>/AccountSettings</url-pattern>
 	</servlet-mapping>
 </web-app>

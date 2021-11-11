@@ -120,7 +120,7 @@ public class CourseSubjectDAO {
 	}	
 	public List<CourseSubjects> getCourseSubjects()throws Exception{
 		List<CourseSubjects> courseSubjects = new ArrayList<>();
-		ListIterator<Course> courses = courseDAO.getCourses("All").listIterator();
+		ListIterator<Course> courses = courseDAO.getCourses("NameSorted").listIterator();
 		while(courses.hasNext()) {
 			int course_id = courses.next().getCourse_id();
 			List<CourseSubject> subjects = getCourseSubjectsByCourseId(course_id);

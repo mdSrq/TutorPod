@@ -86,10 +86,10 @@ public class CourseController extends HttpServlet {
 				out.write("request has no command");
 			switch(request.getParameter("cmd")) {
 			case "addCourse":
-				String course_name = request.getParameter("course_name");
-				String name_abbr = request.getParameter("name_abbr");
-				String duration_type = request.getParameter("duration_type");
-				int duration =  Integer.parseInt(request.getParameter("duration"));
+				String course_name = request.getParameter("course_name").strip();
+				String name_abbr = request.getParameter("name_abbr").strip();
+				String duration_type = request.getParameter("duration_type").strip();
+				int duration =  Integer.parseInt(request.getParameter("duration").strip());
 				response.setContentType("text/plain");
 				if( courseDAO.addCourse(new Course(course_name, name_abbr, duration_type, duration)) )
 					out.write("Course Added");
@@ -98,9 +98,9 @@ public class CourseController extends HttpServlet {
 				break;
 			case"editCourse":
 				int course_id =  Integer.parseInt(request.getParameter("course_id"));
-				course_name = request.getParameter("course_name");
-				name_abbr = request.getParameter("name_abbr");
-				duration_type = request.getParameter("duration_type");
+				course_name = request.getParameter("course_name").strip();
+				name_abbr = request.getParameter("name_abbr").strip();
+				duration_type = request.getParameter("duration_type").strip();
 				duration =  Integer.parseInt(request.getParameter("duration"));
 				response.setContentType("text/plain");
 				if(courseDAO.updateCourse(new Course(course_id,course_name, name_abbr, duration_type, duration)))

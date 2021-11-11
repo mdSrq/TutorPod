@@ -1,44 +1,46 @@
-.hero{
-    display: flex;
-    flex-flow: row-reverse wrap;
-    justify-content: space-around;
-    align-content: center;
-    min-height: 90vh;
-    &__illustration{
-        width: 50%;
-        img{
-            width: 100%;
-            height: auto;
-        }
+.hero {
+  display: flex;
+  flex-flow: row-reverse wrap;
+  justify-content: space-around;
+  align-content: center;
+  min-height: 90vh;
+  &__illustration {
+    width: 50%;
+    img {
+      width: 100%;
+      height: auto;
     }
-    &__action_tile{
-        text-align: center;
-        box-shadow: $shadow1;
-        width: 40%;
-        padding: 2rem 2.5rem;
-       // border: 2px solid #e6e6e6;
-        border-radius: 1rem;
-        height: max-content;
+  }
+  &__action_tile {
+    text-align: center;
+    box-shadow: $shadow1;
+    width: 40%;
+    padding: 2rem 2.5rem;
+    // border: 2px solid #e6e6e6;
+    border-radius: 1rem;
+    height: max-content;
+  }
+  &__cta_search {
+    background-image: url("../../images/search.png");
+    margin-top: 1.2rem;
+    padding: 1rem;
+    padding-left: 3rem;
+    background-position: 1rem 1rem;
+  }
+  &__sugesstion {
+    a {
+      color: $dark;
+      &:hover {
+        color: $lighterBlue;
+      }
     }
-    &__cta_search{
-        background-image: url("../../images/search.png");
-        margin-top: 1.2rem;
-    }
-    &__sugesstion{
-        a{
-            color: $dark;
-            &:hover{
-                color: $lighterBlue;
-            }
-        }
-
-    }
+  }
 }
-@include breakpoint-down(medium){
-    .hero{
-        &__action_tile{
-            box-shadow: none;
-            padding: 0;
-        }
+@include breakpoint-down(medium) {
+  .hero {
+    &__action_tile {
+      box-shadow: none;
+      padding: 0;
     }
+  }
 }
