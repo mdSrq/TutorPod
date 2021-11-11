@@ -32,21 +32,25 @@
                 <a href="#" class="underlined">Apply to Teach</a>
                 <a href="#" class="underlined">Search Tutors</a>
                 <a href="#" class="underlined">Study Resources</a>
-                <div class="nav-dd">
+                <div class="nav-dd" tabindex="99">
                     <ul class="nav-dd_courses scrollable">
-                        <li class="nav-dd_course" onclick="dropDurations(1)">BCA</li>
+                    	<li><a href="#" class="dropdown-caption">Select Course</a> </li>
                     </ul>
                     <ul class="nav-dd_durations">
-                        <li class="nav-dd_duration course_1">Semester 1</li>
-                        
+                   		<li><a href="#" class="dropdown-caption">Select Year/Sem</a> </li>
                     </ul>
-                    <ul class="nav-dd_subjects">
-                        <li class="nav-dd_subject course_1">Semester 1</li>
-                        
+                    <ul class="nav-dd_subjects scrollable">
+                    	<li><a href="#" class="dropdown-caption">Select Subject</a> </li>
                     </ul>
                 </div>
             </div>
             <div class="header-controls">
+            	<div class="header-controls__home">
+            		<a href="./"><img src="./images/home.png" alt=""></a>
+            	</div>
+            	<div class="header-controls__menu">
+            		<a href="#"><img src="./images/menu.png" alt=""></a>
+            	</div>
                 <div class="header-controls__notifications">
                 <a href="#"> 
                     <div class="notification_bell">
@@ -54,28 +58,48 @@
                         <span class="notification_badge"><span>2</span></span>
                     </div> 
                 </a>
+                <div class="notifications scrollable">
+                    <div class="notifications__header">
+                        <span class="notifications__header_title">Notifications</span>
+                        <a href="#" class="notifications__header_link_l">Mark all as seen</a>
+                        <a href="#" class="notifications__header_link_r">See all</a>
+                    </div>
+                    <div class="notifications__body">
+                        <a href="#" class="notifications__item">
+                            <span  class="notifications__item_text notifications__item_unseen">Welcome to TutorPod</span>
+                            <span class="notifications__item_time">2min ago</span>
+                        </a>
+                        <a href="#" class="notifications__item">
+                            <span  class="notifications__item_text notifications__item_unseen">Your class is about to start please be prepared with all the materials neended for class.</span>
+                            <span class="notifications__item_time">2min ago</span>
+                        </a>
+                        <a href="#" class="notifications__item">
+                            <span  class="notifications__item_text notifications__item_unseen">Welcome to TutorPod</span>
+                            <span class="notifications__item_time">2min ago</span>
+                        </a>
+                    </div>
+                </div>
                 </div>
                 <div class="header-controls__user-profile">
                     <div class="avatar">
                         <img src="./images/user.png" alt="profile-pic">
                     </div>
-                    <div class="header-controls__user-profile_dropdown">
+                    <div class="header-controls__user-profile_dropdown" tabindex="98">
                         <a href="#">Dashboard</a>
                         <a href="#">My Students</a>
                         <a href="#">Lessons</a>
                         <a href="#">Settings</a>
-                        <a href="#">Logout</a>
+                        <a href="./UserController?cmd=logout">Logout</a>
                     </div>
                 </div>
             </div>
+            <a href="#" class="button hide-for-mobile" id="signinBtn">Sign In</a>
         </nav>
         <div class="overlay toggle-on"></div>
         <div class="header__overlay_menu hide-for-desktop toggle-on">
-            <a href="http://">Home</a>
             <a href="http://">Apply to Teach</a>
-            <a href="http://">Other1</a>
-            <a href="http://">Other2</a>
-            <a href="#" id="signinBtnNav">Sign In</a>
+            <a href="#">Search Tutors</a>
+            <a href="#">Study Resources</a>
         </div>
         <div class="overlaydiv">
             <div id="btnCross" class="header__menu cross">
@@ -91,43 +115,71 @@
                     </div>
                     <div class="signin">
                         <form action="./UserController" method="post" id="signinForm">
-                            <input type="text" class="input-with-icon user_id" name="username" id="username"
+                            <div class="form-unit form-unit-full">
+                            <label for="usernameSignIn">Username</label>
+                            <input type="text" class="input-with-icon user_id" name="username" id="usernameSignIn"
                                 placeholder="Username or email address" required />
-                            <input type="password" class="input-with-icon user_pass" name="password" id="password"
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="passwordSignIn">Password</label>
+                                <input type="password" class="input-with-icon user_pass" name="password" id="passwordSignIn"
                                 placeholder="Password" required />
-                            <input type="hidden" name="cmd" id="cmd" value="login" />
+                            </div>
+                            <input type="hidden" name="cmd" id="cmd" value="signin" />
                             <input type="submit" class="button flat-wide-button" value="Sign In" />
                         </form>
                         <p><a href="#">Forgot Password ?</a></p>
                     </div>
                     <div class="signup">
                         <form action="./UserController" method="post" id="signupForm">
-                            <input type="text" class="input-with-icon user_name user_fname" name="fname" id="fname"
+                            <div class="form-unit form-unit-full">
+                                <label for="username">Username</label>
+                                <input type="text" class="input-with-icon user_id" name="username" id="username"
+                                placeholder="Enter Username" required />
+                            </div>
+                            <div class="form-unit-half-container">
+                                <div class="form-unit form-unit-half">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="input-with-icon user_name user_fname" name="fname" id="fname"
                                 placeholder="Enter First Name" required />
-                            <input type="text" class="input-with-icon user_name user_lname" name="lname" id="lname"
+                            </div>
+                            <div class="form-unit form-unit-half">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="input-with-icon user_name user_lname" name="lname" id="lname"
                                 placeholder="Enter Last Name" required />
-                            <select name="gender" id="gender" class="input-with-icon user_gender">
+                            </div>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="password">Password</label>
+                                <input type="password" class="input-with-icon user_pass" name="password" id="password"
+                                placeholder="Enter Password" required />
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="gender">Gender</label>
+                                <select name="gender" id="gender" class="input-with-icon user_gender">
                                 <option value="default" selected disabled>Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
-                            </select>
-                            <input type="text" class="input-with-icon user_id" name="username" id="username"
-                                placeholder="Enter Username" required />
-                            <input type="text" class="input-with-icon user_email" name="email" id="email"
-                                placeholder="Enter Email Adderss" required />
-                            <input type="tel" class="input-with-icon user_tel" name="mobile_no" id="mobile_no"
+                                </select>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="email_id">Email ID</label>
+                                <input type="text" class="input-with-icon user_email" name="email_id" id="email_id"
+                                placeholder="Enter Email Adderss" required />   
+                            </div>
+                           <div class="form-unit form-unit-full">
+                               <label for="mobile_no">Mobile Number</label>
+                               <input type="tel" class="input-with-icon user_tel" name="mobile_no" id="mobile_no"
                                 placeholder="Enter Mobile Number" required />
-                            <input type="password" class="input-with-icon user_pass" name="password" id="password"
-                                placeholder="Enter Password" required />
-                            <input type="hidden" name="cmd" id="cmd" value="login" />
+                           </div>
+                            <input type="hidden" name="cmd" id="cmd" value="signup" />
                             <input type="submit" class="button flat-wide-button" value="Sign Up" />
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </header>
     <main>
         <section class="hero container">
@@ -166,108 +218,184 @@
         $(".tab-selector_signin").click(showSignIn);
         $(".tab-selector_signup").click(showSignUp);
         $(".header-controls__user-profile").click(()=>{
-        $(".header-controls__user-profile_dropdown").css("display", "block");
+            $(".header-controls__user-profile_dropdown").css("display", "block")
+            	.focus();
+            $("<div>").addClass("overlay-background").appendTo($("body"));
+            });
+            $(".header-controls__user-profile_dropdown").focusout(()=>{
+            	$(".header-controls__user-profile_dropdown").removeAttr("style");
+            	$(".overlay-background").remove();
+            });
+        $(".header__links_dropdown").click(showSubjectsDropdown);
+        $(".header-controls__menu img").click(function(e){
+            if(e.target !== this) return;
+            if($(".header-controls__menu > .nav-dd").length==0){
+                $(".nav-dd").clone(true,true).appendTo($(".header-controls__menu"));
+                showSubjectsDropdown();
+            }else{
+                $(".header-controls__menu > .nav-dd").remove();
+            }
         });
-        $(".header-controls__user-profile_dropdown").hover(()=>{
-        	$(".header-controls__user-profile_dropdown").removeAttr("style");
-        });
-        $(".header__links_dropdown").hover(()=>{
-            $(".nav-dd").css("display","block");
-            $(".nav-dd_courses").css("display","block");
-        });
-        $(".nav-dd").hover(()=>{
+        function showSubjectsDropdown () {
+            $(".nav-dd").css("display", "block");
+            showCourses();
+            $(".nav-dd").focus();
+        }
+        function showCourses(){
+            $(".nav-dd_courses").css("display", "block");
+            if(!$(".header-controls__menu > .nav-dd").length){
+                $(".nav-dd_durations").removeAttr("style");
+                $(".nav-dd_subjects").removeAttr("style");
+            }   
+        }
+        $(".nav-dd").focusout(function () {
+            if ($(".nav-dd_subject" + ":hover").length) {
+                return;
+            }
             $(".nav-dd").removeAttr("style");
             $(".nav-dd_courses").removeAttr("style");
-        })
+            removeAllDurations();
+            $(".nav-dd_durations").removeAttr("style");
+            removeAllSubjects();
+            $(".nav-dd_subjects").removeAttr("style");
+        });
+
         function showSignInDiv() {
-            $("body").css("overflow-y","hidden");
+            $("body").css("overflow-y", "hidden");
             $(".overlaydiv").css("animation", "fade-in ease-in 0.3s forwards");
             $(".overlaydiv").css("visibility", "visible");
         }
+
         function hideSignInDiv() {
-            $("body").css("overflow-y","unset");
+            $("body").css("overflow-y", "unset");
             $(".overlaydiv").css("animation", "fade-out ease-in 0.3s forwards");
             $(".overlaydiv").css("visibility", "hidden");
         }
+
         function showSignIn() {
             $(".signup").hide();
             $(".signin").show();
             $(".tab-selector_signin").addClass("tab-selector_selected");
             $(".tab-selector_signup").removeClass("tab-selector_selected");
         }
+
         function showSignUp() {
             $(".signin").hide();
             $(".signup").show();
             $(".tab-selector_signup").addClass("tab-selector_selected");
             $(".tab-selector_signin").removeClass("tab-selector_selected");
         }
-        $(document).on("submit", "#signupForm", function(event) {
-                var $form = $(this);
-                if($("#gender").val()==null){
-                    $("#snackbar").html("Select a gender");
-                    showToast();
-                    return false; 
-                }
-                showLoading();
-                $.post($form.attr("action"), $form.serialize(), function(response) {
-                        hideLoading();
-                        $("#snackbar").html(response); 
-                        showToast();
-                        console.log(response);
-                        fetchBankAccData();
-                        $form.trigger("reset");
-                });  
-                event.preventDefault();
+        $.ajax({
+            url: "./SubjectController",
+            data: "cmd=seeCourseAndSubjects",
+            success: function (response) {
+                console.log(response);
+                $.each(response, function (i, courses) {
+                    if (courses.courseSubjects[0] == null)
+                        return;
+                    $(".nav-dd_courses").append($("<li>").addClass("nav-dd_course")
+                        .append($("<a>").attr({
+                            onclick: "dropDurations(" + courses.courseSubjects[0]
+                                .course_id + ")"
+                        }).text(courses.courseSubjects[0].name_abbr)));
+
+                    for (var k = 0; k < courses.courseSubjects[0].duration; k++) {
+                        $("<li>").addClass("nav-dd_duration nav-dd_duration_" + courses
+                                .courseSubjects[0].course_id).appendTo($(".nav-dd_durations"))
+                            .append($("<a>").attr({
+                                onclick: "dropSubjects(" + courses.courseSubjects[0]
+                                    .course_id + "," + (k + 1) + ")"
+                            }).text(courses.courseSubjects[0].duration_type + " " + (k + 1)));
+                    }
+                    $.each(courses.courseSubjects, function (j, subjects) {
+                        $("<li>").addClass("nav-dd_subject nav-dd_subject_" + subjects
+                                .course_id + "_" + subjects.duration_no).appendTo($(
+                                ".nav-dd_subjects"))
+                            .append($("<a>").attr({
+                                href: "./TutorController?cmd=searchBySubject&course_id=" +
+                                    subjects.course_id + "&duration_no=" + subjects
+                                    .duration_no + "&subject_id=" + subjects
+                                    .subject_id,
+                            }).text(subjects.subject_code + " - " + subjects
+                                .subject_name));
+                    });
+                });
+            }
         });
-        $(document).on("submit", "#signinForm", function(event) {
+
+        function dropDurations(course_id) {
+            if($(".header-controls__menu > .nav-dd").length!=0){
+                $(".header-controls__menu > .nav-dd > .nav-dd_courses").removeAttr("style");
+            }
+            $(".nav-dd_durations").css("display", "block");
+            removeAllDurations();
+            removeAllSubjects();
+            $(".nav-dd_subjects").removeAttr("style");
+            $(".nav-dd_duration_" + course_id)
+                .each(function (i, duration) {
+                    duration.style = "display:block";
+                });
+        }
+
+        function removeAllDurations() {
+            $(".nav-dd_duration").each(function (i, duration) {
+                duration.removeAttribute("style");
+            });
+        }
+
+        function dropSubjects(course_id, duration_no) {
+            if($(".header-controls__menu > .nav-dd").length!=0){
+                $(".header-controls__menu > .nav-dd > .nav-dd_durations").removeAttr("style");
+                $(".header-controls__menu > .nav-dd > .nav-dd_courses").removeAttr("style");
+            }
+            $(".nav-dd_subjects").css("display", "block");
+            removeAllSubjects();
+            $(".nav-dd_subject_" + course_id + "_" + duration_no)
+                .each(function (i, subject) {
+                    subject.style = "display:block";
+                });
+        }
+
+        function removeAllSubjects() {
+            $(".nav-dd_subject").each(function (i, duration) {
+                duration.removeAttribute("style");
+            });
+        }
+        $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
+            console.log(jqxhr.responseText + "\n" + thrownError);
+        });
+        $(document).on("submit", "#signupForm", function (event) {
             var $form = $(this);
-            if($("#gender").val()==null){
+            if ($("#gender").val() == null) {
                 $("#snackbar").html("Select a gender");
                 showToast();
-                return false; 
+                return false;
             }
             showLoading();
-            $.post($form.attr("action"), $form.serialize(), function(response) {
-                    hideLoading();
-                    $("#snackbar").html(response); 
-                    showToast();
-                    console.log(response);
-                    fetchBankAccData();
-                    $form.trigger("reset");
-            });  
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $("#snackbar").html(response);
+                showToast();
+                console.log(response);
+                $form.trigger("reset");
+                location.reload();
+            });
             event.preventDefault();
-   		});
-        $.ajax({
-    	    url: "./SubjectController",
-    	    data:"cmd=seeCourseAndSubjects",
-    	    success: function(response) {
-				console.log(response);
-				$.each(response, function(i, courses){
-                            $(".nav-dd_courses").append($("<li>").addClass("nav-dd_course")
-                                .append($("<a>").attr({
-                                    onclick:"dropDurations("+courses.courseSubjects[0].course_id+")"
-                                }).text(courses.courseSubjects[0].name_abbr) ));
-                        
-                        for(var k=0;k<courses.courseSubjects[0].duration;k++){
-                            $("<li>").addClass("nav-dd_duration nav-dd_duration_"+courses.courseSubjects[0].course_id).appendTo($(".nav-dd_durations"))
-                                .append($("<a>").attr({
-                                    onclick:"dropSubjects("+courses.courseSubjects[0].course_id+","+(k+1)+")"
-                                }).text(courses.courseSubjects[0].duration_type+" "+(k+1))); 
-                        }
-					$.each(courses.courseSubjects,function(j,subjects){
-                           $("<li>").addClass("nav-dd_subject nav-dd_subject_"+subjects.course_id+"_"+subjects.duration_no).appendTo($(".nav-dd_subjects"))
-                                .append($("<a>").attr({
-                                    href:"./TutorController?cmd=searchBySubject&course_id="+subjects.course_id+"&duration_no="+subjects.duration_no+"&subject_id="+subjects.subject_id,                                   
-                                }).text(subjects.subject_code+" - "+subjects.subject_name));
-                    });
-				});
-    	    }
-    	});
-        function dropDurations(course_id){
-
-        }
-        $( document ).ajaxError(function(event, jqxhr, settings, thrownError ) {
-        	  console.log(jqxhr.responseText+"\n"+thrownError);
+        });
+        $(document).on("submit", "#signinForm", function (event) {
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $("#snackbar").html(response);
+                showToast();
+                console.log(response);
+                $form.trigger("reset");
+                if(response.includes("Success")){
+                    location.reload();
+                }
+            });
+            event.preventDefault();
         });
     </script>
 </body>

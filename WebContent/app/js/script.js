@@ -3,7 +3,10 @@ const header = document.querySelector("#header");
 const toggleOn = document.querySelectorAll(".toggle-on");
 const dashboardDropdown = document.querySelectorAll(".sidebar__dropdown_title");
 const sidebar = document.querySelector(".sidebar");
-btnHamburger.addEventListener("click",function(){
+const overlay = document.querySelector(".overlay");
+btnHamburger.addEventListener("click",showNavDropdown);
+overlay.addEventListener("click",showNavDropdown);
+function showNavDropdown(){
     header.classList.toggle("open");
     toggleOn.forEach(element=>{
         if(element.classList.contains("fade-in")){
@@ -16,7 +19,7 @@ btnHamburger.addEventListener("click",function(){
             document.querySelector("body").style="overflow:hidden";
         }
     })
-});
+}
 dashboardDropdown.forEach(item=>{
     item.addEventListener("click",()=>{
         console.log("Shit");

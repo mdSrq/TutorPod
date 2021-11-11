@@ -30,6 +30,14 @@
     width: 100%;
   }
 }
+@keyframes diminish {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
 @keyframes shiftGradient {
   from {
     background: linear-gradient(90deg, $darkBlue, $lightPurple);
@@ -160,5 +168,19 @@
   }
   to {
     width: 0.93rem;
+  }
+}
+@keyframes short-life{
+  0%{
+    opacity: 0;
+  }
+  25%{
+    opacity: 1;
+  }
+  75%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
   }
 }

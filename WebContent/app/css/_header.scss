@@ -2,7 +2,7 @@
   margin-bottom: 0.5rem;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 99;
   background-color: white;
   box-shadow: $shadow5;
   nav {
@@ -30,7 +30,7 @@
     > span {
       display: block;
       width: 26px;
-      height: 4px;
+      height: 2.5px;
       border-radius: 2px;
       background: linear-gradient(90deg, $darkBlue, $lightPurple);
       opacity: 1;
@@ -38,7 +38,7 @@
         margin-bottom: 4px;
       }
       transition: all 0.2s ease-in-out;
-      transform-origin: 2px 2px;
+      transform-origin: 3px 1.5px;
     }
   }
   &__links {
@@ -48,22 +48,26 @@
       font-size: $font-med;
       color: $dark;
       font-weight: 600;
-      transition: color 0.3s ease-in-out;
+      transition: color 0.1s ease-in-out;
       &:not(:last-child) {
         margin-right: 32px;
       }
-      &:hover {
-        color: $darkBlue;
-        &::before {
+      &::before {
           content: "";
           display: block;
           position: absolute;
-          height: 4px;
+          height: 2.5px;
           background: linear-gradient(90deg, $darkBlue, $lightPurple);
           left: 0;
           right: 0;
           bottom: -10px;
           border-radius: 2px;
+          animation: diminish ease-in-out 0.25s forwards;
+      }
+      &:hover {
+        color: $darkBlue;
+        &::before {
+          display: block;
           animation: highlight ease-in-out 0.25s forwards;
         }
       }
@@ -71,10 +75,10 @@
     &_dropdown {
       position: relative;
       font-size: 1.5rem;
-      &:hover {
-        &::before {
+      &::before {
           visibility: hidden;
-        }
+      }
+      &:hover {
         .dropdown-arrow {
           transition: all ease-in-out 0.2s;
           position: relative;
@@ -85,104 +89,6 @@
         .dropdown-arrow{
           color: $lightPurple;
           top: 0.3rem;
-        }
-      }
-    }
-    .nav-dd{
-      position: absolute;
-      top: 3.1rem;
-      left: 0;
-      max-height: 85vh;
-      display: none;
-      &:hover{
-        display: block;
-      }
-      ul,li{
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .dropdown-caption{
-        background-color: #eee;
-        color: grey;
-      }
-      &_courses,&_durations,&_subjects{
-        display: none;
-        position: absolute;
-        top: 0;
-        background-color: $white;
-        box-shadow: $shadow2;
-        width: 11rem;
-        border-radius: 0.25rem;
-        &:hover{
-          display: block;
-        }
-        a{
-          color: $dark;
-          display: inline-block;
-          padding: 0.5rem 1rem;
-          width: 100%;
-          cursor: pointer;
-        }
-      }
-      &_duration,&_subject{
-        display: none;
-      }
-      &_course,&_duration,&_subject{
-        position: static;
-        &:hover{
-          background-color: $lightBlue;
-          border-radius: 0.25rem;
-        }
-      }
-      &_courses{
-        overflow-y: auto;
-      }
-      &_durations{
-        top: 0;
-        left: 11rem;
-      }
-      &_subjects{
-        top: 0;
-        left: 22rem;
-        width: max-content;
-        max-height: 85vh;
-        max-width: 20rem;
-        overflow-y: auto;
-      }
-      &_subject{
-        a{
-          color: $dark;
-          width: 100%;
-          &:hover{
-            color: $darkBlue;
-          }
-        }
-      }
-      &_course,&_duration{
-        a{
-          position: relative;
-            &::after{
-            position: absolute;
-            top: 0.3rem;
-            right: 1rem;
-            content: ">";
-            font-weight: bold;
-            font-family: monospace;
-            font-size: 1.5rem;
-            transition: all ease-in-out 0.2s;
-          }
-          &:hover{
-            &::after{
-              color: $darkBlue;
-            }
-          }
-          &:active{
-            &::after{
-              color: $lightPurple;
-              right: 0.7rem;
-            }
-          }
         }
       }
     }
@@ -202,11 +108,7 @@
   }
   .overlay {
     display: block;
-    background-image: linear-gradient(
-      $darkBlue 0%,
-      $lighterBlue 50%,
-      transparent 100%
-    );
+    background-image: linear-gradient(rgba($color: $darkBlue, $alpha: 0.8) 0%,rgba($color: $lightPurple, $alpha: 0.8) 60%,rgba($color: $lightBlue, $alpha: 0.8)100%) ;
     position: fixed;
     top: 63px;
     left: 0;
@@ -277,35 +179,11 @@
           overflow-x: unset;
           .tab-selector {
             width: calc(100% - 2rem);
-            margin-right: 2rem;
-            border-top-left-radius: inherit;
-            border-top-right-radius: inherit;
-            margin: 0 auto;
-            height: 3rem;
-            background-color: $lightBlue;
-            display: flex;
-            &_signin,
-            &_signup {
-              cursor: pointer;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex: 1;
-              text-align: center;
-              padding: 1rem;
-              &:hover{
-                color: $darkBlue;
-              }
-            }
-          &_selected{
-            background-color: $white;
-            box-shadow: $shadow7;
-          }
           &_signin{
             border-top-left-radius: inherit;
           }
           &_signup{
-            border-top-right-radius: inherit;
+            border-top-right-radius: inherit; 
           }
         }
         .signin,
@@ -333,9 +211,88 @@
       display: block;
     }
     &__notifications{
+      position: relative;
       a{
         display: block;
         margin: auto;
+      }
+      .notifications{
+        position: absolute;
+        top: 3.2rem;
+        right: 0;
+        width:20rem;
+        height: max-content;
+        max-height: 15rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-color: $white;
+        box-shadow: $shadow2;
+        padding-bottom: 0.5rem;
+        border-radius: 0.2rem;
+        display: none;
+        &__header{
+          width: 100%;
+          padding: 0.5rem 0.8rem;
+          position: sticky;
+          background: linear-gradient(45deg,$lightPurple,$lighterBlue);
+          color: $white;
+          top: 0;
+          &_title,&_link{
+            display: block;
+            text-align: center;
+          }
+          &_title{
+            width: 100%;
+            text-align: center;
+            font-size: 1.25rem;
+            padding-bottom: 0.5rem;
+            display: none;
+          }
+          &_link_l,&_link_r{
+            display: inline-block;
+            font-size: 0.9rem;
+            color: $white;
+          }
+          &_link_r{
+            float: right;
+          }
+        }
+        &__item{
+          display: block;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.8rem;
+          width: 100%;
+          color: $dark;
+          &:not(:last-child){
+              border-bottom: 1px solid $lightBlue;
+          }
+          &:hover{
+            background-color: $lightBlue;
+          }
+          &_text{
+            width: 80%;
+            display: block;
+            font-size: 0.85rem;
+            &:hover{
+              color: $darkBlue;
+            }
+          }
+          &_unseen{
+            font-weight: bold;
+            color: $lightPurple;
+          }
+          &_unclicked{
+            color: $lightPurple;
+          }
+          &_time{
+            display: block;
+            width: max-content;
+            max-width: 19%;
+            font-size: 0.65rem;
+          }
+        }
       }
     }
     &__user-profile{
@@ -343,7 +300,7 @@
       &_dropdown{
         display: none;
         position: absolute;
-        top: 3.1rem;
+        top: 3.3rem;
         width: max-content;
         right: 0;
         background-color: $white;
@@ -361,12 +318,9 @@
             color: $darkBlue;
           }
         }
-        &:hover{
-          display: block;
-        }
       }
     }
-    &__home,&__menu{
+    &__home,&__menu,&__dash-menu{
       display: none;
       height: 1.5rem;
       img{
@@ -375,11 +329,44 @@
         filter: invert(1);
       }
     }
+    &__menu{
+      .nav-dd{
+        top: auto;
+        bottom: 3rem;
+        left: 50%;
+        transform: translate(-50%);
+        width: calc(100% - 1rem);
+        height: calc(100vh - 7.5rem);
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        &_courses,&_durations,&_subjects{
+            width: 100%;
+            max-width: 100%;
+            position: static;
+            height: 100%;
+            max-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .dropdown-caption{
+          background-color: $white;
+          text-align: center;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+  .header-controls-hidden{
+    display: none;
+    @include breakpoint-down(medium) {
+      display: flex;
+    }
   }
 }
 @include breakpoint-down(medium) {
   body{
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
   }
   .header{
     flex-wrap:wrap-reverse;
@@ -389,7 +376,7 @@
       left: 0;
       z-index: 99;
       width: 100%;
-      background: #0037B4;
+      background: $rightBlue;
       box-shadow: $shadow8;
       padding: 0.55rem;
       &__notifications{
@@ -412,6 +399,7 @@
           border: none;
           padding: 0;
           height: 1.7rem;
+          box-shadow: none;
           img{
             background-color: $white;
             padding: 0.1rem;
@@ -426,9 +414,30 @@
           transform: translate(-50%);
         }
       }
-      &__home,&__menu{
+      &__home,&__menu,&__dash-menu{
         display: block;
       }
+      &__notifications{
+        position: static;
+        .notifications{
+          top: auto;
+          bottom: 3rem;
+          left: 50%;
+          transform: translate(-50%);
+          width:calc(100% - 1rem);
+          height: calc(100vh - 7.5rem);
+          max-height: calc(100vh - 7.5rem);
+          &__header{
+            &_title{
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    .dropdown-caption{
+      background: linear-gradient(45deg,$lightPurple,$lighterBlue);
+      color: $white;
     }
     .overlaydiv{
       .signup-form{
@@ -440,7 +449,7 @@
             .signin,
             .signup {
               width: auto;
-              margin: 2rem 0.5rem 0 0.5rem;
+              margin: 2rem 1rem 0 1rem;
             }
           }
         }

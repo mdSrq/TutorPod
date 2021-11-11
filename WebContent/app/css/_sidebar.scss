@@ -1,0 +1,58 @@
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #eeeff2;
+    margin-top: -0.5rem;
+}
+.sidebar{
+        position: sticky;
+        color: $white;
+        top: 4.5rem;
+        left: 0;
+        width: 13rem;
+        height: 88vh;
+        background-color: $white;
+        box-shadow: $shadow1;
+        @include breakpoint-down(medium) {
+            position: fixed;
+            left: -13rem;
+            top: 4rem;
+            height: calc(100vh - 3rem);
+            z-index: 90;
+        }
+        &__link{
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            width: 100%;
+            color: $dark;
+            padding: 0.3rem 1rem;
+            &:first-child{
+                margin-top: 1rem;
+            }
+            &:hover{
+                background-color: $lightBlue;
+                .sidebar__link_icon{
+                    background-color: $white;
+                }
+            }
+            &_icon{
+                background-color: $lightBlue;
+                display: block;
+                padding: 0.2rem;
+                height: 2rem;
+                width: 2rem;
+                margin-right: 0.35rem;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    max-width: 1.2rem;
+                    max-height: 1.2rem;
+                }
+            }
+        }
+    }

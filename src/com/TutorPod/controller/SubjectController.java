@@ -106,8 +106,8 @@ public class SubjectController extends HttpServlet {
 				int course_id = Integer.parseInt(request.getParameter("course_id"));
 				int duration_no = Integer.parseInt(request.getParameter("duration_no"));
 				int subject_id=0;
-				String subject_name = request.getParameter("subject_name");
-				String subject_code = request.getParameter("subject_code");
+				String subject_name = request.getParameter("subject_name").strip();
+				String subject_code = request.getParameter("subject_code").strip();
 				boolean subjectAdded=false;
 				boolean courseSubAdded=false;
 				if(subjectDAO.getSubject(subject_code)==null)
@@ -125,8 +125,8 @@ public class SubjectController extends HttpServlet {
 			case "editSubject":
 				course_id = Integer.parseInt(request.getParameter("course_id"));
 				duration_no = Integer.parseInt(request.getParameter("duration_no"));
-				subject_name = request.getParameter("subject_name");
-				subject_code = request.getParameter("subject_code");
+				subject_name = request.getParameter("subject_name").strip();
+				subject_code = request.getParameter("subject_code").strip();
 				int course_sub_id = Integer.parseInt(request.getParameter("course_sub_id"));
 				subject_id = Integer.parseInt(request.getParameter("subject_id"));
 				boolean subjectUpdated=false;
