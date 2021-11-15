@@ -229,4 +229,23 @@ public class UserDAO {
 		int bank_acc_id = Rs.getInt("bank_acc_id");
 		return new User(user_id, fname, lname, username, password, email_id, mobile_no, gender, photo, profile_status,joining_date,tutor_id,wallet_id,bank_acc_id);
 	}
+	public void setAutoCommit(int setValue)throws Exception {
+		String sql = "set autocommit="+setValue;
+		Connection Conn = dataSource.getConnection();
+		Statement Stmt = Conn.createStatement();
+		Stmt.execute(sql);
+		close(Conn,Stmt,null);
+	}
+	public void Commit()throws Exception {
+		Connection Conn = dataSource.getConnection();
+		Statement Stmt = Conn.createStatement();
+		Stmt.execute("commit");
+		close(Conn,Stmt,null);
+	}
+	public void Rollback()throws Exception {
+		Connection Conn = dataSource.getConnection();
+		Statement Stmt = Conn.createStatement();
+		Stmt.execute("rollback");
+		close(Conn,Stmt,null);
+	}
 }

@@ -17,10 +17,10 @@ if (session.getAttribute("USER") == null) {
 		<h1 class="main__heading">Account Settings</h1>
 		<div class="main__acc-forms-container">
 			<div class="tab-selector">
-				<span href="#" class="tab-selector_tab tab_1 <%if(user.getPhoto()==null){%>tab-selector_exclamation<%}%>" onclick="changeTab(1)">Personal Info</span>
-				<span href="#" class="tab-selector_tab tab_2" onclick="changeTab(2)">Username & Email</span> 
-				<span href="#" class="tab-selector_tab tab_3" onclick="changeTab(3)">Password</span> 
-				<span href="#" class="tab-selector_tab tab_4 <%if(user.getBank_acc_id()<1){%>tab-selector_error<%}%>" onclick="changeTab(4)">Bank Account</span> 
+				<span href="#" class="tab-selector_tab tab_1 <%if(user.getPhoto()==null){%>tab-selector_exclamation<%}%>" id="tab-selector_tab1" onclick="changeTab(1)">Personal Info</span>
+				<span href="#" class="tab-selector_tab tab_2" id="tab-selector_tab2"  onclick="changeTab(2)">Username & Email</span> 
+				<span href="#" class="tab-selector_tab tab_3" id="tab-selector_tab3"  onclick="changeTab(3)">Password</span> 
+				<span href="#" class="tab-selector_tab tab_4 <%if(user.getBank_acc_id()<1){%>tab-selector_error<%}%>" id="tab-selector_tab4" onclick="changeTab(4)">Bank Account</span> 
 			</div>
 			<div class="main__container_inner" id="tab_1">
 				<div class="main__container_inner_photo">
@@ -40,7 +40,7 @@ if (session.getAttribute("USER") == null) {
 						</div>
 						<%}%>
 					<form action="./UserController" method="post" enctype="multipart/form-data" id="photoForm" class="main__container_inner_photo_buttons">
-						<input type="file" name="photo" id="photo" accept=".jpg" style="display: none" />
+						<input type="file" name="photo" id="photo" accept=".jpg" style="display: none" required/>
 						<input type="hidden" name="cmd" value="changePhoto" /> 
 						<button type="submit" name="submit"class="button flat-wide-button" id="changePhotoBtn">Change Photo</button>
 						<button class="button flat-wide-button delete-button" id="removePhotoBtn">Remove Photo</button>
@@ -211,6 +211,9 @@ if (session.getAttribute("USER") == null) {
 			nextURL = href.substring(0,href.indexOf("tab="))+"?tab="+tabNo;
 		window.history.pushState(nextState, nextTitle, nextURL);
 		window.history.replaceState(nextState, nextTitle, nextURL);
+		$('.tab-selector').animate({
+			scrollLeft: $('#tab-selector_tab' + tabNo).offset().left
+		}, 500);
 	}
 	$("#changePhotoBtn").click((e) => {
 		$("#photo").click();

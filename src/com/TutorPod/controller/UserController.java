@@ -23,11 +23,14 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
+import com.TutorPod.dao.AddressDAO;
 import com.TutorPod.dao.BankAccDAO;
 import com.TutorPod.dao.NotificationDAO;
+import com.TutorPod.dao.TutorDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.dao.WalletDAO;
 import com.TutorPod.model.Notification;
+import com.TutorPod.model.Tutor;
 import com.TutorPod.model.User;
 import com.TutorPod.model.Wallet;
 
@@ -42,6 +45,8 @@ public class UserController extends HttpServlet {
 	private WalletDAO walletDAO;
 	private NotificationDAO notifDAO;
 	private BankAccDAO bankAccDAO;
+	private TutorDAO tutorDAO;
+	private AddressDAO addressDAO;
 	public void init() throws ServletException {
 		super.init();
 		try {
@@ -49,6 +54,8 @@ public class UserController extends HttpServlet {
 			walletDAO = new WalletDAO(dataSource);
 			notifDAO = new NotificationDAO(dataSource);
 			bankAccDAO = new BankAccDAO(dataSource);
+			tutorDAO = new TutorDAO(dataSource);
+			addressDAO = new AddressDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -66,6 +73,7 @@ public class UserController extends HttpServlet {
 			case"logout":
 				session.removeAttribute("USER");
 				session.removeAttribute("TUTOR");
+				session.removeAttribute("ADDRESS");
 				session.removeAttribute("DASHBOARD_TYPE");
 				response.sendRedirect("./");
 				break;
@@ -101,6 +109,11 @@ public class UserController extends HttpServlet {
 						session.setAttribute("DASHBOARD_TYPE", "USER");
 						if(user.getBank_acc_id()>0)
 							session.setAttribute("BANK_ACC", bankAccDAO.getBankAcc(user.getBank_acc_id()));
+						Tutor tutor = tutorDAO.getTutorByUserID(user.getUser_id());
+						if(tutor.getAddress_id()>0 && tutor.getProfile_status().equals("NewApply"))
+							session.setAttribute("ADDRESS", addressDAO.getAddress(tutor.getAddress_id()));
+						session.setAttribute("TUTOR", tutor);
+						
 						out.write("Signup Success");
 					}else
 						out.write("Wrong Password");
@@ -108,80 +121,35 @@ public class UserController extends HttpServlet {
 					out.write("Username doesn't exist");
 				break;
 			case"signup":
-				String fname = request.getParameter("fname").strip();
-				String lname = request.getParameter("lname").strip();
-				username = request.getParameter("username").strip();
-				password = request.getParameter("password");
-				String gender = request.getParameter("gender").strip();
-				String email_id = request.getParameter("email_id").strip();
-				String mobile_no = request.getParameter("mobile_no").strip();
-				String profile_status = "New";
-				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
-				DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
-				Instant instant = Instant.now();
-				String joining_date = dateFormatter.format(instant);
-				String datetime = dateTimeFormatter.format(instant);
-				user = new User(fname,lname,username,password,email_id,mobile_no,gender,profile_status,joining_date);
-				if(userDAO.addUser(user)) {
-					int user_id = userDAO.getRecentUser().getUser_id();
-					user.setUser_id(user_id);
-					if(walletDAO.addWallet(new Wallet(0.0,user_id))) {
-						int wallet_id = walletDAO.getRecentWallet().getWallet_id();
-						if( userDAO.updateUserField("wallet_id", ""+wallet_id, true, user_id)) {
-							session.setAttribute("USER", user);
-							session.setAttribute("DASHBOARD_TYPE", "USER");
-							out.write("Account Created");
-							notifDAO.addNotification(new Notification("Welcome to TutorPod!. We're happy to see you here. Happy Learning :)","#",datetime,user_id,-1,false,false));
-							notifDAO.addNotification(new Notification("Complete your profile to begin your learning journey.","./AccountSettings",datetime,user_id,-1,false,false));
-							break;
-						}
-					}	
-				}
-				out.write("Failed to create account");
+				out.write(addUser(request,"Complete your profile to begin your learning journey.","./AccountSettings"));
 				break;
 			case"changePhoto":
-				Part photo = request.getPart("photo");
-				user = (User)session.getAttribute("USER");
-				String filename = user.getFname()+"_"+user.getLname()+"_"+user.getUser_id();
-				String path = getServletContext().getInitParameter("upload.location");
-				File file = new File(path, filename+"_temp.jpg");
-				InputStream input = photo.getInputStream();
-				Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-				File tempFile = new File(path, filename+"_temp.jpg");
-				BufferedImage fullFrame = ImageIO.read(tempFile);
-                int height = fullFrame.getHeight();
-                int width = fullFrame.getWidth();
-                if (height > width)
-                    ImageIO.write( fullFrame.getSubimage(0, (height-width)/2, width, width), "jpg", new File(path, filename+".jpg"));
-                else if(width > height)
-                    ImageIO.write( fullFrame.getSubimage((width-height)/2, 0, height, height), "jpg", new File(path, filename+".jpg"));
-
-                tempFile.delete();
-				if( userDAO.updateUserField("photo", filename, false, user.getUser_id()) ) {
-					user.setPhoto(filename+".jpg");
-					session.setAttribute("USER", user);
-					out.write("Photo Changed");
-				}else
-					out.write("Failed to change photo");
-				
+				out.write(uploadPhoto(request));
+				break;
+			case "saveBasicInfo":
+				if(request.getParameter("cmd2")!=null)
+					if(request.getParameter("cmd2").equals("addUser")) {
+						out.write(addUser(request,"Your user profile is created. Click to view settings.","./AccountSettings"));
+					}
+				out.write(uploadPhoto(request));
 				break;
 			case "removePhoto":
 				user = (User)session.getAttribute("USER");
 				if( userDAO.updateUserField("photo", null, false, user.getUser_id()) ) {
 					user.setPhoto(null);
-					filename = user.getFname()+user.getLname()+"_"+user.getUser_id()+".jpg";
-					path = getServletContext().getInitParameter("upload.location");
-					file = new File(path,filename);
+					String filename = user.getFname()+user.getLname()+"_"+user.getUser_id()+".jpg";
+					String path = getServletContext().getInitParameter("upload.location");
+					File file = new File(path,filename);
 					file.delete();
 					out.write("Photo Removed");
 				}else
 					out.write("Failed to remove photo");
 				break;
 			case "changePersonalInfo":
-				fname = request.getParameter("fname").strip();
-				lname = request.getParameter("lname").strip();
-				gender = request.getParameter("gender").strip();
-				mobile_no = request.getParameter("mobile_no").strip();
+				String fname = request.getParameter("fname").strip();
+				String lname = request.getParameter("lname").strip();
+				String gender = request.getParameter("gender").strip();
+				String mobile_no = request.getParameter("mobile_no").strip();
 				user = (User)session.getAttribute("USER");
 				user.setFname(fname);
 				user.setLname(lname);
@@ -196,7 +164,7 @@ public class UserController extends HttpServlet {
 				break;
 			case "changeUsernameOrEmail":
 				username = request.getParameter("username");
-				email_id = request.getParameter("email_id");
+				String email_id = request.getParameter("email_id");
 				password = request.getParameter("password");
 				user = (User)session.getAttribute("USER");
 				if(user.getPassword().equals(password)) {
@@ -258,5 +226,66 @@ public class UserController extends HttpServlet {
 		catch(Exception e) {
 			e.printStackTrace(out);
 		}
+	}
+	private String uploadPhoto(HttpServletRequest request)throws Exception{
+		Part photo = request.getPart("photo");
+		User user = (User)request.getSession().getAttribute("USER");
+		String filename = user.getFname()+"_"+user.getLname()+"_"+user.getUser_id();
+		String path = getServletContext().getInitParameter("upload.location");
+		File file = new File(path, filename+"_temp.jpg");
+		InputStream input = photo.getInputStream();
+		Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		File tempFile = new File(path, filename+"_temp.jpg");
+		BufferedImage fullFrame = ImageIO.read(tempFile);
+        int height = fullFrame.getHeight();
+        int width = fullFrame.getWidth();
+        if (height > width)
+            ImageIO.write( fullFrame.getSubimage(0, (height-width)/2, width, width), "jpg", new File(path, filename+".jpg"));
+        else if(width > height)
+            ImageIO.write( fullFrame.getSubimage((width-height)/2, 0, height, height), "jpg", new File(path, filename+".jpg"));
+
+        tempFile.delete();
+		if( userDAO.updateUserField("photo", filename, false, user.getUser_id()) ) {
+			user.setPhoto(filename+".jpg");
+			request.getSession().setAttribute("USER", user);
+			return " Photo Changed ";
+		}else {
+			return " Failed to change photo ";
+		}
+	}
+	private String addUser(HttpServletRequest request,String notification,String link)throws Exception{
+		String fname = request.getParameter("fname").strip();
+		String lname = request.getParameter("lname").strip();
+		String username = request.getParameter("username").strip();
+		String password = request.getParameter("password");
+		String gender = request.getParameter("gender").strip();
+		String email_id = request.getParameter("email_id").strip();
+		String mobile_no = request.getParameter("mobile_no").strip();
+		String profile_status = "New";
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
+		Instant instant = Instant.now();
+		String joining_date = dateFormatter.format(instant);
+		String datetime = dateTimeFormatter.format(instant);
+		User user = new User(fname,lname,username,password,email_id,mobile_no,gender,profile_status,joining_date);
+		userDAO.Rollback();
+		userDAO.setAutoCommit(0);
+		if(userDAO.addUser(user)) {
+			int user_id = userDAO.getRecentUser().getUser_id();
+			user.setUser_id(user_id);
+			if(walletDAO.addWallet(new Wallet(0.0,user_id))) {
+				int wallet_id = walletDAO.getRecentWallet().getWallet_id();
+				if( userDAO.updateUserField("wallet_id", ""+wallet_id, true, user_id)) {
+					request.getSession().setAttribute("USER", user);
+					request.getSession().setAttribute("DASHBOARD_TYPE", "USER");
+					userDAO.Commit();
+					userDAO.setAutoCommit(1);
+					notifDAO.addNotification(new Notification("Welcome to TutorPod!. We're happy to see you here. Happy Learning :)","#",datetime,user_id,-1,false,false));
+					notifDAO.addNotification(new Notification(notification,link,datetime,user_id,-1,false,false));
+					return " Account Created ";
+				}
+			}	
+		}
+		return(" Failed to create account ");
 	}
 }
