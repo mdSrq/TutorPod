@@ -62,13 +62,15 @@
           right: 0;
           bottom: -10px;
           border-radius: 2px;
-          animation: diminish ease-in-out 0.25s forwards;
+          width: 0;
+          transition: width 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
       }
       &:hover {
         color: $darkBlue;
         &::before {
           display: block;
-          animation: highlight ease-in-out 0.25s forwards;
+          width: 100%;
+          transition: width 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
         }
       }
     }

@@ -8,6 +8,7 @@ create table admin_bank_acc(admin_bank_acc_id int auto_increment primary key,
 					admin_id int not null,
 					bank_acc_id int not null,
 					selected boolean default false
+					 constraint UC_admin_bank_acc unique(admin_id,bank_acc_id)
 					);
 create table user(user_id int auto_increment primary key,
 					fname varchar(25) not null,
@@ -53,14 +54,11 @@ create table experience(experience_id int auto_increment primary key,
                     title varchar(30) not null,
                     institution varchar(30),
                     location varchar(25),
-                    description varchar(50),
+                    description varchar(300),
                     start_year varchar(4),
-                    end_year varchar(5)
-					);
-create table experience_info(experience_info int auto_increment primary key,
-					experience_id int not null,
-					tutor_id int not null,
-					constraint UC_experience_info unique(experience_id,tutor_id)
+                    end_year varchar(5),
+                    tutor_id int not null,
+                    constraint UC_experience unique(title,start_year,tutor_id)
 					);
 create table language(language_id int auto_increment primary key,
 					language_name varchar(20) not null unique
@@ -106,11 +104,6 @@ create table course_sub(course_sub_id int auto_increment primary key,
                     subject_id int not null,
                     constraint UC_course_sub unique(course_id,subject_id)
 					);
-create table subject_info(subject_info_id int auto_increment primary key,
-					tutor_id int not null,
-                    subject_id int not null,
-                    teaching_level varchar(10)
-					);
 create table wallet(wallet_id int auto_increment primary key,
 					balance double ,
                     user_id int unique not null
@@ -125,11 +118,11 @@ create table transaction( transaction_id int auto_increment primary key,
                     date date not null,
                     datetime datetime not null
 					);
-create table fees(fee_id int auto_increment primary key,
+create table fees(fees_id int auto_increment primary key,
 					tutor_id int not null,
-                    suject_id int not null,
-                    duration double not null,
-                    amount double not null
+                    subject_id int not null,
+                    fee double not null,
+                    constraint UC_fees unique(tutor_id,subject_id)
 					);
 create table lesson(lesson_id int auto_increment primary key,
 					booking_id int not null,

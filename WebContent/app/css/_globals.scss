@@ -259,6 +259,10 @@ select {
   background-repeat: no-repeat;
   background-size: 1.2rem;
   background-position: 1rem 1rem;
+  &_no-icon{
+    background: $white;
+    padding-left: 1rem;
+  }
 }
 
 input[type=file] {
@@ -410,7 +414,9 @@ textarea {
 .proficiency {
   background-image: url(../../images/badge.png);
 }
-
+.rupee{
+  background-image: url(../../images/rupee.png);
+}
 .bank {
   background-image: url(../../images/bank.png);
 }
@@ -472,10 +478,14 @@ caption,
 
 thead {
   background: linear-gradient(150deg, $darkBlue, $lighterBlue);
+  position: sticky;
+  top:-2px;
 }
 
 th {
   color: $white;
+  position: sticky;
+  top:0;
 }
 
 th,
@@ -491,20 +501,22 @@ td {
 tbody tr:nth-child(even) {
   background: $lightBlue;
 }
-
+.tabe_action{
+  display: inline-block;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  justify-items: center;
+  height: 100%;
+  a{
+    text-align: center;
+  }
+}
 .white-table {
   box-shadow: none;
-  width: max-content;
-  max-width: 100%;
-
-  @include breakpoint-down(medium) {
-    max-width: none;
-  }
-
+  width: 100%;
   thead {
-    background: $white;
-    border: solid $lightBlue;
-    border-width: 1.5px 0 1.5px 0;
+    background: $lightBlue;
 
     th {
       color: $dark;
@@ -515,7 +527,9 @@ tbody tr:nth-child(even) {
       }
     }
   }
-
+  tr:nth-child(even){
+    background: $white;
+  }
   td {
     border: solid $lightBlue;
     border-width: 0 0 1.5px 0;
@@ -999,7 +1013,43 @@ tbody tr:nth-child(even) {
     }
   }
 }
-
+.big-green-tick{
+  background-color: $greenish;
+  display: block;
+  height: 8rem;
+  width: 8rem;
+  border-radius: 50%;
+  margin: 1rem auto;
+  position: relative;
+  &::after{
+    display: block;
+    position: absolute;
+    content: "";
+    height: 6rem;
+    width: 1rem;
+    bottom: 2.1rem;
+    left: 2.25rem;
+    background-color: $white;
+    border-radius: 0.5rem;
+    transform-origin: 0px 6rem;
+    transform: rotate(40deg);
+    animation: big-tick-stem ease-in-out 0.7s forwards;
+  }
+  &::before{
+    display: block;
+    position: absolute;
+    content: "";
+    background-color: $white;
+    height: 1rem;
+    width: 3rem;
+    top: 3.8rem;
+    left: 1.5rem;
+    border-radius: 0.5rem;
+    transform-origin: 0px 0px;
+    transform: rotate(30deg) ;
+    animation: big-tick-kick ease-in-out 0.3s forwards;
+  }
+}
 .form-info {
   display: block;
   width: max-content;
