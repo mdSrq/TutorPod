@@ -23,7 +23,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
-import com.TutorPod.dao.AddressDAO;
 import com.TutorPod.dao.BankAccDAO;
 import com.TutorPod.dao.NotificationDAO;
 import com.TutorPod.dao.TutorDAO;
@@ -46,7 +45,6 @@ public class UserController extends HttpServlet {
 	private NotificationDAO notifDAO;
 	private BankAccDAO bankAccDAO;
 	private TutorDAO tutorDAO;
-	private AddressDAO addressDAO;
 	public void init() throws ServletException {
 		super.init();
 		try {
@@ -55,7 +53,6 @@ public class UserController extends HttpServlet {
 			notifDAO = new NotificationDAO(dataSource);
 			bankAccDAO = new BankAccDAO(dataSource);
 			tutorDAO = new TutorDAO(dataSource);
-			addressDAO = new AddressDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -73,7 +70,7 @@ public class UserController extends HttpServlet {
 			case"logout":
 				session.removeAttribute("USER");
 				session.removeAttribute("TUTOR");
-				session.removeAttribute("ADDRESS");
+				session.removeAttribute("BANK_ACC");
 				session.removeAttribute("DASHBOARD_TYPE");
 				response.sendRedirect("./");
 				break;
@@ -105,13 +102,12 @@ public class UserController extends HttpServlet {
 				User user = userDAO.getUser(username);
 				if(user!=null) {
 					if(user.getPassword().equals(password)) {
+						user.setPassword(null);
 						session.setAttribute("USER", user);
 						session.setAttribute("DASHBOARD_TYPE", "USER");
 						if(user.getBank_acc_id()>0)
 							session.setAttribute("BANK_ACC", bankAccDAO.getBankAcc(user.getBank_acc_id()));
 						Tutor tutor = tutorDAO.getTutorByUserID(user.getUser_id());
-						if(tutor.getAddress_id()>0 && tutor.getProfile_status().equals("NewApply"))
-							session.setAttribute("ADDRESS", addressDAO.getAddress(tutor.getAddress_id()));
 						session.setAttribute("TUTOR", tutor);
 						
 						out.write("Signup Success");
@@ -127,11 +123,19 @@ public class UserController extends HttpServlet {
 				out.write(uploadPhoto(request));
 				break;
 			case "saveBasicInfo":
-				if(request.getParameter("cmd2")!=null)
+				if(request.getParameter("cmd2")!=null) {
 					if(request.getParameter("cmd2").equals("addUser")) {
-						out.write(addUser(request,"Your user profile is created. Click to view settings.","./AccountSettings"));
+						if(session.getAttribute("USER")==null)
+							out.write(
+									addUser(request,"Your user profile is created. Click to view settings.","./AccountSettings")
+									+" "+
+									uploadPhoto(request)
+									);
+						else
+							out.write(updateUser(request,(User)session.getAttribute("USER")));
 					}
-				out.write(uploadPhoto(request));
+				}else
+					out.write(uploadPhoto(request));
 				break;
 			case "removePhoto":
 				user = (User)session.getAttribute("USER");
@@ -167,6 +171,7 @@ public class UserController extends HttpServlet {
 				String email_id = request.getParameter("email_id");
 				password = request.getParameter("password");
 				user = (User)session.getAttribute("USER");
+				user = userDAO.getUser(user.getUser_id());
 				if(user.getPassword().equals(password)) {
 					user.setUsername(username);
 					user.setEmail_id(email_id);
@@ -182,6 +187,7 @@ public class UserController extends HttpServlet {
 				password = request.getParameter("password");
 				String newPassword = request.getParameter("newPassword");
 				user = (User)session.getAttribute("USER");
+				user = userDAO.getUser(user.getUser_id());
 				if(user.getPassword().equals(password)) {
 					user.setPassword(newPassword);
 					if(userDAO.updateUser(user)) {
@@ -276,16 +282,42 @@ public class UserController extends HttpServlet {
 			if(walletDAO.addWallet(new Wallet(0.0,user_id))) {
 				int wallet_id = walletDAO.getRecentWallet().getWallet_id();
 				if( userDAO.updateUserField("wallet_id", ""+wallet_id, true, user_id)) {
+					user.setPassword(null);
 					request.getSession().setAttribute("USER", user);
 					request.getSession().setAttribute("DASHBOARD_TYPE", "USER");
 					userDAO.Commit();
 					userDAO.setAutoCommit(1);
-					notifDAO.addNotification(new Notification("Welcome to TutorPod!. We're happy to see you here. Happy Learning :)","#",datetime,user_id,-1,false,false));
+					notifDAO.addNotification(new Notification("Welcome to TutorPod! &#128522;","#",datetime,user_id,-1,false,false));
 					notifDAO.addNotification(new Notification(notification,link,datetime,user_id,-1,false,false));
 					return " Account Created ";
 				}
 			}	
 		}
 		return(" Failed to create account ");
+	}
+	private String updateUser(HttpServletRequest request,User user)throws Exception{
+		String fname = request.getParameter("fname").strip();
+		String lname = request.getParameter("lname").strip();
+		String username = request.getParameter("username").strip();
+		String gender = request.getParameter("gender").strip();
+		String email_id = request.getParameter("email_id").strip();
+		String mobile_no = request.getParameter("mobile_no").strip();
+		user = userDAO.getUser(user.getUser_id());
+		user.setFname(fname);
+		user.setLname(lname);
+		user.setUsername(username);
+		user.setGender(gender);
+		user.setEmail_id(email_id);
+		user.setMobile_no(mobile_no);
+		if(userDAO.updateUser(user)) {
+			user.setPassword(null);
+			request.getSession().setAttribute("USER", user);
+			if(request.getParameter("photo")!=null) {
+				uploadPhoto(request);
+			}
+			return "Update Created ";
+		}else
+			return "Update Failed ";
+		
 	}
 }

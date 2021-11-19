@@ -111,6 +111,23 @@ public class TutorDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public boolean deleteLanguageInfo(int tutor_id)throws Exception{
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "delete from language_info where tutor_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, tutor_id);
+			if(Stmt.executeUpdate()>0)
+				return true;
+			else
+				return false;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,null);
+		}
+	}
 	public boolean addLanguage(int language_id,int tutor_id)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;

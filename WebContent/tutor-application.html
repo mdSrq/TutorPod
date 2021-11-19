@@ -185,6 +185,25 @@
     </header>
     <main class="grey-container">
         <div class="main__form-container main__form-container_shadowed">
+            <span class="big-green-tick"></span>
+            <h1 class="thin-H1 ">Application Submitted</h1>
+            <div class="main__form">
+                <p>Your application is submitted. You will be able to provide lessons to learners once your application
+                    is approved. </p>
+                <p>Until then you can use TutodPod as a learner and you can also edit your details.</p>
+                <ul>
+                    <li>
+                        Click on your profile in navigation bar then click <strong>Account Settings</strong> to see and change your profile details.
+                    </li>
+                    <li>
+                        Click on your profile in navigation bar then click <strong>Switch to Tutor</strong> or <strong>Switch to Learner</strong> to switch between two profiles and see dashboard options for respective profile.
+                    </li>
+                </ul>
+                <p> <strong>We wish you a great learning and teacher experience.</strong> </p>
+            </div>
+        </div>
+        
+        <div class="main__form-container main__form-container_shadowed">
             <h1 class="thin-H1 underlined">Tutor Application</h1>
             <div class="tab-selector">
                 <span href="#"
@@ -259,7 +278,6 @@
                     </div>
                 </form>
             </div>
-
             <div class="main__form" id="tab_2">
                 <form  action="#" method="post" class="main__form-section" id="addressForm">
                     <h2 class="main__sub-heading">Enter Your Address</h2>
@@ -344,29 +362,90 @@
                 </form>
             </div>
             <div class="main__form" id="tab_4">
-                <form action="#" method="post"  class="main__form-section" id="experienceForm">
-                    <h2 class="main__sub-heading">Add Your Experience</h2>
-                    <div class="table-container scrollable">
-                        <table aria-label="Experience Table" class="white-table">
-                            <thead>
-                                <th>Experience Type</th>
-                                <th>Experience</th>
-                                <th>Duration</th>
-                                <th>Description</th>
-                                <th>Actions</th>
-                            </thead>
-                            <tbody>
-                                <td>Education</td>
-                                <td>10th <br>Victor Public School <br> Delhi </td>
-                                <td>2010 - 2015</td>
-                                <td>Completed Secondary Education</td>
-                                <td><a href="#" class="button small-round-button delete-button"">Delete</a></td>
-                            </tbody>
-                        </table>
+                    <form action="#" method="post" class="main__form-section" id="experienceForm">
+                        <h2 class="main__sub-heading">Add Your Experience</h2>
+                        <div class="table-container scrollable">
+                            <table aria-label="Experience Table" class="white-table">
+                                <thead>
+                                    <th>Experience Type</th>
+                                    <th>Experience</th>
+                                    <th>Duration</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </thead>
+                                <tbody>
+                                    <td>Education</td>
+                                    <td>10th <br>Victor Public School <br> Delhi
+                                    </td>
+                                    <td>2010 - 2015</td>
+                                    <td>Completed Secondary Education</td>
+                                    <td><a href="#" class="button small-round-button delete-button">Delete</a></td>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class=" button round-single-button ">+</button>
+                        <div class="main__form_footer">
+                            <button class="button flat-wide-button flat-hallow-button backBtn" id="backBtn_tab4">&lt; Back</button>
+                            <button type="submit" class="button flat-wide-button flat-wide-button_narrow saveBtn" id="saveBtn_tab4"
+                                <%if(false){%>disabled<%}%> >Save Details</button>
+                            <button class="button flat-wide-button flat-hallow-button nextBtn" id="nextBtn_tab4" <%if(false){%>disabled
+                                <%}%>
+                                    >Next &gt;</button>
+                        </div>
+                    </form>
+                    <div class="main__form_overlayform">
+                        <a href="#" class="main__form_overlayform_cross">x</a>
+                        <h2 class="main__sub-heading">Add New Experience</h2>
+                        <form action="./TutorController" method="post" class="scrollable">
+                            <div class="form-unit-half-container">
+                                <div class="form-unit form-unit-half">
+                                    <label for="experience_type">Experience Type</label>
+                                    <select name="experience_type" id="experience_type" class="input-with-icon input-with-icon_no-icon">
+                                        <option value="default" selected disabled>Select Experience Type</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Certification">Certification</option>
+                                        <option value="Work Experience">Work Experience</option>
+                                    </select>
+                                </div>
+                                <div class="form-unit form-unit-half">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="input-with-icon input-with-icon_no-icon" name="title"
+                                        placeholder="Enter Title of Experience" required />
+                                </div>
+                            </div>
+                            <div class="form-unit-half-container">
+                                <div class="form-unit form-unit-half">
+                                    <label for="institution">Institution</label>
+                                    <input type="text" class="input-with-icon input-with-icon_no-icon" name="institution"
+                                        placeholder="Enter Institution Name" required />
+                                </div>
+                                <div class="form-unit form-unit-half">
+                                    <label for="institution">Location</label>
+                                    <input type="text" class="input-with-icon input-with-icon_no-icon" name="location"
+                                        placeholder="Enter Location" required />
+                                </div>
+                            </div>
+                            <div class="form-unit-half-container">
+                                <div class="form-unit form-unit-half">
+                                    <label for="start_year">Start Year</label>
+                                    <input type="number" class="input-with-icon input-with-icon_no-icon" name="start_year"
+                                        placeholder="Enter Start Year" required />
+                                </div>
+                                <div class="form-unit form-unit-half">
+                                    <label for="end_year">End Year</label>
+                                    <input type="number" class="input-with-icon input-with-icon_no-icon" name="end_year"
+                                        placeholder="Enter End Year" required />
+                                </div>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <label for="description">Description</label>
+                                <textarea class="input-with-icon input-with-icon_no-icon" required name="bio" id="bio"
+                                    placeholder="Describe your experience in a brief paragraph. In Less than 300 character."></textarea>
+                            </div>
+                            <input type="submit" class="button flat-wide-button" value="Add Experience">
+
+                        </form>
                     </div>
-                <button class=" button round-single-button ">+</button>
-                <button class=" button flat-wide-button flat-wide-button_narrow">Next >></button>
-                </form>
             </div>
         </div>
         </div>
