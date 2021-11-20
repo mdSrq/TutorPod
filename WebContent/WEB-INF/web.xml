@@ -156,4 +156,22 @@
 	    <servlet-name>account-settings</servlet-name>
 	    <url-pattern>/AccountSettings</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>tutor-application</servlet-name>
+    	<jsp-file>/tutor-application.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>tutor-application</servlet-name>
+	    <url-pattern>/TutorApplication</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>notifications</servlet-name>
+    	<jsp-file>/notifications.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>notifications</servlet-name>
+	    <url-pattern>/Notifications</url-pattern>
+	</servlet-mapping>
 </web-app>

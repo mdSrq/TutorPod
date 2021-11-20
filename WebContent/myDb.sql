@@ -8,6 +8,7 @@ create table admin_bank_acc(admin_bank_acc_id int auto_increment primary key,
 					admin_id int not null,
 					bank_acc_id int not null,
 					selected boolean default false
+					 constraint UC_admin_bank_acc unique(admin_id,bank_acc_id)
 					);
 create table user(user_id int auto_increment primary key,
 					fname varchar(25) not null,
@@ -25,44 +26,67 @@ create table user(user_id int auto_increment primary key,
                     bank_acc_id int
 					);
 create table tutor(tutor_id int auto_increment primary key,
-					photo varchar(20) not null,
-                    bio varchar(150) not null,
-                    approval_date date not null,
+                    bio varchar(300) not null,
+                    approval_date date,
                     profile_status varchar(20) not null,
-                    user_id int not null,
+                    user_id int unique not null,
                     address_id int
 					);
 create table address(address_id int auto_increment primary key,
-					street_address varchar(30) not null,
-                    locality varchar(30) not null,
-                    district varchar(20) not null,
-                    state varchar(20) not null,
-                    pin_code varchar(6) not null
+					street_address varchar(100) not null,
+                    locality varchar(50) not null,
+                    district varchar(50) not null,
+                    city varchar(50) not null,
+                    state varchar(50) not null, 
+                    pincode varchar(6) not null,
+                    constraint UC_address unique(street_address,locality,pincode)
 					);
 create table bank_acc(bank_acc_id int auto_increment primary key,
-					bank_name varchar(20) not null,
+					bank_name varchar(50) not null,
                     acc_no varchar(20) not null,
-                    holder_name varchar(30) not null,
+                    holder_name varchar(50) not null,
                     ifsc_code varchar(15) not null,
                     balance long not null,
                     constraint UC_bank_acc unique(bank_name,acc_no,ifsc_code)
 					);
-create table achievement(achievement_id int auto_increment primary key,
-					achivement_type varchar(15) not null,
+create table experience(experience_id int auto_increment primary key,
+					experience_type varchar(15) not null,
                     title varchar(30) not null,
                     institution varchar(30),
                     location varchar(25),
-                    description varchar(50),
+                    description varchar(300),
                     start_year varchar(4),
-                    end_year varchar(5)
+                    end_year varchar(5),
+                    tutor_id int not null,
+                    constraint UC_experience unique(title,start_year,tutor_id)
 					);
 create table language(language_id int auto_increment primary key,
-					language_name varchar(20) not null unique,
-                    proficiency enum('Beginner','Intermediate','Fluent','Native') not null unique
+					language_name varchar(20) not null unique
 					);
-create table lang_info(lang_info_id int auto_increment primary key,
+insert into language(language_name) values('Hindi');
+insert into language(language_name) values('English');
+insert into language(language_name) values('Bengali');
+insert into language(language_name) values('Marathi');
+insert into language(language_name) values('Telugu');
+insert into language(language_name) values('Tamil');
+insert into language(language_name) values('Gujarati');
+insert into language(language_name) values('Urdu');
+insert into language(language_name) values('Kannada');
+insert into language(language_name) values('Odia');
+insert into language(language_name) values('Malayalam');
+insert into language(language_name) values('Punjabi');
+insert into language(language_name) values('Assamese');
+insert into language(language_name) values('Maithili');
+insert into language(language_name) values('Bhojpuri');
+insert into language(language_name) values('Bhili/Bhilodi');
+insert into language(language_name) values('Santali');
+insert into language(language_name) values('Kashmiri');
+insert into language(language_name) values('Nepali');
+insert into language(language_name) values('Sindhi');
+create table language_info(lang_info_id int auto_increment primary key,
 					tutor_id int not null,
-                    language_id int not null
+                    language_id int not null,
+                    constraint UC_language_info unique(tutor_id,language_id)
 					);
 create table course( course_id int auto_increment primary key,
 					course_name varchar(80) unique not null,
@@ -80,11 +104,6 @@ create table course_sub(course_sub_id int auto_increment primary key,
                     subject_id int not null,
                     constraint UC_course_sub unique(course_id,subject_id)
 					);
-create table subject_info(subject_info_id int auto_increment primary key,
-					tutor_id int not null,
-                    subject_id int not null,
-                    teaching_level varchar(10)
-					);
 create table wallet(wallet_id int auto_increment primary key,
 					balance double ,
                     user_id int unique not null
@@ -99,11 +118,11 @@ create table transaction( transaction_id int auto_increment primary key,
                     date date not null,
                     datetime datetime not null
 					);
-create table fees(fee_id int auto_increment primary key,
+create table fees(fees_id int auto_increment primary key,
 					tutor_id int not null,
-                    suject_id int not null,
-                    duration double not null,
-                    amount double not null
+                    subject_id int not null,
+                    fee double not null,
+                    constraint UC_fees unique(tutor_id,subject_id)
 					);
 create table lesson(lesson_id int auto_increment primary key,
 					booking_id int not null,

@@ -19,6 +19,7 @@ function showNavDropdown(){
             document.querySelector("body").style="overflow:hidden";
         }
     })
+    showSignIn();
 }
 dashboardDropdown.forEach(item=>{
     item.addEventListener("click",()=>{

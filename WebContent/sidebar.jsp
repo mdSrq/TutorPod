@@ -49,7 +49,7 @@
                     Teachers
                 </a>
                 <%}%>
-                <a href="#" class="sidebar__link">
+                <a href="./Notifications" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/bell.png" alt="" />
                     </div>
@@ -69,3 +69,8 @@
                 </a>
             </div>
         </div>
+<script>
+    if($("#dash_menu_icon").length<1){
+        $(".header-controls").prepend('<div class="header-controls__dash-menu" id="dash_menu_icon"> <a href="#"><img src="./images/dash_menu.png" alt=""></a> </div>');
+    }
+</script>

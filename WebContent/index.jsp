@@ -1,9 +1,4 @@
 <%@include file="header.jsp" %>
-<%if(session.getAttribute("USER")!=null){ %>
-<div class="hide-for-desktop">
-	<%@include file="sidebar.jsp" %>
-</div>
-<%}%>
 <main>
     <section class="hero container">
         <div class="hero__illustration wide-for-mobile">

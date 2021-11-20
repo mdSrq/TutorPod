@@ -50,6 +50,7 @@ public class BankAccountController extends HttpServlet {
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
 		try {
 			if(request.getParameter("cmd")==null)
 				out.write("request has no command");
@@ -82,6 +83,15 @@ public class BankAccountController extends HttpServlet {
 					out.write("Bank Account Selected");
 				else
 					out.write("Failed to select bank account");
+				break;
+			case "loadBankAcc":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				User user = (User)session.getAttribute("USER");
+				if(user!=null)
+					if(user.getBank_acc_id()>0)
+						responseJSON = new Gson().toJson(bankAccDAO.getBankAcc(user.getBank_acc_id()));
+				out.write(responseJSON);
 				break;
 			default:
 				out.write("Invalid Request");
@@ -121,7 +131,14 @@ public class BankAccountController extends HttpServlet {
 			case "saveBankAcc":
 				String password = request.getParameter("password");
 				User user = (User)session.getAttribute("USER");
-				if(user.getPassword().equals(password)) {
+				user = userDAO.getUser(user.getUser_id());
+				String pass_required = request.getParameter("pass_required");
+				boolean passwordMatched =false;
+				if(pass_required!=null)
+					passwordMatched = pass_required.equals("Not");
+				if(password!=null)
+					passwordMatched	= user.getPassword().equals(password);
+				if((passwordMatched)) {
 					bank_name = request.getParameter("bank_name").strip();
 					acc_no = request.getParameter("acc_no").strip();
 					holder_name = request.getParameter("holder_name").strip();
@@ -184,7 +201,22 @@ public class BankAccountController extends HttpServlet {
 			default:
 				out.write("Invalid Request");
 			}
-		}catch(Exception e) {
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			out.write("This Account Number already exists");
+		}catch(com.mysql.cj.jdbc.exceptions.MysqlDataTruncation e) {
+			String excMsg = e.toString();
+			if(excMsg.contains("bank_name"))
+				out.write("Bank Name is longer than allowed limit(50 characters)");
+			else if(excMsg.contains("acc_no"))
+				out.write("Account Number is longer than allowed limit (20 characters)");
+			else if(excMsg.contains("holder_name"))
+				out.write("Holder Name is longer than allowed limit (50 characters)");
+			else if(excMsg.contains("ifsc_code"))
+				out.write("IFSC Code is longer than allowed limit (15 characters)");
+			else
+				out.write(excMsg);
+		}
+		catch(Exception e) {
 			e.printStackTrace(out);
 		}
 	}

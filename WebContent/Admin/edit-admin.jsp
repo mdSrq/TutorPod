@@ -43,8 +43,7 @@
     function fetchAdminData() {
         $.ajax({
             url: "../AdminController",
-            data: "cmd=editAdmin&admin_id=<%=request.getParameter("
-            admin_id ")%>",
+            data: "cmd=editAdmin&admin_id=<%=request.getParameter("admin_id")%>",
             dataType: "json",
             processData: true,
             success: function (res) {

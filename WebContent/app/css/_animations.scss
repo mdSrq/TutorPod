@@ -170,6 +170,26 @@
     width: 0.93rem;
   }
 }
+@keyframes big-tick-stem{
+  0%{
+    transform: rotate(40deg) scaleY(0);
+
+  }
+  30%{
+    transform: rotate(40deg) scaleY(0);
+  }
+  100%{
+    transform: rotate(40deg) scaleY(1);
+  }
+}
+@keyframes big-tick-kick{
+  from{
+    transform: rotate(45deg) scaleX(0);
+  }
+  to{
+    transform: rotate(45deg) scaleX(1);
+  }
+}
 @keyframes short-life{
   0%{
     opacity: 0;

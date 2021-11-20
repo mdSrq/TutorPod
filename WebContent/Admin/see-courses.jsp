@@ -62,6 +62,7 @@
             success: function (res) {
                 if (res.length < 1) {
                     $("thead").hide();
+                    $("#NoData").remove();
                     $(".main__preview").append(
                         "<p style=\"text-align:center\" id=\"NoData\">No Courses Found</p>");
                 } else {
@@ -108,6 +109,7 @@
                 hideLoading();
                 if (res.length < 1) {
                     $("#popup_table thead").hide();
+                    $("#NoData").remove();
                     $(".scrollable").append(
                         "<p style=\"text-align:center\" id=\"NoData\">No Subjects Found in this course</p>"
                         );

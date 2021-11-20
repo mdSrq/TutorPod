@@ -6,7 +6,8 @@
     flex: 1;
     min-height: 88vh;
     margin: 1.5rem 3rem;
-
+    position: relative;
+    
     @include breakpoint-down(medium) {
         width: 100%;
         flex: unset;
@@ -34,15 +35,16 @@
 
     &__heading {
         font-size: 1.5rem;
-
+        width: 100%;
+        text-align: left;
         @include breakpoint-down(medium) {
             padding: 1rem;
-            width: 100%;
             text-align: center;
         }
     }
 
     &__sub-heading {
+        width: 100%;
         font-size: 1.25rem;
         text-align: center;
     }
@@ -96,19 +98,157 @@
         display: flex;
         flex-flow: column wrap;
         justify-content: center;
+        border-radius: 0.25rem;
         @include breakpoint-down(medium) {
             width: 100%;
             padding: 1rem;
         }
+        &_wider{
+            width: 100%;
+        }
+        &_shadowed{
+            background-color: $white;
+            box-shadow: $shadow2;
+            margin: 0 auto;
+            .tab-selector{
+                width: 100%;
+            }
+        }
     }
 
     &__form {
+        max-width: 100%;
         padding: 3rem;
         padding-top: 0.5rem;
-
         @include breakpoint-down(medium) {
             padding: 0;
+            width: 100%;
         }
-
+        &_footer{
+            max-width: 100%;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            bottom: 0;
+        }
+        &_overlayform{
+            display: none;
+            position: fixed;
+            background-color: $white;
+            box-shadow: $shadow2;
+            border-radius: 0.5rem;
+            top: 4.5rem;
+            width: 50%;
+            height: 80vh;
+            left: 50%;
+            transform: translate(-50%);
+            padding: 1rem 0.5rem;
+            z-index: 99;
+            @include breakpoint-down(medium) {
+                width: 95%;
+            }
+            form{
+                overflow-y: auto;
+                overflow-x: auto;
+                height: 90%;
+                padding: 1rem;
+                padding-bottom: 2rem;
+            }
+            &_cross{
+                position: absolute;
+                display: block;
+                text-align: center;
+                height: 2rem;
+                width: 2rem;
+                top: 0.5rem;
+                border-radius: 50%;
+                right: 0.5rem;
+                font-size: 1.5rem;
+                font-weight: bolder;
+                color: $lightPurple;
+                background-color: $white;
+                box-shadow: $shadow8;
+                transition: all 0.2s ease-in-out;
+                &:hover{
+                    background-color: $lightPurple;
+                    color: $white;
+                }
+                &:active{
+                    transform: scale(0.90);
+                }
+            }
+        }
+    }
+    &__form-section{
+        padding-top: 1rem;
+        width: 100%;
+        min-height: 60vh;
+    }
+    
+    &__notifications-container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 1rem;
+        width: 100%;
+    }
+    &__notification,&__notification_header{
+        width: 100%;
+        background-color: $white;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-items: center;
+        height: max-content;
+        padding: 1rem;
+        border-radius: 0.4rem;
+        margin-bottom: 1rem;
+        &_left{
+            width: max-content;
+            .check-container{
+                display: block;
+                top: -0.4rem;
+                padding-right: 1rem;
+            }
+        }
+        &_middle{
+            flex: 8;
+            font-size: 1rem;
+            @include breakpoint-down(medium) {
+                font-size: 0.9rem;
+            }
+            a{
+                color: $dark;
+            }
+        }
+        &_right{
+            flex: 2;
+            @include breakpoint-down(medium) {
+                text-align: end;
+                font-size: 0.8rem;
+                flex: none;
+                margin-top: 0.5rem;
+                width: 100%;
+            }
+        }
+    }
+    &__notification_header{
+        .main__notification_middle{
+            display: flex;
+            flex-flow: row wrap;
+        }
+    }
+}
+#finalMsg{
+    display: none;
+}
+.grey-container{
+    height: 100%;
+    min-height: 95vh;
+    background-color: #eeeff2;
+    margin-top: -0.5rem;
+    padding: 1.5rem;
+    @include breakpoint-down(medium) {
+        padding: 0;
     }
 }
