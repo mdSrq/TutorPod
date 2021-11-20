@@ -6,6 +6,7 @@
     flex: 1;
     min-height: 88vh;
     margin: 1.5rem 3rem;
+    position: relative;
     
     @include breakpoint-down(medium) {
         width: 100%;
@@ -34,10 +35,10 @@
 
     &__heading {
         font-size: 1.5rem;
-
+        width: 100%;
+        text-align: left;
         @include breakpoint-down(medium) {
             padding: 1rem;
-            width: 100%;
             text-align: center;
         }
     }
@@ -101,6 +102,9 @@
         @include breakpoint-down(medium) {
             width: 100%;
             padding: 1rem;
+        }
+        &_wider{
+            width: 100%;
         }
         &_shadowed{
             background-color: $white;
@@ -179,6 +183,60 @@
         padding-top: 1rem;
         width: 100%;
         min-height: 60vh;
+    }
+    
+    &__notifications-container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 1rem;
+        width: 100%;
+    }
+    &__notification,&__notification_header{
+        width: 100%;
+        background-color: $white;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-items: center;
+        height: max-content;
+        padding: 1rem;
+        border-radius: 0.4rem;
+        margin-bottom: 1rem;
+        &_left{
+            width: max-content;
+            .check-container{
+                display: block;
+                top: -0.4rem;
+                padding-right: 1rem;
+            }
+        }
+        &_middle{
+            flex: 8;
+            font-size: 1rem;
+            @include breakpoint-down(medium) {
+                font-size: 0.9rem;
+            }
+            a{
+                color: $dark;
+            }
+        }
+        &_right{
+            flex: 2;
+            @include breakpoint-down(medium) {
+                text-align: end;
+                font-size: 0.8rem;
+                flex: none;
+                margin-top: 0.5rem;
+                width: 100%;
+            }
+        }
+    }
+    &__notification_header{
+        .main__notification_middle{
+            display: flex;
+            flex-flow: row wrap;
+        }
     }
 }
 #finalMsg{

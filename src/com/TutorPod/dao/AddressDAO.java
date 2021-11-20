@@ -62,6 +62,27 @@ public class AddressDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public int getDuplicateAddress(String street_address,String locality,String pincode)throws Exception{
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from address where street_address=? and ( locality=? and pincode=? )";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setString(1, street_address);
+			Stmt.setString(2, locality);
+			Stmt.setString(3, pincode);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				return Rs.getInt("address_id");
+			}else
+				return 0;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}
+	}
 	public Address getAddressByTutorId(int tutor_id)throws Exception{
 		Address address=null;
 		Connection Conn = null;

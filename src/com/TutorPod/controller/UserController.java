@@ -23,7 +23,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
-import com.TutorPod.dao.BankAccDAO;
 import com.TutorPod.dao.NotificationDAO;
 import com.TutorPod.dao.TutorDAO;
 import com.TutorPod.dao.UserDAO;
@@ -43,7 +42,6 @@ public class UserController extends HttpServlet {
 	private UserDAO userDAO;
 	private WalletDAO walletDAO;
 	private NotificationDAO notifDAO;
-	private BankAccDAO bankAccDAO;
 	private TutorDAO tutorDAO;
 	public void init() throws ServletException {
 		super.init();
@@ -51,7 +49,6 @@ public class UserController extends HttpServlet {
 			userDAO = new UserDAO(dataSource);
 			walletDAO = new WalletDAO(dataSource);
 			notifDAO = new NotificationDAO(dataSource);
-			bankAccDAO = new BankAccDAO(dataSource);
 			tutorDAO = new TutorDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
@@ -66,21 +63,42 @@ public class UserController extends HttpServlet {
 		try {
 			if(request.getParameter("cmd")==null)
 				out.write("request has no command");
+			else
 			switch(request.getParameter("cmd")) {
-			case"logout":
+			
+			case "logout":
 				session.removeAttribute("USER");
 				session.removeAttribute("TUTOR");
-				session.removeAttribute("BANK_ACC");
 				session.removeAttribute("DASHBOARD_TYPE");
 				response.sendRedirect("./");
 				break;
-			case"checkUsername":
+				
+			case "checkUsername":
 				String username = request.getParameter("username");
 				if(userDAO.getUser(username)!=null)
 					out.write("Username Exists");
 				else
 					out.write("Valid Username");
 				break;
+				
+			case "switchToTutor":
+				session.setAttribute("DASHBOARD_TYPE","TUTOR");
+				String requestPage = request.getParameter("page");
+				if(requestPage!=null)
+					response.sendRedirect("./"+requestPage);
+				else
+					response.sendRedirect("./Dashboard");
+				break;
+				
+			case "switchToUser":
+				session.setAttribute("DASHBOARD_TYPE","USER");
+				requestPage = request.getParameter("page");
+				if(requestPage!=null)
+					response.sendRedirect("./"+requestPage);
+				else
+					response.sendRedirect("./Dashboard");
+				break;
+				
 			default:
 				out.write("Invalid Request");
 			}
@@ -105,8 +123,6 @@ public class UserController extends HttpServlet {
 						user.setPassword(null);
 						session.setAttribute("USER", user);
 						session.setAttribute("DASHBOARD_TYPE", "USER");
-						if(user.getBank_acc_id()>0)
-							session.setAttribute("BANK_ACC", bankAccDAO.getBankAcc(user.getBank_acc_id()));
 						Tutor tutor = tutorDAO.getTutorByUserID(user.getUser_id());
 						session.setAttribute("TUTOR", tutor);
 						
@@ -287,7 +303,7 @@ public class UserController extends HttpServlet {
 					request.getSession().setAttribute("DASHBOARD_TYPE", "USER");
 					userDAO.Commit();
 					userDAO.setAutoCommit(1);
-					notifDAO.addNotification(new Notification("Welcome to TutorPod! &#128522;","#",datetime,user_id,-1,false,false));
+					notifDAO.addNotification(new Notification("Welcome to TutorPod :)","#",datetime,user_id,-1,false,false));
 					notifDAO.addNotification(new Notification(notification,link,datetime,user_id,-1,false,false));
 					return " Account Created ";
 				}

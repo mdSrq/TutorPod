@@ -156,8 +156,15 @@ public class TutorController extends HttpServlet {
 					String bio = request.getParameter("bio");
 					String profile_status = "NewApply";
 					User user = (User)session.getAttribute("USER");
-					if( tutorDAO.addTutor(new Tutor(bio,"",profile_status,user.getUser_id(),0)) )
-					session.setAttribute("TUTOR", tutorDAO.getTutorByUserID(user.getUser_id()));
+					if( tutorDAO.addTutor(new Tutor(bio,"",profile_status,user.getUser_id(),0)) ) {
+						Tutor tutor = tutorDAO.getTutorByUserID(user.getUser_id());
+						if(userDAO.updateUserField("tutor_id", ""+tutor.getTutor_id(), true, user.getUser_id())) {
+							user.setTutor_id(tutor.getTutor_id());
+							session.setAttribute("USER", user);
+						}
+						session.setAttribute("TUTOR", tutor);
+					}
+					
 				}else{
 					String bio = request.getParameter("bio");
 					Tutor tutor = (Tutor)session.getAttribute("TUTOR");
@@ -169,6 +176,16 @@ public class TutorController extends HttpServlet {
 				}
 				out.write("TutorController Response");
 				break;
+			case "updateBio":
+				String bio = request.getParameter("bio");
+				Tutor tutor = (Tutor)session.getAttribute("TUTOR");
+				tutor.setBio(bio);
+				if(tutorDAO.updateTutor(tutor)) {
+					session.setAttribute("TUTOR", tutor);
+					out.write("Bio Saved");
+				}else
+					out.write("Failed to save bio");
+				break;
 			case"saveAddress":
 				String street_address = request.getParameter("street_address");
 				 String locality = request.getParameter("locality");
@@ -176,7 +193,7 @@ public class TutorController extends HttpServlet {
 				 String city = request.getParameter("city");
 				 String state = request.getParameter("state");
 				 String pincode = request.getParameter("pincode");
-				 Tutor tutor = (Tutor)session.getAttribute("TUTOR");
+				 tutor = (Tutor)session.getAttribute("TUTOR");
 				 if(tutor!=null)
 					 if(tutor.getAddress_id()>0) {
 						 Address address = addressDAO.getAddress(tutor.getAddress_id());
@@ -191,9 +208,18 @@ public class TutorController extends HttpServlet {
 						 else
 							 out.write("Failed to saved details");
 					 }else {
-						 if(addressDAO.addAddress(new Address(street_address,locality,district,city,state,pincode),tutor.getTutor_id())) {
-							 Address address = addressDAO.getAddressByTutorId(tutor.getTutor_id());
+						 boolean added= false;
+						 int address_id= addressDAO.getDuplicateAddress(street_address, locality, pincode);
+						 Address address=null;
+						 if(address_id==0) {
+							 added = addressDAO.addAddress(new Address(street_address,locality,district,city,state,pincode),tutor.getTutor_id());
+							 address = addressDAO.getAddressByTutorId(tutor.getTutor_id());
 							 tutor.setAddress_id(address.getAddress_id());
+						 }else {
+							 added = true;
+							 tutor.setAddress_id(address_id);
+						 }
+						 if(added) {
 							 session.setAttribute("TUTOR", tutor);
 							 out.write("Details Saved");
 						 }else

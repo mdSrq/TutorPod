@@ -69,8 +69,8 @@ User user = null;
                         <div class="notifications__header">
                             <span class="notifications__header_title">Notifications</span> <a href="#"
                                 class="notifications__header_link_l" onclick="markAllAsSeen()">Mark all as
-                                seen</a> <a href="#" class="notifications__header_link_r">See
-                                all</a>
+                                seen</a> 
+                                <a href="./Notifications" class="notifications__header_link_r">See all</a>
                         </div>
                         <div class="notifications__body"></div>
                     </div>
@@ -91,9 +91,9 @@ User user = null;
 						if(session.getAttribute("TUTOR")!=null){ 
 							if(isTutor){
 						%>
-                        <a href="#">Switch to Learner</a>
+                        <a href="./UserController?cmd=switchToUser">Switch to Learner</a>
                         <%}else{%>
-                        <a href="#">Switch to Tutor</a>
+                        <a href="./UserController?cmd=switchToTutor">Switch to Tutor</a>
                         <%}}%>
                         <%if(isTutor){ %>
                         <a href="#">My Students</a>
@@ -617,7 +617,7 @@ User user = null;
             $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
                 $("#snackbar").html("Some Error Occured");
                 showToast();
-                console.log(jqxhr.responseText + "\n" + thrownError);
+                console.log(jqxhr);
             });
         });
         

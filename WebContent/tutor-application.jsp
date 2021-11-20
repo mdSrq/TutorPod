@@ -542,9 +542,6 @@
                 $("#acc_no").val(response.acc_no);
                 $("#holder_name").val(response.holder_name);
                 $("#ifsc_code").val(response.ifsc_code);  
-                if(response.bank_acc_id != null)
-                    $("#tab-selector_tab6").addClass("tab-selector_completed");
-                getNextButton(6);
             }
         });
     }
@@ -569,7 +566,6 @@
                 $("#description").val(response.description);
             }
         });
-
     }
     function deleteExperience(id){
         if(!confirm("Are you sure you want to delete this experience ?"))

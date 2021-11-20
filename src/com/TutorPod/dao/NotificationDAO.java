@@ -16,21 +16,27 @@ public class NotificationDAO {
 		super();
 		this.dataSource = dataSource;
 	}
-	public List<Notification> getNotifications() throws Exception{
+	public List<Notification> getNotificationsForUser(int user_id,boolean forUser) throws Exception{
 		List<Notification> notifications = new ArrayList<>();
 		
 		Connection Conn = null;
-		Statement Stmt = null;
+		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
 		
 		try {
 			Conn = dataSource.getConnection();
 			
-			String sql = "select * from notification order by notification_id desc";
+			String sql = "select * from notification where ";
+			if(forUser)
+				sql+="user_id";
+			else
+				sql+="tutor_id";
+			sql+="=? order by notification_id desc limit 10";
 			
-			Stmt = Conn.createStatement();
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, user_id);
 			
-			Rs = Stmt.executeQuery(sql);
+			Rs = Stmt.executeQuery();
 			
 			while (Rs.next())
 				notifications.add(createNotification(Rs));				
@@ -41,7 +47,7 @@ public class NotificationDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public List<Notification> getNotificationsForUser(int user_id,boolean forUser) throws Exception{
+	public List<Notification> getAllNotificationsForUser(int user_id,boolean forUser) throws Exception{
 		List<Notification> notifications = new ArrayList<>();
 		
 		Connection Conn = null;
@@ -173,6 +179,27 @@ public class NotificationDAO {
 			String sql = "delete from notification where notification_id=?";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, nofificationId);
+			if(Stmt.executeUpdate()>0)
+				return true;
+			else
+				return false;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,null);
+		}	
+	}
+	public boolean deleteAllNotification(int user_id, boolean isUser)throws Exception{
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "delete from notification where ";
+			if(isUser)
+				sql += "user_id = ?";
+			else
+				sql += "tutor_id = ?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, user_id);
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else

@@ -520,6 +520,25 @@ button:active,
 .delete-button {
   background-image: linear-gradient(90deg, red 0%, #f76363 50%, red 100%);
 }
+.delete-button_with-img {
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.delete-button_with-img:hover {
+  background-color: #d7e3f5;
+}
+.delete-button_with-img:hover img {
+  filter: sepia(1);
+}
+.delete-button_with-img img {
+  display: block;
+  max-width: 70%;
+  height: auto;
+}
 
 .edit-button {
   background-image: linear-gradient(to right, #23049d 0%, #233e8b 50%, #23049d 100%);
@@ -552,6 +571,17 @@ button:active,
   .float-right-btn {
     right: auto;
     left: 1.2rem;
+  }
+}
+
+.float-equally {
+  top: 0;
+  right: 0;
+}
+@media (max-width: 59.9375em) {
+  .float-equally {
+    position: static;
+    margin: 0 auto 0.5rem auto;
   }
 }
 

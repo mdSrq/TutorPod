@@ -49,7 +49,7 @@
                     Teachers
                 </a>
                 <%}%>
-                <a href="#" class="sidebar__link">
+                <a href="./Notifications" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/bell.png" alt="" />
                     </div>

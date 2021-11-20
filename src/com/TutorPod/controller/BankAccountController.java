@@ -131,6 +131,7 @@ public class BankAccountController extends HttpServlet {
 			case "saveBankAcc":
 				String password = request.getParameter("password");
 				User user = (User)session.getAttribute("USER");
+				user = userDAO.getUser(user.getUser_id());
 				String pass_required = request.getParameter("pass_required");
 				boolean passwordMatched =false;
 				if(pass_required!=null)
@@ -200,7 +201,22 @@ public class BankAccountController extends HttpServlet {
 			default:
 				out.write("Invalid Request");
 			}
-		}catch(Exception e) {
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			out.write("This Account Number already exists");
+		}catch(com.mysql.cj.jdbc.exceptions.MysqlDataTruncation e) {
+			String excMsg = e.toString();
+			if(excMsg.contains("bank_name"))
+				out.write("Bank Name is longer than allowed limit(50 characters)");
+			else if(excMsg.contains("acc_no"))
+				out.write("Account Number is longer than allowed limit (20 characters)");
+			else if(excMsg.contains("holder_name"))
+				out.write("Holder Name is longer than allowed limit (50 characters)");
+			else if(excMsg.contains("ifsc_code"))
+				out.write("IFSC Code is longer than allowed limit (15 characters)");
+			else
+				out.write(excMsg);
+		}
+		catch(Exception e) {
 			e.printStackTrace(out);
 		}
 	}

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.TutorPod.dao.NotificationDAO;
+import com.TutorPod.model.Tutor;
 import com.TutorPod.model.User;
 import com.google.gson.Gson;
 
@@ -51,34 +52,53 @@ public class NotificationController extends HttpServlet {
 					User user = (User)session.getAttribute("USER");
 					responseJSON = new Gson().toJson(notifDAO.getNotificationsForUser(user.getUser_id(), true));
 				}else {
-					
+					Tutor tutor = (Tutor)session.getAttribute("TUTOR");
+					responseJSON = new Gson().toJson(notifDAO.getNotificationsForUser(tutor.getTutor_id(), false));
+				}
+			    out.write(responseJSON);
+				break;
+			case "seeAllNotifications":
+				dashboardType = session.getAttribute("DASHBOARD_TYPE").toString();
+				response.setContentType("application/json");
+				responseJSON="";
+				if(dashboardType.equals("USER")) {
+					User user = (User)session.getAttribute("USER");
+					responseJSON = new Gson().toJson(notifDAO.getAllNotificationsForUser(user.getUser_id(), true));
+				}else {
+					Tutor tutor = (Tutor)session.getAttribute("TUTOR");
+					responseJSON = new Gson().toJson(notifDAO.getAllNotificationsForUser(tutor.getTutor_id(), false));
 				}
 			    out.write(responseJSON);
 				break;
 			case"seenNotifications":
 				dashboardType = session.getAttribute("DASHBOARD_TYPE").toString();
+				if(!request.getParameter("notification_id").equals("undefined")) {
+					int notification_id = Integer.parseInt(request.getParameter("notification_id"));
+					boolean success=false;
+					if(dashboardType.equals("USER")) {
+						User user = (User)session.getAttribute("USER");
+						success = notifDAO.seenNotifications(notification_id, user.getUser_id(), true);
+					}else {
+						Tutor tutor = (Tutor)session.getAttribute("TUTOR");
+						success = notifDAO.seenNotifications(notification_id, tutor.getTutor_id(), false);
+					}
+					if(success)
+						out.write("Success");
+					else
+						out.write("Failed");
+				}else
+					out.write("No Notifications");
+				break;
+			case"markAllAsSeen":
+				dashboardType = session.getAttribute("DASHBOARD_TYPE").toString();
 				int notification_id = Integer.parseInt(request.getParameter("notification_id"));
 				boolean success=false;
 				if(dashboardType.equals("USER")) {
 					User user = (User)session.getAttribute("USER");
-					success = notifDAO.seenNotifications(notification_id, user.getUser_id(), true);
-				}else {
-					
-				}
-				if(success)
-					out.write("Success");
-				else
-					out.write("Failed");
-				break;
-			case"markAllAsSeen":
-				dashboardType = session.getAttribute("DASHBOARD_TYPE").toString();
-				notification_id = Integer.parseInt(request.getParameter("notification_id"));
-				success=false;
-				if(dashboardType.equals("USER")) {
-					User user = (User)session.getAttribute("USER");
 					success = notifDAO.markAllAsSeen(notification_id, user.getUser_id(), true);
 				}else {
-					
+					Tutor tutor = (Tutor)session.getAttribute("TUTOR");
+					success = notifDAO.markAllAsSeen(notification_id, tutor.getTutor_id(), false);
 				}
 				if(success)
 					out.write("Success");
@@ -103,11 +123,35 @@ public class NotificationController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
 		try {
 				if(request.getParameter("cmd")==null)
 					out.write("request has no command");
 				switch(request.getParameter("cmd")) {
-				case"":
+				case"deleteNotifications":
+					String selectAll = request.getParameter("selectAll");
+					boolean deleted=false;
+					if(selectAll!=null) {
+						if(session.getAttribute("DASHBOARD_TYPE").toString().equals("USER")) {
+							User user = (User)session.getAttribute("USER");
+							deleted = notifDAO.deleteAllNotification(user.getUser_id(), true);
+						}else {
+							Tutor tutor = (Tutor)session.getAttribute("TUTOR");
+							deleted = notifDAO.deleteAllNotification(tutor.getTutor_id(), false);
+						}
+					}else {
+						String[] notification_ids = request.getParameterValues("notification_ids");
+						int deleteCount=0;
+						for(String notification_id : notification_ids) {
+							if(notifDAO.deleteNotification(Integer.parseInt(notification_id)))
+								deleteCount++;
+						}
+						deleted = deleteCount == notification_ids.length;
+					}
+					if(deleted)
+						out.write("Notifications Deleted");
+					else
+						out.write("Failed to delete notifications");
 					break;
 				default:
 					out.write("Invalid Request");
