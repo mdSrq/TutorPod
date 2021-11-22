@@ -544,6 +544,14 @@ button:active,
   background-image: linear-gradient(to right, #23049d 0%, #233e8b 50%, #23049d 100%);
 }
 
+.green-button {
+  background-image: linear-gradient(to right, green 0%, #5ce49a 50%, green 100%);
+}
+
+.red-button {
+  background-image: linear-gradient(to right, red 0%, #f76363 50%, red 100%);
+}
+
 .float-right-btn {
   position: absolute;
   top: 0.8rem;
@@ -2360,6 +2368,21 @@ tbody tr:nth-child(even) {
 .main__notification_header .main__notification_middle {
   display: flex;
   flex-flow: row wrap;
+}
+.main__availability_container {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+}
+.main__availability_form, .main__availability_calendar {
+  background-color: #fff;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  flex: 1;
+  border-radius: 0.4rem;
+  padding: 1rem 1rem 2rem;
+}
+.main__availability_form {
+  margin-right: 2rem;
 }
 
 #finalMsg {

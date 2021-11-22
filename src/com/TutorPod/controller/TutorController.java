@@ -2,6 +2,11 @@ package com.TutorPod.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -17,12 +22,15 @@ import javax.sql.DataSource;
 import com.TutorPod.dao.AddressDAO;
 import com.TutorPod.dao.ExperienceDAO;
 import com.TutorPod.dao.FeesDAO;
+import com.TutorPod.dao.NotificationDAO;
 import com.TutorPod.dao.TutorDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.model.Address;
 import com.TutorPod.model.Experience;
 import com.TutorPod.model.Fees;
+import com.TutorPod.model.Notification;
 import com.TutorPod.model.Tutor;
+import com.TutorPod.model.TutorInfo;
 import com.TutorPod.model.User;
 import com.google.gson.Gson;
 
@@ -37,6 +45,7 @@ public class TutorController extends HttpServlet {
     private ExperienceDAO experienceDAO;
     private FeesDAO feesDAO;
     private UserDAO userDAO;
+    private NotificationDAO notificationDAO;
 	public void init() throws ServletException {
 		super.init();
 		try {
@@ -45,6 +54,7 @@ public class TutorController extends HttpServlet {
 			experienceDAO = new ExperienceDAO(dataSource);
 			feesDAO = new FeesDAO(dataSource);
 			userDAO = new UserDAO(dataSource);
+			notificationDAO = new NotificationDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -126,6 +136,21 @@ public class TutorController extends HttpServlet {
 					responseJSON = new Gson().toJson(feesDAO.getFeesByTutorID(tutor.getTutor_id()));
 				}
 				out.write(responseJSON);
+				break;
+			case "loadApplied":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				responseJSON = new Gson().toJson(tutorDAO.getTutorApplications());
+				out.write(responseJSON);
+				break;
+			case "loadAppliedTutors":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				responseJSON = new Gson().toJson(tutorDAO.getTutorApplicantsBasicInfo());
+				out.write(responseJSON);
+				break;
+			case "loadAppliedTutorInfo":
+				
 				break;
 			default:
 				response.getWriter().write("Invalid Request");
@@ -311,11 +336,44 @@ public class TutorController extends HttpServlet {
 				else
 					out.write("Failed to submit");
 				break;
+			case"approveApplication":
+				int tutor_id = Integer.parseInt(request.getParameter("tutor_id"));
+				String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+				if(tutorDAO.updateTutorField("profile_status","Tutor", false, tutor_id) && tutorDAO.updateTutorField("approval_date", date, false, tutor_id))
+					out.write("Application Approved");
+				else
+					out.write("Failed to approve application");
+				break;
+			case"dismissApplication":
+				tutor_id = Integer.parseInt(request.getParameter("tutor_id"));
+				String message = request.getParameter("message");
+				String link = request.getParameter("link");
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
+				Instant instant = Instant.now();
+				String datetime = dateTimeFormatter.format(instant);
+				if(notificationDAO.addNotification(new Notification(message,link,datetime,-1,tutor_id,false,false))) {
+				if(tutorDAO.updateTutorField("profile_status","Dismissed", false, tutor_id) && tutorDAO.updateTutorField("approval_date", null, false, tutor_id))
+					out.write("Application Dismissed");
+				else
+					out.write("Failed to dismiss application");
+				}else
+					out.write("Failed to send notification");
+				break;
 			default:
 				response.getWriter().write("Invalid Request");
 			}
 		}catch(Exception e) {
 			e.printStackTrace(out);
 		}
+	}
+	private TutorInfo getTutorInfo(Tutor tutor)throws Exception{
+		User user = userDAO.getUser(tutor.getUser_id());
+		Address address = addressDAO.getAddressByTutorId(tutor.getTutor_id());
+		List<String[]> languages = tutorDAO.getLanguages(tutor.getTutor_id());
+		List<Experience> experiences = experienceDAO.getExperiencesByTutorId(tutor.getTutor_id());
+		List<Fees> fees = feesDAO.getFeesByTutorID(tutor.getTutor_id());
+		return new TutorInfo(user.getUser_id(), user.getFname(), user.getLname(), user.getUsername(), user.getEmail_id(), user.getMobile_no(),
+				user.getGender(), user.getPhoto(),user.getJoining_date(), tutor.getTutor_id(), tutor.getBio(), tutor.getApproval_date(),
+				tutor.getProfile_status(),address,languages,experiences,fees);
 	}
 }

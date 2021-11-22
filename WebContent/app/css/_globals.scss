@@ -206,7 +206,12 @@ button,
       $lighterBlue 50%,
       $darkBlue 100%);
 }
-
+.green-button{
+  background-image: linear-gradient(to right,green 0%,$greenish 50%,green 100%);
+}
+.red-button{
+  background-image: linear-gradient(to right,red 0%,$lightRed 50%,red 100%);
+}
 .float-right-btn {
   position: absolute;
   top: 0.8rem;

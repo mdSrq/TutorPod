@@ -25,9 +25,6 @@
 		</table>
 	</div>
 </main>
-<div id="snackbar"></div>
-<script src="../app/js/jquery-3.6.0.min.js"></script>
-<script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
 	showLoading();
 	fetchBankAccData();
@@ -122,10 +119,5 @@
 			});
 		}
 	}
-	$(document).ajaxError(function (event, jqxhr, settings, thrownError) {
-		$("#snackbar").html("Some error occured see the log");
-		console.log(jqxhr.responseText + "\n" + thrownError);
-		showToast();
-	});
 </script>
 <%@include file="footer.jsp" %>

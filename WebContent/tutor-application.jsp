@@ -20,6 +20,18 @@
                 </div>
             </div>
         </div>
+<%}else if(profile_status.equals("Tutor")){%>
+	<div class="main__form-container main__form-container_shadowed">
+            <div class="main__form-section">
+                <span class="big-green-tick"></span>
+                <h1 class="thin-H1 ">Already A Tutor </h1>
+                <div class="main__form" style="diplay:block">
+                    <p>You are already a tutor on TutorPod.</p><p>To fill another tutor application form please log out from
+                        this
+                        profile and then revisit this page.</p>
+                </div>
+            </div>
+        </div>
 <%}else{%>
     <div class="main__form-container main__form-container_shadowed" id="applicationForm">
         <h1 class="thin-H1">Tutor Application</h1>

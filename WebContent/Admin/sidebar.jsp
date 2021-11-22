@@ -27,9 +27,9 @@
         </ul>
     </ul>
     <ul class="sidebar__dropdown">
-        <li class="sidebar__dropdown_title">Tutors <span class="sidebar__dropdown_title_arrow">></span></li>
+        <li class="sidebar__dropdown_title">Tutors <span class="sidebar__dot sidebar__dot_outter" id="tutorOutter"></span> <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">
-            <li><a href="#">Tutor Applications</a></li>
+            <li><a href="./TutorApplications">Tutor Applications <span class="sidebar__dot" id="tutorApplicationsDot">2</span></a></li>
             <li><a href="#">See All Tutors</a></li>
         </ul>
     </ul>
@@ -79,3 +79,34 @@
                 src="../images/logout-vector.svg" alt=""></a>
     </div>
 </section>
+<div id="snackbar"></div>
+<script src="../app/js/admin-script.js"></script>
+<script src="../app/js/jquery-3.6.0.min.js"></script>
+<script>
+    function loadTutorApplied(){
+        showLoading();
+        $.ajax({
+            url: "../TutorController",
+            data: "cmd=loadApplied",
+            success: function (response) {
+                hideLoading();
+                var appliedCount = response.length;
+                if(appliedCount>0){
+                    $("#tutorOutter").css("display","inline-block");
+                    $("#tutorApplicationsDot").text(appliedCount).css("display","inline-block");
+                }else{
+                    $("#tutorOutter").css("display","none");
+                    $("#tutorApplicationsDot").text(appliedCount).css("display","none");
+                }
+            }
+        });
+    }
+    $(document).ready(function(){
+        loadTutorApplied();
+    });
+    $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
+        $("#snackbar").html("Some error occured see the log");
+        console.log(jqxhr.responseText + "\n" + thrownError);
+        showToast();
+    });
+</script>

@@ -1,192 +1,143 @@
- <!DOCTYPE html>
- <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
- <head>
-     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="../app/css/admin-styles.css">
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link
-         href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-         rel="stylesheet">
-     <title>TutorPod Admin</title>
- </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../app/css/admin-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>TutorPod Admin</title>
+</head>
 
- <body>
-     <header class="header" id="header">
-         <nav class="flex flex-jc-sb flex-ai-c">
-             <a href="#" id="btnHamburger" class="header__menu">
-                 <span></span>
-                 <span></span>
-                 <span></span>
-             </a>
-             <div href="/" class="header__logo flex flex-ai-c ">
-                 <img src="../images/TutorPod1.svg" alt="TutorPod">
-                 <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span></span>
-             </div>
-         </nav>
-     </header>
-     <section class="sidebar">
-         <div class="sidebar__user">
-             <div class="sidebar__user_avatar">
-                 <img src="../images/avatar.png" alt="Admin">
-             </div>
-             <div class="sidebar__user_info">
-                 <span style="font-size:1.4rem"><strong>admin</strong></span>
-                 <span><em>Administrator</em></span>
-             </div>
-         </div>
-         <ul class="sidebar__dropdown">
-             <li class="sidebar__dropdown_title"><a href="./Dashboard">Dashboard</a></li>
-         </ul>
-         <ul class="sidebar__dropdown">
-             <li class="sidebar__dropdown_title">Courses <span class="sidebar__dropdown_title_arrow">></span></li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="./AddCourse">Add Course</a></li>
-                 <li><a href="./AddSubject">Add Subjects</a></li>
-                 <li><a href="./SeeCourses">See Courses</a></li>
-                 <li><a href="./SeeSubjects">See Subjects</a></li>
-             </ul>
-         </ul>
-         <ul class="sidebar__dropdown">
-             <li class="sidebar__dropdown_title">Users <span class="sidebar__dropdown_title_arrow">></span></li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="#">See All Users</a></li>
-             </ul>
-         </ul>
-         <ul class="sidebar__dropdown">
-             <li class="sidebar__dropdown_title">Tutors <span class="sidebar__dropdown_title_arrow">></span></li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="#">Tutor Applications</a></li>
-                 <li><a href="#">See All Tutors</a></li>
-             </ul>
-         </ul>
-         <ul class="sidebar__dropdown">
-             <li class="sidebar__dropdown_title">Orders <span class="sidebar__dropdown_title_arrow">></span></li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="#">See Placed Orders</a></li>
-                 <li><a href="#">Pending Lessons</a></li>
-                 <li><a href="#">See All Lessons</a></li>
-             </ul>
-         </ul>
-         <ul class="sidebar__dropdown">
-             <li class="sidebar__dropdown_title">Banks Accounts <span class="sidebar__dropdown_title_arrow">></span>
-             </li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="./AddAdminBankAcc">Add Admin Bank Acc</a></li>
-                 <li><a href="./SeeAdminBankAcc">See Admins Bank Acc(s)</a></li>
-                 <li><a href="#">See User Bank Acc(s)</a></li>
-             </ul>
-         </ul>
-         <ul class="sidebar__dropdown acc_dropdown">
-             <li class="sidebar__dropdown_title">Withdraw Requests <span class="sidebar__dropdown_title_arrow">></span>
-             </li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="#">Pending Requests</a></li>
-                 <li><a href="#">Approved Requests</a></li>
-                 <li><a href="#">Rejected Requests</a></li>
-             </ul>
-         </ul>
-         <ul class="sidebar__dropdown">
-             <li class="sidebar__dropdown_title">Reports <span class="sidebar__dropdown_title_arrow">></span></li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="#">Daily Report</a></li>
-                 <li><a href="#">Monthly Report</a></li>
-                 <li><a href="#">Yearly Report</a></li>
-             </ul>
-         </ul>
-         <ul class="sidebar__dropdown acc_dropdown">
-             <li class="sidebar__dropdown_title">Account Settings <span class="sidebar__dropdown_title_arrow">></span>
-             </li>
-             <ul class="sidebar__dropdown_items">
-                 <li><a href="./AddAdmin">Add new Admin</a></li>
-                 <li><a href="./SeeAdmins">Show All Admins</a></li>
-             </ul>
-         </ul>
-         <div class="sidebar__footer">
-             <a href="../" class="sidebar__footer_icon" title="TutorPod FrontEnd"><img
-                     src="../images/marketplace-vector.svg" alt=""></a>
-             <a href="../AdminController?cmd=logout" class="sidebar__footer_icon" title="Log Out"><img
-                     src="../images/logout-vector.svg" alt=""></a>
-         </div>
-     </section>
-     <main class="main">
-         <div class="main__preview">
-             <table aria-label="Course Preview">
-                 <h1 class="main__heading">Admin Bank Accounts Details</h1>
-                 <thead>
-                     <tr>
-                         <th scope="...">S.No.</th>
-                         <th scope="...">Admin Name</th>
-                         <th scope="...">Bank Name</th>
-                         <th scope="...">Account No.</th>
-                         <th scope="...">Holder Name</th>
-                         <th scope="...">IFSC Code</th>
-                         <th scope="...">Balance</th>
-                         <th scope="...">Transactions</th>
-                         <th scope="...">Selected</th>
-                         <th scope="...">Action</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr>
-                         <td>1</td>
-                         <td>admin</td>
-                         <td>SBI</td>
-                         <td>123412341239</td>
-                         <td>Mohd Shariq</td>
-                         <td>SBIN0004844</td>
-                         <td>10</td>
-                         <td><a href="#" onclick="showTransactions(22)">See Transactions</a></td>
-                         <td><span class="checkmark checkmark_selected"></span>
-                        </td>
-                         <td class="main__preview_action"><a href="./EditAdminBankAcc?admin_bank_acc_id=16"
-                                 class="button small-round-button edit-button">Edit</a><a href="#"
-                                 class="button small-round-button delete-button" onclick="deleteAcc(16)">Delete</a></td>
-                     </tr>
-                     <tr>
-                         <td>1</td>
-                         <td>admin</td>
-                         <td>SBI</td>
-                         <td>123412341239</td>
-                         <td>Mohd Shariq</td>
-                         <td>SBIN0004844</td>
-                         <td>10</td>
-                         <td><a href="#" onclick="showTransactions(22)">See Transactions</a></td>
-                         <td><span class="checkmark"></span>
-                        </td>
-                         <td class="main__preview_action"><a href="./EditAdminBankAcc?admin_bank_acc_id=16"
-                                 class="button small-round-button edit-button">Edit</a><a href="#"
-                                 class="button small-round-button delete-button" onclick="deleteAcc(16)">Delete</a></td>
-                     </tr>
-                     <tr>
-                         <td>1</td>
-                         <td>admin</td>
-                         <td>SBI</td>
-                         <td>123412341239</td>
-                         <td>Mohd Shariq</td>
-                         <td>SBIN0004844</td>
-                         <td>10</td>
-                         <td><a href="#" onclick="showTransactions(22)">See Transactions</a></td>
-                         <td><span class="checkmark"></span>
-                        </td>
-                         <td class="main__preview_action"><a href="./EditAdminBankAcc?admin_bank_acc_id=16"
-                                 class="button small-round-button edit-button">Edit</a><a href="#"
-                                 class="button small-round-button delete-button" onclick="deleteAcc(16)">Delete</a></td>
-                     </tr>
-                 </tbody>
-             </table>
-         </div>
-     </main>
-     <div id="snackbar"></div>
-<script>
-    const checkmark = document.querySelectorAll(".checkmark");
-    checkmark.forEach((element)=>{
-        element.addEventListener("click",()=>{
-            element.classList.toggle("checkmark_selected");
-        });
-    });
-</script>
- </html>
+<body>
+    <header class="header" id="header">
+        <nav class="flex flex-jc-sb flex-ai-c">
+            <a href="#" id="btnHamburger" class="header__menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+            <div href="/" class="header__logo flex flex-ai-c ">
+                <img src="../images/TutorPod1.svg" alt="TutorPod">
+                <span class="header__logo_title">Tutor<span class="header__logo_title_part">Pod</span></span>
+            </div>
+        </nav>
+    </header>
+    <section class="sidebar">
+        <div class="sidebar__user">
+            <div class="sidebar__user_avatar">
+                <img src="../images/avatar.png" alt="Admin">
+            </div>
+            <div class="sidebar__user_info">
+                <span style="font-size:1.4rem"><strong>admin</strong></span>
+                <span><em>Administrator</em></span>
+            </div>
+        </div>
+        <ul class="sidebar__dropdown">
+            <li class="sidebar__dropdown_title"><a href="./Dashboard">Dashboard</a></li>
+        </ul>
+        <ul class="sidebar__dropdown">
+            <li class="sidebar__dropdown_title">Courses <span class="sidebar__dropdown_title_arrow">></span></li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="./AddCourse">Add Course</a></li>
+                <li><a href="./SeeCourses">See Courses</a></li>
+                <li><a href="./AddSubject">Add Subjects</a></li>
+                <li><a href="./SeeSubjects">See Subjects</a></li>
+            </ul>
+        </ul>
+        <ul class="sidebar__dropdown">
+            <li class="sidebar__dropdown_title">Users <span class="sidebar__dropdown_title_arrow">></span></li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="#">See All Users</a></li>
+            </ul>
+        </ul>
+        <ul class="sidebar__dropdown">
+            <li class="sidebar__dropdown_title">Tutors <span class="sidebar__dot sidebar__dot_outter"
+                    id="tutorOutter"></span> <span class="sidebar__dropdown_title_arrow">></span></li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="#">Tutor Applications <span class="sidebar__dot" id="tutorApplicationsDot">2</span></a>
+                </li>
+                <li><a href="#">See All Tutors</a></li>
+            </ul>
+        </ul>
+        <ul class="sidebar__dropdown">
+            <li class="sidebar__dropdown_title">Orders <span class="sidebar__dropdown_title_arrow">></span></li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="#">See Placed Orders</a></li>
+                <li><a href="#">Pending Lessons</a></li>
+                <li><a href="#">See All Lessons</a></li>
+            </ul>
+        </ul>
+        <ul class="sidebar__dropdown">
+            <li class="sidebar__dropdown_title">Banks Accounts <span class="sidebar__dropdown_title_arrow">></span></li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="./AddAdminBankAcc">Add Admin Bank Acc</a></li>
+                <li><a href="./SeeAdminBankAcc">See Admins Bank Acc(s)</a></li>
+                <li><a href="#">See User Bank Acc(s)</a></li>
+            </ul>
+        </ul>
+        <ul class="sidebar__dropdown acc_dropdown">
+            <li class="sidebar__dropdown_title">Withdraw Requests <span class="sidebar__dropdown_title_arrow">></span>
+            </li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="#">Pending Requests</a></li>
+                <li><a href="#">Approved Requests</a></li>
+                <li><a href="#">Rejected Requests</a></li>
+            </ul>
+        </ul>
+        <ul class="sidebar__dropdown">
+            <li class="sidebar__dropdown_title">Reports <span class="sidebar__dropdown_title_arrow">></span></li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="#">Daily Report</a></li>
+                <li><a href="#">Monthly Report</a></li>
+                <li><a href="#">Yearly Report</a></li>
+            </ul>
+        </ul>
+        <ul class="sidebar__dropdown acc_dropdown">
+            <li class="sidebar__dropdown_title">Account Settings <span class="sidebar__dropdown_title_arrow">></span>
+            </li>
+            <ul class="sidebar__dropdown_items">
+                <li><a href="./AddAdmin">Add new Admin</a></li>
+                <li><a href="./SeeAdmins">Show All Admins</a></li>
+            </ul>
+        </ul>
+        <div class="sidebar__footer">
+            <a href="../" class="sidebar__footer_icon" title="TutorPod FrontEnd"><img
+                    src="../images/marketplace-vector.svg" alt=""></a>
+            <a href="../AdminController?cmd=logout" class="sidebar__footer_icon" title="Log Out"><img
+                    src="../images/logout-vector.svg" alt=""></a>
+        </div>
+    </section>
+    <div id="snackbar"></div>
+    <main class="main">
+        <div class="main__preview main__table">
+            <table aria-label="Course Data" id="default_table">
+                <h1 class="main__heading">Tutor Applications</h1>
+                <thead>
+                    <tr>
+                        <th scope="...">S.No.</th>
+                        <th scope="...">Full Name</th>
+                        <th scope="...">Contact Info</th>
+                        <th scope="...">Bio</th>
+                        <th scope="...">Status</th>
+                        <th scope="...">Details</th>
+                        <th scope="...">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+
+</html>
