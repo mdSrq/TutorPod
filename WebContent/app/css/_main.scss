@@ -238,6 +238,24 @@
             flex-flow: row wrap;
         }
     }
+    &__availability{
+        &_container{
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            
+        }
+        &_form,&_calendar{
+            background-color: $white;
+            box-shadow: $shadow1;
+            flex: 1;
+            border-radius: 0.4rem;
+            padding: 1rem 1rem 2rem;
+        }
+        &_form{
+            margin-right: 2rem;
+        }
+    }
 }
 #finalMsg{
     display: none;

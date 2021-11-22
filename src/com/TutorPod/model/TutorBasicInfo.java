@@ -1,8 +1,6 @@
 package com.TutorPod.model;
 
-import java.util.List;
-
-public class TutorInfo {
+public class TutorBasicInfo {
 	private int user_id;
 	private String fname;
 	private String lname;
@@ -16,14 +14,9 @@ public class TutorInfo {
 	private String bio;
 	private String approval_date;
 	private String profile_status;
-	private Address address;
-	private List<String[]> languages;
-	private List<Experience> experiences;
-	private List<Fees> fees;
-	public TutorInfo(int user_id, String fname, String lname, String username, String email_id, String mobile_no,
+	public TutorBasicInfo(int user_id, String fname, String lname, String username, String email_id, String mobile_no,
 			String gender, String photo, String joining_date, int tutor_id, String bio, String approval_date,
-			String profile_status, Address address, List<String[]> languages, List<Experience> experiences,
-			List<Fees> fees) {
+			String profile_status) {
 		super();
 		this.user_id = user_id;
 		this.fname = fname;
@@ -38,10 +31,6 @@ public class TutorInfo {
 		this.bio = bio;
 		this.approval_date = approval_date;
 		this.profile_status = profile_status;
-		this.address = address;
-		this.languages = languages;
-		this.experiences = experiences;
-		this.fees = fees;
 	}
 	public int getUser_id() {
 		return user_id;
@@ -120,30 +109,6 @@ public class TutorInfo {
 	}
 	public void setProfile_status(String profile_status) {
 		this.profile_status = profile_status;
-	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	public List<String[]> getLanguages() {
-		return languages;
-	}
-	public void setLanguages(List<String[]> languages) {
-		this.languages = languages;
-	}
-	public List<Experience> getExperiences() {
-		return experiences;
-	}
-	public void setExperiences(List<Experience> experiences) {
-		this.experiences = experiences;
-	}
-	public List<Fees> getFees() {
-		return fees;
-	}
-	public void setFees(List<Fees> fees) {
-		this.fees = fees;
 	}
 	
 }

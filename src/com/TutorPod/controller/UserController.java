@@ -283,13 +283,12 @@ public class UserController extends HttpServlet {
 		String gender = request.getParameter("gender").strip();
 		String email_id = request.getParameter("email_id").strip();
 		String mobile_no = request.getParameter("mobile_no").strip();
-		String profile_status = "New";
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
 		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
 		Instant instant = Instant.now();
 		String joining_date = dateFormatter.format(instant);
 		String datetime = dateTimeFormatter.format(instant);
-		User user = new User(fname,lname,username,password,email_id,mobile_no,gender,profile_status,joining_date);
+		User user = new User(fname,lname,username,password,email_id,mobile_no,gender,joining_date);
 		userDAO.Rollback();
 		userDAO.setAutoCommit(0);
 		if(userDAO.addUser(user)) {
