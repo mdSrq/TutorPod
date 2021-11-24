@@ -345,6 +345,38 @@
     opacity: 0;
   }
 }
+@-webkit-keyframes grow {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 70vh;
+  }
+}
+@keyframes grow {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 70vh;
+  }
+}
+@-webkit-keyframes flip {
+  from {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+@keyframes flip {
+  from {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
 html {
   font-size: 100%;
   box-sizing: border-box;
@@ -602,6 +634,21 @@ button:active,
   margin: 1rem auto;
   font-family: "Courier New", Courier, monospace;
   background-image: linear-gradient(to right, #ff79cd 0%, #aa2ee6 50%, #ff79cd 100%);
+}
+
+.flat-button-filled, .flat-button-hallow {
+  border-radius: 0.2rem;
+}
+
+.flat-button-hallow {
+  background-image: none;
+  color: #23049d;
+  background-color: transparent;
+  border: 1.5px solid #23049d;
+  box-shadow: none;
+}
+.flat-button-hallow:hover {
+  box-shadow: none;
 }
 
 input,
@@ -1560,6 +1607,17 @@ tbody tr:nth-child(even) {
 .slide-out {
   -webkit-animation: slide-out ease-in-out 0.3s forwards;
           animation: slide-out ease-in-out 0.3s forwards;
+}
+
+.grow {
+  -webkit-animation: grow ease-in-out 0.4s forwards;
+          animation: grow ease-in-out 0.4s forwards;
+}
+
+.flip::after {
+  color: #aa2ee6;
+  -webkit-animation: flip ease-in-out 0.4s forwards;
+          animation: flip ease-in-out 0.4s forwards;
 }
 
 .header {

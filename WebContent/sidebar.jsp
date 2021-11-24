@@ -27,6 +27,7 @@
                     </div>
                     Lessons
                 </a>
+                <%if(!isUser){ %>
                 <a href="#" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/group.png" alt="" />
