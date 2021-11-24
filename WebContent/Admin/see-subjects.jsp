@@ -60,8 +60,7 @@
 							.append($("<a>").attr({
 								href: "#",
 								class: "button small-round-button delete-button",
-								onclick: "deleteSubject(" + list.course_sub_id + "," + list
-									.subject_id + ")"
+								onclick: "deleteSubject(" + list.course_sub_id + "," + list.subject_id + ")"
 							}).text("Delete"))
 						);
 				});

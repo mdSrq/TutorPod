@@ -42,7 +42,7 @@
     function fetchData() {
         $.ajax({
             url: "../CourseController",
-            data: "cmd=editCourse&course_id=<%=request.getParameter("course_id ")%>",
+            data: "cmd=editCourse&course_id=<%=request.getParameter("course_id")%>",
             dataType: "json",
             success: function (res) {
                 $("#course_id").val(res.course_id);

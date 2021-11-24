@@ -57,14 +57,3 @@ public class Course {
 				+ ", duration_type=" + duration_type + ", duration=" + duration + "]";
 	}
 }
-/*
-+---------------+-------------+------+-----+---------+----------------+
-| Field         | Type        | Null | Key | Default | Extra          |
-+---------------+-------------+------+-----+---------+----------------+
-| course_id     | int         | NO   | PRI | NULL    | auto_increment |
-| course_name   | varchar(25) | NO   | UNI | NULL    |                |
-| name_abbr     | varchar(6)  | NO   | UNI | NULL    |                |
-| duration_type | varchar(10) | NO   |     | NULL    |                |
-| duration      | int         | NO   |     | NULL    |                |
-+---------------+-------------+------+-----+---------+----------------+
-*/

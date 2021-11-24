@@ -261,7 +261,19 @@ button,
   font-family: 'Courier New', Courier, monospace;
   background-image: linear-gradient(to right, $kindaPink 0%, $lightPurple 50%, $kindaPink 100%);
 }
-
+.flat-button-filled,.flat-button-hallow{
+  border-radius: 0.2rem;
+}
+.flat-button-hallow{
+  background-image: none;
+  color: $darkBlue;
+  background-color: transparent;
+  border: 1.5px solid $darkBlue;
+  box-shadow: none;
+  &:hover{
+    box-shadow: none;
+  }
+}
 //Inputs
 input,
 select {
@@ -1258,4 +1270,14 @@ tbody tr:nth-child(even) {
 
 .slide-out {
   animation: slide-out ease-in-out 0.3s forwards;
+}
+
+.grow{
+  animation: grow ease-in-out 0.4s forwards;
+}
+.flip{
+  &::after{
+    color: $lightPurple;
+    animation: flip ease-in-out 0.4s forwards;
+  }
 }

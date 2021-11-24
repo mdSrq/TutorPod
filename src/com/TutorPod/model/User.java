@@ -138,5 +138,12 @@ public class User {
 	public void setBank_acc_id(int bank_acc_id) {
 		this.bank_acc_id = bank_acc_id;
 	}
+	@Override
+	public String toString() {
+		return "User [user_id=" + user_id + ", fname=" + fname + ", lname=" + lname + ", username=" + username
+				+ ", password=" + password + ", email_id=" + email_id + ", mobile_no=" + mobile_no + ", gender="
+				+ gender + ", photo=" + photo + ", joining_date=" + joining_date + ", tutor_id=" + tutor_id
+				+ ", wallet_id=" + wallet_id + ", bank_acc_id=" + bank_acc_id + "]";
+	}
 	
 }

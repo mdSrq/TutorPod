@@ -192,4 +192,13 @@
 	    <servlet-name>availability</servlet-name>
 	    <url-pattern>/Availability</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>search-tutor</servlet-name>
+    	<jsp-file>/search-tutor.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>search-tutor</servlet-name>
+	    <url-pattern>/SearchTutor</url-pattern>
+	</servlet-mapping>
 </web-app>

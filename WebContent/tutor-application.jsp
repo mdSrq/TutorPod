@@ -13,7 +13,7 @@
             <div class="main__form-section">
                 <span class="big-green-tick"></span>
                 <h1 class="thin-H1 ">Already Applied </h1>
-                <div class="main__form" style="diplay:block">
+                <div class="main__form" style="display:block">
                     <p>You are have already a applied to be a tutor on TutorPod.</p><p>To fill another tutor application form please log out from
                         this
                         profile and then revisit this page.</p>
