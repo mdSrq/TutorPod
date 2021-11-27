@@ -2,34 +2,97 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  position: relative;
   &__heading {
     width: 100%;
     text-align: center;
     font-weight: normal;
     font-size: 1.6rem;
   }
+  &__sub-heading {
+        width: 100%;
+        font-size: 1.25rem;
+        text-align: center;
+  }
+  &_overlayform {
+    display: none;
+    position: fixed;
+    background-color: $white;
+    box-shadow: $shadow2;
+    border-radius: 0.5rem;
+    top: 4.5rem;
+    width: 50%;
+    height: 80vh;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 1rem 0.5rem;
+    z-index: 99;
+
+    @include breakpoint-down(medium) {
+      width: 95%;
+    }
+
+    form {
+      overflow-y: auto;
+      overflow-x: auto;
+      height: 90%;
+      padding: 1rem;
+      padding-bottom: 2rem;
+    }
+
+    &_cross {
+      position: absolute;
+      display: block;
+      text-align: center;
+      height: 2rem;
+      width: 2rem;
+      top: 0.5rem;
+      border-radius: 50%;
+      right: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: bolder;
+      color: $lightPurple;
+      background-color: $white;
+      box-shadow: $shadow8;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: $lightPurple;
+        color: $white;
+      }
+
+      &:active {
+        transform: scale(0.90);
+      }
+    }
+  }
+
   .form_group {
     display: flex;
     flex-flow: row wrap;
     width: 50%;
     padding: 0.5rem;
     font-size: 1rem;
+
     label {
       display: block;
       width: 100%;
       padding-bottom: 0.4rem;
     }
+
     input,
     select {
       width: 100%;
       font-size: 1rem;
       padding: 1rem;
     }
+
     &_submit {
       width: 60%;
       margin: 0 auto;
     }
   }
+
   &__form,
   &__preview {
     background-color: $white;
@@ -41,6 +104,7 @@
     margin: 1rem;
     height: max-content;
     flex: 1;
+
     &_action {
       display: flex;
       flex-flow: row wrap;
@@ -48,21 +112,26 @@
       justify-items: center;
     }
   }
+
   &__form {
     display: flex;
     flex-flow: row wrap;
+
     &_wide {
       flex: none;
       width: 55%;
     }
   }
+
   &__table {
     width: 100%;
   }
 }
+
 @include breakpoint-down(medium) {
   .main {
     flex-flow: column wrap;
+
     &__form,
     &__preview,
     &__form_wide {
@@ -70,32 +139,41 @@
       width: calc(100% - 2rem);
       margin: 0.5rem;
     }
+
     &__form {
       flex-flow: column wrap;
     }
+
     .form_group {
       width: 100%;
+
       &_submit {
         width: 100%;
       }
     }
+
     &__preview {
       tr {
         width: max-content;
       }
+
       td {
         width: min-content;
       }
+
       overflow-x: scroll;
       scrollbar-color: auto;
       scrollbar-width: thin;
+
       &::-webkit-scrollbar {
         width: 0.5rem;
         height: 0.5rem;
       }
+
       &::-webkit-scrollbar-track {
         background: $darkBlue;
       }
+
       &::-webkit-scrollbar-thumb {
         background: $lightPurple;
         border-radius: 0.1rem;

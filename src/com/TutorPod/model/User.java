@@ -10,14 +10,13 @@ public class User {
 	private String mobile_no;
 	private String gender;
 	private String photo;
-	private String profile_status;
 	private String joining_date;
 	private int tutor_id;
 	private int wallet_id;
 	private int bank_acc_id;
 	public User(int user_id, String fname, String lname, String username, String password, String email_id,
-			String mobile_no, String gender, String photo, String profile_status, String joining_date, int tutor_id,
-			int wallet_id, int bank_acc_id) {
+			String mobile_no, String gender, String photo, String joining_date, int tutor_id, int wallet_id,
+			int bank_acc_id) {
 		super();
 		this.user_id = user_id;
 		this.fname = fname;
@@ -28,14 +27,13 @@ public class User {
 		this.mobile_no = mobile_no;
 		this.gender = gender;
 		this.photo = photo;
-		this.profile_status = profile_status;
 		this.joining_date = joining_date;
 		this.tutor_id = tutor_id;
 		this.wallet_id = wallet_id;
 		this.bank_acc_id = bank_acc_id;
 	}
-	public User(String fname, String lname, String username, String password, String email_id,
-			String mobile_no, String gender, String profile_status, String joining_date) {
+	public User(String fname, String lname, String username, String password, String email_id, String mobile_no,
+			String gender, String photo, String joining_date, int tutor_id, int wallet_id, int bank_acc_id) {
 		super();
 		this.fname = fname;
 		this.lname = lname;
@@ -44,7 +42,22 @@ public class User {
 		this.email_id = email_id;
 		this.mobile_no = mobile_no;
 		this.gender = gender;
-		this.profile_status = profile_status;
+		this.photo = photo;
+		this.joining_date = joining_date;
+		this.tutor_id = tutor_id;
+		this.wallet_id = wallet_id;
+		this.bank_acc_id = bank_acc_id;
+	}
+	public User(String fname, String lname, String username, String password, String email_id, String mobile_no,
+			String gender, String joining_date) {
+		super();
+		this.fname = fname;
+		this.lname = lname;
+		this.username = username;
+		this.password = password;
+		this.email_id = email_id;
+		this.mobile_no = mobile_no;
+		this.gender = gender;
 		this.joining_date = joining_date;
 	}
 	public int getUser_id() {
@@ -101,12 +114,6 @@ public class User {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	public String getProfile_status() {
-		return profile_status;
-	}
-	public void setProfile_status(String profile_status) {
-		this.profile_status = profile_status;
-	}
 	public String getJoining_date() {
 		return joining_date;
 	}
@@ -135,28 +142,8 @@ public class User {
 	public String toString() {
 		return "User [user_id=" + user_id + ", fname=" + fname + ", lname=" + lname + ", username=" + username
 				+ ", password=" + password + ", email_id=" + email_id + ", mobile_no=" + mobile_no + ", gender="
-				+ gender + ", photo=" + photo + ", profile_status=" + profile_status + ", joining_date=" + joining_date
-				+ ", tutor_id=" + tutor_id + ", wallet_id=" + wallet_id + ", bank_acc_id=" + bank_acc_id + "]";
+				+ gender + ", photo=" + photo + ", joining_date=" + joining_date + ", tutor_id=" + tutor_id
+				+ ", wallet_id=" + wallet_id + ", bank_acc_id=" + bank_acc_id + "]";
 	}
 	
 }
-/*
-+----------------+-------------------------------+------+-----+---------+----------------+
-| Field          | Type                          | Null | Key | Default | Extra          |
-+----------------+-------------------------------+------+-----+---------+----------------+
-| user_id        | int                           | NO   | PRI | NULL    | auto_increment |
-| fname          | varchar(25)                   | NO   |     | NULL    |                |
-| lname          | varchar(25)                   | YES  |     | NULL    |                |
-| username       | varchar(20)                   | NO   | UNI | NULL    |                |
-| password       | varchar(20)                   | NO   |     | NULL    |                |
-| email_id       | varchar(40)                   | NO   |     | NULL    |                |
-| mobile_no      | varchar(13)                   | NO   |     | NULL    |                |
-| gender         | enum('Male','Female','Other') | NO   |     | NULL    |                |
-| photo          | varchar(20)                   | YES  |     | NULL    |                |
-| profile_status | varchar(20)                   | NO   |     | NULL    |                |
-| joining_date   | date                          | NO   |     | NULL    |                |
-| tutor_id       | int                           | YES  |     | NULL    |                |
-| wallet_id      | int                           | YES  |     | NULL    |                |
-| bank_acc_id    | int                           | YES  |     | NULL    |                |
-+----------------+-------------------------------+------+-----+---------+----------------+
-*/

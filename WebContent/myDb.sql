@@ -2,13 +2,14 @@ create database tutorpod;
 use tutorpod;
 create table admin(admin_id int auto_increment primary key,
 					name varchar(20) unique not null,
-                    password varchar(20) not null,
+                    password varchar(20) not null
 					);
+insert into admin(name,password) values('admin','admin');					
 create table admin_bank_acc(admin_bank_acc_id int auto_increment primary key,
 					admin_id int not null,
 					bank_acc_id int not null,
-					selected boolean default false
-					 constraint UC_admin_bank_acc unique(admin_id,bank_acc_id)
+					selected boolean default false,
+					constraint UC_admin_bank_acc unique(admin_id,bank_acc_id)
 					);
 create table user(user_id int auto_increment primary key,
 					fname varchar(25) not null,
@@ -19,7 +20,6 @@ create table user(user_id int auto_increment primary key,
                     mobile_no varchar(13) unique not null,
                     gender enum('Male','Female','Other') not null,
                     photo varchar(60),
-                    profile_status varchar(20) not null,
                     joining_date date not null,
                     tutor_id int ,
                     wallet_id int,
@@ -52,7 +52,7 @@ create table bank_acc(bank_acc_id int auto_increment primary key,
 create table experience(experience_id int auto_increment primary key,
 					experience_type varchar(15) not null,
                     title varchar(30) not null,
-                    institution varchar(30),
+                    institution varchar(80),
                     location varchar(25),
                     description varchar(300),
                     start_year varchar(4),
@@ -136,6 +136,8 @@ create table availability (availability_id int auto_increment primary key,
 					avail_date Date, 
 					time_from Time  not null,
 					time_to Time  not null,
+					constraint UC_availability_weekday unique(day_of_week,tutor_id),
+					constraint UC_availability_date unique(avail_date,tutor_id),
 					CHECK ((day_of_week IS NULL OR avail_date IS NULL) AND (day_of_week IS NOT NULL OR avail_date IS NOT NULL))
 					);
 create table booking(booking_id int auto_increment primary key,

@@ -107,7 +107,7 @@ public class UserDAO {
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "insert into user(fname, lname, username, password, email_id, mobile_no, gender, profile_status,joining_date) values(?,?,?,?,?,?,?,?,?) ";
+			String sql = "insert into user(fname, lname, username, password, email_id, mobile_no, gender,joining_date) values(?,?,?,?,?,?,?,?) ";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setString(1, user.getFname());
 			Stmt.setString(2, user.getLname());
@@ -116,8 +116,7 @@ public class UserDAO {
 			Stmt.setString(5, user.getEmail_id());
 			Stmt.setString(6, user.getMobile_no());
 			Stmt.setString(7, user.getGender());
-			Stmt.setString(8, user.getProfile_status());
-			Stmt.setString(9, user.getJoining_date());
+			Stmt.setString(8, user.getJoining_date());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else
@@ -132,7 +131,7 @@ public class UserDAO {
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "update user set fname=?, lname=?, username=?, password=?, email_id=?, mobile_no=?, gender=?, photo=?, profile_status=?,joining_date=?,tutor_id=?,wallet_id=?,bank_acc_id=? where user_id=? ";
+			String sql = "update user set fname=?, lname=?, username=?, password=?, email_id=?, mobile_no=?, gender=?, photo=?, joining_date=?,tutor_id=?,wallet_id=?,bank_acc_id=? where user_id=? ";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setString(1, user.getFname());
 			Stmt.setString(2, user.getLname());
@@ -142,12 +141,11 @@ public class UserDAO {
 			Stmt.setString(6, user.getMobile_no());
 			Stmt.setString(7, user.getGender());
 			Stmt.setString(8, user.getPhoto());
-			Stmt.setString(9, user.getProfile_status());
-			Stmt.setString(10, user.getJoining_date());
-			Stmt.setInt(11, user.getTutor_id());
-			Stmt.setInt(12, user.getWallet_id());
-			Stmt.setInt(13, user.getBank_acc_id());
-			Stmt.setInt(14, user.getUser_id());
+			Stmt.setString(9, user.getJoining_date());
+			Stmt.setInt(10, user.getTutor_id());
+			Stmt.setInt(11, user.getWallet_id());
+			Stmt.setInt(12, user.getBank_acc_id());
+			Stmt.setInt(13, user.getUser_id());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else
@@ -222,12 +220,11 @@ public class UserDAO {
 		String mobile_no = Rs.getString("mobile_no");
 		String gender = Rs.getString("gender");
 		String photo = Rs.getString("photo");
-		String profile_status = Rs.getString("profile_status");
 		String joining_date = Rs.getString("joining_date");
 		int tutor_id = Rs.getInt("tutor_id");
 		int wallet_id = Rs.getInt("wallet_id");
 		int bank_acc_id = Rs.getInt("bank_acc_id");
-		return new User(user_id, fname, lname, username, password, email_id, mobile_no, gender, photo, profile_status,joining_date,tutor_id,wallet_id,bank_acc_id);
+		return new User(user_id, fname, lname, username, password, email_id, mobile_no, gender, photo,joining_date,tutor_id,wallet_id,bank_acc_id);
 	}
 	public void setAutoCommit(int setValue)throws Exception {
 		String sql = "set autocommit="+setValue;

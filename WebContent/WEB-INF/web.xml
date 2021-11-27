@@ -167,11 +167,38 @@
 	</servlet-mapping>
 	
 	<servlet>
+   		<servlet-name>tutor-applications</servlet-name>
+    	<jsp-file>/Admin/tutor-applications.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>tutor-applications</servlet-name>
+	    <url-pattern>/Admin/TutorApplications</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
    		<servlet-name>notifications</servlet-name>
     	<jsp-file>/notifications.jsp</jsp-file>
 	</servlet>	
 	<servlet-mapping>
 	    <servlet-name>notifications</servlet-name>
 	    <url-pattern>/Notifications</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>availability</servlet-name>
+    	<jsp-file>/availability.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>availability</servlet-name>
+	    <url-pattern>/Availability</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>search-tutor</servlet-name>
+    	<jsp-file>/search-tutor.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>search-tutor</servlet-name>
+	    <url-pattern>/SearchTutor</url-pattern>
 	</servlet-mapping>
 </web-app>

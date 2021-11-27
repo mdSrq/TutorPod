@@ -238,6 +238,86 @@
             flex-flow: row wrap;
         }
     }
+    &__availability{
+        &_container{
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            
+        }
+        &_form,&_calendar{
+            background-color: $white;
+            box-shadow: $shadow1;
+            flex: 1;
+            border-radius: 0.4rem;
+            padding: 1rem 1rem 2rem;
+        }
+        &_form{
+            margin-right: 2rem;
+        }
+    }
+    &__dashboard-container{
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between; 
+        align-items: flex-start;  
+        height: max-content;
+        min-height: 75vh;
+    }
+    &__big-tile{
+        width: 48%;
+        background-color: $white;
+        height: max-content;
+        min-height: 15rem;
+        padding: 1rem;
+        box-shadow: $shadow1;
+        border-radius: 0.4rem;
+        p{
+            text-align: center;
+        }
+    }
+    &__tile{
+        background-color: $white;
+        box-shadow: $shadow1;
+        border-radius: 0.4rem;
+        display: flex;
+        flex-flow: row wrap;
+        width: 30%;
+        &_title{
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+        }
+        &_img{
+            width: 25%;
+            padding: 1rem;
+            background-color: $lightBlue;
+            border-radius: 50%;
+            margin: 0 0 1rem 1rem;
+            img{
+                display: block;
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        &_number{
+            width: 63%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            margin: 0 1rem 1rem 0;
+            span{
+                display: block;
+                font-size: 1.6rem;
+                width: 100%;
+                padding-left: 1rem;
+                text-align: center;
+            }
+        }
+    }
 }
 #finalMsg{
     display: none;

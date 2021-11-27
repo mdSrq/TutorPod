@@ -16,9 +16,6 @@ import com.TutorPod.dao.CourseDAO;
 import com.TutorPod.model.Course;
 import com.google.gson.Gson;
 
-/**
- * Servlet implementation class CourseController
- */
 @WebServlet("/CourseController")
 public class CourseController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

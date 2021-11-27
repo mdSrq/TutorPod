@@ -14,11 +14,11 @@
                     Account Settings
                 </a>
                 <%if(!isUser){ %>
-                     <a href="#" class="sidebar__link">
+                     <a href="./Availability" class="sidebar__link">
                     	<div class="sidebar__link_icon">
                         	<img src="./images/calendar.png" alt="" />
                     	</div>
-                   	 	Availability Calendar
+                   	 	Availability
                 	</a>
                <%}%>
                 <a href="#" class="sidebar__link">
@@ -28,12 +28,6 @@
                     Lessons
                 </a>
                 <%if(!isUser){ %>
-                <a href="#" class="sidebar__link">
-                    <div class="sidebar__link_icon">
-                        <img src="./images/notes.png" alt="" />
-                    </div>
-                    Lesson Notes
-                </a>
                 <a href="#" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/group.png" alt="" />

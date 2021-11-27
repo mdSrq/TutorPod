@@ -34,9 +34,6 @@
         </div>
     </form>
 </main>
-<div id="snackbar"></div>
-<script src="../app/js/jquery-3.6.0.min.js"></script>
-<script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
     showLoading();
     $(document).ready(fetchData());
@@ -45,8 +42,7 @@
     function fetchData() {
         $.ajax({
             url: "../CourseController",
-            data: "cmd=editCourse&course_id=<%=request.getParameter("
-            course_id ")%>",
+            data: "cmd=editCourse&course_id=<%=request.getParameter("course_id")%>",
             dataType: "json",
             success: function (res) {
                 $("#course_id").val(res.course_id);
@@ -73,11 +69,6 @@
             $form.trigger("reset");
         });
         event.preventDefault();
-    });
-    $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
-        $("#snackbar").html("Some error occured see the log");
-        console.log(jqxhr.responseText + "\n" + thrownError);
-        showToast();
     });
 </script>
 <%@include file="footer.jsp" %>

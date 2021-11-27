@@ -46,9 +46,6 @@
         </table>
     </div>
 </div>
-<div id="snackbar"></div>
-<script src="../app/js/jquery-3.6.0.min.js"></script>
-<script src="../app/js/admin-script.js"></script>
 <script type="text/javascript">
     showLoading();
     fetchData();
@@ -70,7 +67,6 @@
                     $("#NoData").remove();
                 }
                 $("tbody").empty();
-                var data = ""
                 $.each(res, function (index, list) {
                     $("<tr>").appendTo($("#default_table tbody"))
                         .append($("<td>").text(index + 1))
@@ -179,11 +175,6 @@
     $("#btnCross").click(function () {
         $(".overlaydiv").css("animation", "fade-out ease-in 0.3s forwards");
         $(".overlaydiv").css("visibility", "hidden");
-    });
-    $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
-        $("#snackbar").html("Some error occured see the log");
-        console.log(jqxhr.responseText + "\n" + thrownError);
-        showToast();
     });
 </script>
 <%@include file="footer.jsp" %>

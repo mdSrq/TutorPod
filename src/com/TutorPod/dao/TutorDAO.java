@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.TutorPod.model.Tutor;
+import com.TutorPod.model.TutorBasicInfo;
 
 public class TutorDAO {
 	private DataSource dataSource;
@@ -40,6 +41,78 @@ public class TutorDAO {
 			return tutors;
 		}
 		finally {
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public List<Tutor> getTutorApplications() throws Exception{
+		List<Tutor> tutors = new ArrayList<>();
+		
+		Connection Conn = null;
+		Statement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from tutor where profile_status='Applied' order by tutor_id asc";
+			
+			Stmt = Conn.createStatement();
+			
+			Rs = Stmt.executeQuery(sql);
+			
+			while (Rs.next()) {
+				
+				Tutor tempTutor = createTutor(Rs);
+				tutors.add(tempTutor);				
+			}
+			return tutors;
+		}
+		finally {
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public List<TutorBasicInfo> getTutorApplicantsBasicInfo() throws Exception{
+		List<TutorBasicInfo> tutors = new ArrayList<>();
+		
+		Connection Conn = null;
+		Statement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from tutor inner join user on tutor.user_id = user.user_id where profile_status like 'Applied' order by tutor.tutor_id asc";
+			
+			Stmt = Conn.createStatement();
+			
+			Rs = Stmt.executeQuery(sql);
+			
+			while (Rs.next()) {
+				
+				TutorBasicInfo tempTutor = createTutorBasicInfo(Rs);
+				tutors.add(tempTutor);
+			}
+			return tutors;
+		}
+		finally {
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public TutorBasicInfo getTutorBasicInfo(int tutor_id)throws Exception{
+		TutorBasicInfo tutor=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from tutor inner join user on tutor.user_id = user.user_id where tutor.tutor_id=? ";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, tutor_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				tutor = createTutorBasicInfo(Rs);
+			}
+			return tutor;
+		}finally {
+			// close JDBC objects
 			close(Conn,Stmt,Rs);
 		}	
 	}
@@ -268,5 +341,23 @@ public class TutorDAO {
 		int user_id = Rs.getInt("user_id");
 		int address_id = Rs.getInt("address_id");
 		return new Tutor(tutor_id, bio, approval_date, profile_status, user_id, address_id);
+	}
+	private TutorBasicInfo createTutorBasicInfo(ResultSet Rs)throws Exception{
+		int user_id = Rs.getInt("user_id");
+		String fname = Rs.getString("fname");
+		String lname = Rs.getString("lname");
+		String username = Rs.getString("username");
+		String email_id = Rs.getString("email_id");
+		String mobile_no = Rs.getString("mobile_no");
+		String gender = Rs.getString("gender");
+		String photo = Rs.getString("photo");
+		String joining_date = Rs.getString("joining_date");
+		int tutor_id = Rs.getInt("tutor_id");
+		String bio = Rs.getString("bio");
+		String approval_date = Rs.getString("approval_date");
+		String profile_status = Rs.getString("profile_status");
+		return new TutorBasicInfo(user_id,fname,lname,username,email_id,
+				mobile_no, gender, photo, joining_date, tutor_id, bio,
+				approval_date, profile_status);
 	}
 }
