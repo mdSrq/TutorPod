@@ -361,6 +361,22 @@
     max-height: 70vh;
   }
 }
+@-webkit-keyframes shrink {
+  from {
+    max-height: 70vh;
+  }
+  to {
+    max-height: 0;
+  }
+}
+@keyframes shrink {
+  from {
+    max-height: 70vh;
+  }
+  to {
+    max-height: 0;
+  }
+}
 @-webkit-keyframes flip {
   from {
     transform: rotate(90deg);

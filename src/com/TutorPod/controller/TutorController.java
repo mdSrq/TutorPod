@@ -5,8 +5,10 @@ import java.io.PrintWriter;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -69,6 +71,7 @@ public class TutorController extends HttpServlet {
 		try {
 			if(request.getParameter("cmd")==null)
 				out.write("request has no command");
+			else
 			switch(request.getParameter("cmd")) {
 			case "loadBasicInfo":
 				String responseJSON="[]";
@@ -165,6 +168,7 @@ public class TutorController extends HttpServlet {
 		try {
 			if(request.getParameter("cmd")==null)
 				out.write("request has no command");
+			else
 			switch(request.getParameter("cmd")) {
 			case "saveBasicInfo":
 					if((User)session.getAttribute("USER")!=null) {
@@ -362,6 +366,27 @@ public class TutorController extends HttpServlet {
 				}
 				else
 					out.write("Failed to dismiss application");
+				break;
+			case"searchTutor":
+				subject_id=0;
+				if(request.getParameter("subject_id")!=null)
+					subject_id = Integer.parseInt(request.getParameter("subject_id"));
+				String[] avail = request.getParameterValues("avail_days");
+				List<Integer> avail_days = new ArrayList<Integer>();
+				if(avail_days!=null)
+				for(String temp : avail) {
+					avail_days.add(Integer.parseInt(temp));
+				}
+				String keyword = request.getParameter("keyword");
+				String responseJSON="[]";
+				response.setContentType("application/json");
+				ListIterator<Tutor> tutors = tutorDAO.searchTutor(subject_id, avail_days, keyword).listIterator();
+				List<TutorInfo> tutorsInfo = new ArrayList<>();
+				while(tutors.hasNext()) {
+					tutorsInfo.add(getTutorInfo(tutors.next()));
+				}
+				responseJSON = new Gson().toJson(tutorsInfo);
+				out.write(responseJSON);
 				break;
 			default:
 				response.getWriter().write("Invalid Request");

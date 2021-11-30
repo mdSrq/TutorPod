@@ -42,6 +42,7 @@ public class AdminController extends HttpServlet {
 		try {
 			if(request.getParameter("cmd")==null)
 				out.write("request has no command");
+			else
 			switch(request.getParameter("cmd")) {
 				case "logout":
 					request.getSession().removeAttribute("ADMIN");
