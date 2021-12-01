@@ -373,7 +373,7 @@ public class TutorController extends HttpServlet {
 					subject_id = Integer.parseInt(request.getParameter("subject_id"));
 				String[] avail = request.getParameterValues("avail_days");
 				List<Integer> avail_days = new ArrayList<Integer>();
-				if(avail_days!=null)
+				if(avail!=null)
 				for(String temp : avail) {
 					avail_days.add(Integer.parseInt(temp));
 				}

@@ -91,7 +91,7 @@ public class TutorDAO {
 				sql+="inner join availability on availability.tutor_id = tutor.tutor_id ";
 				filterAvailability = true;
 			}
-			if(keyword!=null) {
+			if(!keyword.isEmpty()) {
 				sql+="inner join user on user.user_id=tutor.user_id ";
 				filterKeyword = true;
 			}

@@ -162,6 +162,37 @@
         $.post("./TutorController",form.serialize(),function(response){
             hideLoading();
             console.log(response);
+            $(".search__results_container").empty().append("<h1>").addClass("main__heading").text(response.length+" Tutors Found");
+            $.each(response,function(i,tutor){
+                $("<div>").addClass("search__result").appendTo($(".search__results_container"))
+                .append($("<div>").addClass("search__result_profile")
+                    .append($("<div>").addClass("search__result_profile_img")
+                        .append($("<img>").prop({"src":"./TutorPod_Photos/Users/"+tutor.photo,"alt":tutor.fname+" "+tutor.lname+"'s Photo"})) )
+                    .append($("<p>").addClass("search__result_profile_price"))
+                    .append($("<div>").addClass("search__result_profile_buttons")
+                        .append($("<button>").addClass("flat-button-filled").text("Book Now").attr("onclick","bookTutor("+tutor.tutor_id+")")))
+                        .append($("<button>").addClass("flat-button-hallow").text("View Profile").attr("onclick","viewTutor("+tutor.tutor_id+")")))
+                .append($("<div>").addClass("search__result_about")
+                    .append($("<p>").addClass("search__result_about_name").text(tutor.fname+" "+tutor.lname))
+                    .append($("<p>").addClass("search__result_about_info").text(tutor.state))
+                    .append($("<p>").addClass("search__result_about_sub-heading").text("Teaches"))
+                    .append($("<p>").addClass("search__result_about_details").prop("id","subject_tutor_"+tutor.tutor_id))
+                    .append($("<p>").addClass("search__result_about_sub-heading").text("Speaks"))
+                    .append($("<p>").addClass("search__result_about_details").prop("id","langs_tutor_"+tutor.tutor_id))
+                    .append($("<p>").addClass("search__result_about_sub-heading").text("About"))
+                    .append($("<p>").addClass("search__result_about_details").text(tutor.bio)))
+                .append($("<div>").addClass("search__result_availbality")
+                    .append($("<h2>").addClass("main__sub-heading"))
+                    .append($("<table>").addClass("white-table")
+                        .append($("<thead>")
+                            .append($("<th>").text("Day"))
+                            .append($("<th>").text("From"))
+                            .append($("<th>").text("To")))
+                        .append($("<tbody>").prop("id","tbody_tutor_"+tutor.tutor_id))));
+                $.each(tutor.experiences,function(i,exper){
+                    $()
+                });
+            });
         });
     }
 $(document).ready(()=>{
