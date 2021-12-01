@@ -361,6 +361,22 @@
     max-height: 70vh;
   }
 }
+@-webkit-keyframes shrink {
+  from {
+    max-height: 70vh;
+  }
+  to {
+    max-height: 0;
+  }
+}
+@keyframes shrink {
+  from {
+    max-height: 70vh;
+  }
+  to {
+    max-height: 0;
+  }
+}
 @-webkit-keyframes flip {
   from {
     transform: rotate(90deg);
@@ -2595,10 +2611,10 @@ tbody tr:nth-child(even) {
   top: 3.4rem;
   left: 0;
   background-color: #fff;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow-y: auto;
 }
 .search__selector_courses, .search__selector_durations, .search__selector_subjects, .search__check_courses, .search__check_durations, .search__check_subjects {
-  overflow: hidden;
   transition: max-height 3s ease-in-out;
   max-height: 0;
   width: 100%;
@@ -2634,8 +2650,9 @@ tbody tr:nth-child(even) {
   justify-content: space-between;
   flex-flow: row wrap;
   background-color: #fff;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 0 1rem;
+  transition: all 0.2s ease-in-out;
 }
 .search__check .checkboxs-container .check-container {
   font-size: 1rem;
@@ -2646,15 +2663,15 @@ tbody tr:nth-child(even) {
   margin-top: 0.5rem;
 }
 .search__check .checkboxs-container .check {
-  height: 1.1rem;
-  width: 1.1rem;
+  height: 1.5rem;
+  width: 1.5rem;
   margin: 0;
 }
 .search__check .checkboxs-container .check::after {
   top: 0;
-  left: 0.2rem;
-  height: 0.85rem;
-  width: 0.45rem;
+  left: 0.4rem;
+  height: 1rem;
+  width: 0.5rem;
 }
 .search__bar {
   flex: 3;

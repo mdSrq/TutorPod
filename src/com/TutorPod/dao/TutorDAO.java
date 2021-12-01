@@ -70,6 +70,68 @@ public class TutorDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public List<Tutor> searchTutor(int subject_id,List<Integer> avail, String keyword) throws Exception{
+		List<Tutor> tutors = new ArrayList<>();
+		
+		Connection Conn = null;
+		Statement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from tutor ";
+			boolean filterSubject=false;
+			boolean filterAvailability=false;
+			boolean filterKeyword = false;
+			if(subject_id>0) {
+				sql+="inner join fees on fees.tutor_id = tutor.tutor_id ";
+				filterSubject = true;
+			}
+			if(avail.size()>0) {
+				sql+="inner join availability on availability.tutor_id = tutor.tutor_id ";
+				filterAvailability = true;
+			}
+			if(!keyword.isEmpty()) {
+				sql+="inner join user on user.user_id=tutor.user_id ";
+				filterKeyword = true;
+			}
+			if(filterSubject)
+				sql += "where fees.subject_id="+subject_id+" ";
+			if(filterAvailability) {
+			  if(filterSubject)
+				  sql += "and ";
+			  else
+				  sql += "where ";
+			  for(int i=0;i<avail.size();i++){
+				  int avail_day = avail.get(i);
+				  sql += "availability.day_of_week="+avail_day+" ";
+				  if(!(i==avail.size()-1))
+					  sql+="and ";
+			  }
+			}
+			if(filterKeyword) {
+				if(filterSubject||filterAvailability)
+					sql+="and ";
+				else
+					sql+="where ";
+				sql+="( user.fname like "+keyword+" or user.lname like "+keyword+") ";
+			}
+				
+			Stmt = Conn.createStatement();
+			
+			Rs = Stmt.executeQuery(sql);
+			
+			while (Rs.next()) {
+				
+				Tutor tempTutor = createTutor(Rs);
+				tutors.add(tempTutor);				
+			}
+			return tutors;
+		}
+		finally {
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	public List<TutorBasicInfo> getTutorApplicantsBasicInfo() throws Exception{
 		List<TutorBasicInfo> tutors = new ArrayList<>();
 		
