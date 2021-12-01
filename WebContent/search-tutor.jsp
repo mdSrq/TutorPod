@@ -63,7 +63,7 @@
                 </div>
                 <div class="search__result_about">
                     <p class="search__result_about_name">Mohd Shariq</p>
-                    <p class="search__result_about_info">Delhi | 10 Students | 24 Lessons</p>
+                    <p class="search__result_about_info"><span class="location_icon"></span> Delhi | 10 Students | 24 Lessons</p>
                     <p class="search__result_about_sub-heading">Teaches</p>
                     <p class="search__result_about_details">English, Discrete Mathematics, C++ and more</p>
                     <p class="search__result_about_sub-heading">Speaks</p>
@@ -71,7 +71,7 @@
                     <p class="search__result_about_sub-heading">About</p>
                     <p class="search__result_about_details">A BCA student with diploma in computer engineering and love for teaching.</p>
                 </div>
-                <div class="search__result_availbality">
+                <div class="search__result_availability">
                     <h2 class="main__sub-heading">Availability</h2>
                     <table class="white-table">
                         <thead>
@@ -162,6 +162,87 @@
         $.post("./TutorController",form.serialize(),function(response){
             hideLoading();
             console.log(response);
+          //  $(".search__results_container").empty().append("<h1>").addClass("main__heading").text(response.length+" Tutors Found");
+            $.each(response,function(i,tutor){
+                $("<div>").addClass("search__result").appendTo($(".search__results_container"))
+                .append($("<div>").addClass("search__result_profile")
+                    .append($("<div>").addClass("search__result_profile_img")
+                        .append($("<img>").prop({"src":"/TutorPod_Photos/Users/"+tutor.photo,"alt":tutor.fname+" "+tutor.lname+"'s Photo"})) )
+                    .append($("<p>").addClass("search__result_profile_price").prop("id","price_tutor_"+tutor.tutor_id))
+                    .append($("<div>").addClass("search__result_profile_buttons")
+                        .append($("<button>").addClass("flat-button-filled").text("Book Now").attr("onclick","bookTutor("+tutor.tutor_id+")")))
+                        .append($("<button>").addClass("flat-button-hallow").text("View Profile").attr("onclick","viewTutor("+tutor.tutor_id+")")))
+                .append($("<div>").addClass("search__result_about")
+                    .append($("<p>").addClass("search__result_about_name").text(tutor.fname+" "+tutor.lname))
+                    .append($("<p>").addClass("search__result_about_info").text(tutor.address.city))
+                    .append($("<p>").addClass("search__result_about_sub-heading").text("Teaches"))
+                    .append($("<p>").addClass("search__result_about_details").prop("id","subjects_tutor_"+tutor.tutor_id))
+                    .append($("<p>").addClass("search__result_about_sub-heading").text("Speaks"))
+                    .append($("<p>").addClass("search__result_about_details").prop("id","langs_tutor_"+tutor.tutor_id))
+                    .append($("<p>").addClass("search__result_about_sub-heading").text("About"))
+                    .append($("<p>").addClass("search__result_about_details").text(tutor.bio)))
+                .append($("<div>").addClass("search__result_availability")
+                    .append($("<h2>").addClass("main__sub-heading").text("Availability"))
+                    .append($("<table>").addClass("white-table")
+                        .append($("<thead>")
+                            .append($("<th>").text("Day"))
+                            .append($("<th>").text("From"))
+                            .append($("<th>").text("To")))
+                        .append($("<tbody>")
+                                .append($("<tr>")
+                                    .append($("<td>").text("Monday"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_from_day_1_tutor_"+tutor.tutor_id).text("NA"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_to_day_1_tutor_"+tutor.tutor_id).text("NA")))
+                                .append($("<tr>")
+                                    .append($("<td>").text("Tuesday"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_from_day_2_tutor_"+tutor.tutor_id).text("NA"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_to_day_2_tutor_"+tutor.tutor_id).text("NA")))
+                                .append($("<tr>")
+                                    .append($("<td>").text("Wednesday"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_from_day_3_tutor_"+tutor.tutor_id).text("NA"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_to_day_3_tutor_"+tutor.tutor_id).text("NA")))
+                                .append($("<tr>")
+                                    .append($("<td>").text("Thursday"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_from_day_4_tutor_"+tutor.tutor_id).text("NA"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_to_day_4_tutor_"+tutor.tutor_id).text("NA")))
+                                .append($("<tr>")
+                                    .append($("<td>").text("Friday"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_from_day_5_tutor_"+tutor.tutor_id).text("NA"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_to_day_5_tutor_"+tutor.tutor_id).text("NA")))
+                                .append($("<tr>")
+                                    .append($("<td>").text("Saturday"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_from_day_6_tutor_"+tutor.tutor_id).text("NA"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_to_day_6_tutor_"+tutor.tutor_id).text("NA")))
+                                .append($("<tr>")
+                                    .append($("<td>").text("Sunday"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_from_day_7_tutor_"+tutor.tutor_id).text("NA"))
+                                    .append($("<td>").addClass("dynamic").prop("id","time_to_day_7_tutor_"+tutor.tutor_id).text("NA")))
+                            )));
+                var min_fees=tutor.fees[0].fee;
+                var max_fees=0;
+                $.each(tutor.fees,function(i,fee){
+                    if(fee.fee<min_fees)
+                        min_fees=fee.fee;
+                    if(fee.fee>max_fees)
+                        max_fees=fee.fee;
+                    $("#subjects_tutor_"+tutor.tutor_id).append(fee.subject_name+"<br>");
+                });
+                $("#price_tutor_"+tutor.tutor_id).html("&#8377; "+min_fees+" - &#8377; "+max_fees);
+                $.each(tutor.availability,function(i,avail){
+                    $("#time_from_day_"+avail.day_of_week+"_tutor_"+tutor.tutor_id).text(avail.time_from);
+                    $("#time_to_day_"+avail.day_of_week+"_tutor_"+tutor.tutor_id).text(avail.time_to);
+                });
+                $.each(tutor.languages,function(i,lang){
+                    $("#langs_tutor_"+tutor.tutor_id).append(lang[1]);
+                    if(i == lang.length-1){
+                        $("#langs_tutor_"+tutor.tutor_id).append(" and ");
+                        return;
+                    }
+                    if(i == lang.length)
+                    return;
+                    $("#langs_tutor_"+tutor.tutor_id).append(", ");
+                });
+            });
         });
     }
 $(document).ready(()=>{

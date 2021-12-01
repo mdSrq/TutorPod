@@ -22,12 +22,14 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.TutorPod.dao.AddressDAO;
+import com.TutorPod.dao.AvailabilityDAO;
 import com.TutorPod.dao.ExperienceDAO;
 import com.TutorPod.dao.FeesDAO;
 import com.TutorPod.dao.NotificationDAO;
 import com.TutorPod.dao.TutorDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.model.Address;
+import com.TutorPod.model.Availability;
 import com.TutorPod.model.Experience;
 import com.TutorPod.model.Fees;
 import com.TutorPod.model.Notification;
@@ -48,6 +50,7 @@ public class TutorController extends HttpServlet {
     private FeesDAO feesDAO;
     private UserDAO userDAO;
     private NotificationDAO notificationDAO;
+    private AvailabilityDAO availabilityDAO;
 	public void init() throws ServletException {
 		super.init();
 		try {
@@ -57,6 +60,7 @@ public class TutorController extends HttpServlet {
 			feesDAO = new FeesDAO(dataSource);
 			userDAO = new UserDAO(dataSource);
 			notificationDAO = new NotificationDAO(dataSource);
+			availabilityDAO = new AvailabilityDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -373,7 +377,7 @@ public class TutorController extends HttpServlet {
 					subject_id = Integer.parseInt(request.getParameter("subject_id"));
 				String[] avail = request.getParameterValues("avail_days");
 				List<Integer> avail_days = new ArrayList<Integer>();
-				if(avail_days!=null)
+				if(avail!=null)
 				for(String temp : avail) {
 					avail_days.add(Integer.parseInt(temp));
 				}
@@ -401,9 +405,10 @@ public class TutorController extends HttpServlet {
 		List<String[]> languages = tutorDAO.getLanguages(tutor.getTutor_id());
 		List<Experience> experiences = experienceDAO.getExperiencesByTutorId(tutor.getTutor_id());
 		List<Fees> fees = feesDAO.getFeesByTutorID(tutor.getTutor_id());
+		List<Availability> avail = availabilityDAO.getAllAvailability(tutor.getTutor_id());
 		return new TutorInfo(user.getUser_id(), user.getFname(), user.getLname(), user.getUsername(), user.getEmail_id(), user.getMobile_no(),
 				user.getGender(), user.getPhoto(),user.getJoining_date(), tutor.getTutor_id(), tutor.getBio(), tutor.getApproval_date(),
-				tutor.getProfile_status(),address,languages,experiences,fees);
+				tutor.getProfile_status(),address,languages,experiences,fees,avail);
 	}
 	private boolean sendNotification(int tutor_id,String message,String link)throws Exception{
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());

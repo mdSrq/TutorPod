@@ -662,6 +662,8 @@ button:active,
   background-color: transparent;
   border: 1.5px solid #23049d;
   box-shadow: none;
+  font-size: 1rem;
+  font-family: inherit;
 }
 .flat-button-hallow:hover {
   box-shadow: none;
@@ -1579,6 +1581,28 @@ tbody tr:nth-child(even) {
 .table-container {
   width: 100%;
   overflow-x: auto;
+}
+
+.location_icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 5px solid #aa2ee6;
+  border-radius: 100%;
+  z-index: 0;
+}
+.location_icon::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin: 1px 0 0 -6px;
+  display: block;
+  content: "";
+  border: 6px solid transparent;
+  border-top: 10px solid #aa2ee6;
+  border-bottom: none;
 }
 
 .reveal {

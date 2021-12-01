@@ -43,8 +43,13 @@ public class AvailabilityDAO {
 			// process result set
 			while (Rs.next()) {
 
-				Availability tempAvailability = createAvailability(Rs);
-				availability.add(tempAvailability);
+				Availability avl = createAvailability(Rs);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("KK:mm a", Locale.ENGLISH);
+				LocalTime t = LocalTime.parse(avl.getTime_from());
+				LocalTime t1 = LocalTime.parse(avl.getTime_to());
+				avl.setTime_from(t.format(formatter));
+				avl.setTime_to(t1.format(formatter));
+				availability.add(avl);
 			}
 			
 			return availability;		
