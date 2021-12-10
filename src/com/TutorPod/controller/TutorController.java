@@ -155,8 +155,16 @@ public class TutorController extends HttpServlet {
 				responseJSON = new Gson().toJson(tutorDAO.getTutorApplicantsBasicInfo());
 				out.write(responseJSON);
 				break;
-			case "loadAppliedTutorInfo":
-				
+			case "loadAllTutors":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				ListIterator<Tutor> tutors = tutorDAO.getApprovedTutors().listIterator();
+				List<TutorInfo> tutorsInfo = new ArrayList<>();
+				while(tutors.hasNext()) {
+					tutorsInfo.add(getTutorInfo(tutors.next()));
+				}
+				responseJSON = new Gson().toJson(tutorsInfo);
+				out.write(responseJSON);
 				break;
 			default:
 				response.getWriter().write("Invalid Request");
@@ -274,10 +282,6 @@ public class TutorController extends HttpServlet {
 				else
 					out.write(successCounter+"/"+languages.length+" languages Saved");
 				break;
-			case"saveExperience":
-				session.setAttribute("EXPERIENCES_SAVED", "TRUE");
-				response.sendRedirect("./TutorApplication?tab=4");
-				break;
 			case"addExperience":
 				String experience_type = request.getParameter("experience_type");
 				String title = request.getParameter("title");
@@ -305,15 +309,17 @@ public class TutorController extends HttpServlet {
 						out.write("{'msg':'Failed to add experience'}");
 				}
 				break;
-			case"savePrice":
-				session.setAttribute("FEES_SAVED", "TRUE");
-				response.sendRedirect("./TutorApplication?tab=5");
-				break;
 			case"addPrice":
 				double fee = Double.parseDouble(request.getParameter("fee"));
 				int subject_id = Integer.parseInt(request.getParameter("subject_id"));
 				tutor = (Tutor)session.getAttribute("TUTOR");
 				response.setContentType("application/json");
+				Fees fees = feesDAO.getDuplicateFees(subject_id, tutor.getTutor_id());
+				if(fees!=null) {
+					fees.setFee(fee);
+					if(feesDAO.updateFees(fees))
+						out.write("{\"msg\": \"Updated\",\"fees_id\":"+fees.getFees_id()+"}");
+				}else
 				if(feesDAO.addFees(new Fees(tutor.getTutor_id(),subject_id,fee))) {
 					int fees_id = feesDAO.getMostRecentFees(tutor.getTutor_id()).getFees_id();
 					out.write("{\"msg\": \"Added\",\"fees_id\":"+fees_id+"}");
@@ -364,8 +370,9 @@ public class TutorController extends HttpServlet {
 				if(tutorDAO.updateTutorField("profile_status","Dismissed", false, tutor_id) && tutorDAO.updateTutorField("approval_date", null, false, tutor_id)) {
 					if(sendNotification(tutor_id,message,link))
 						out.write("Notification Sent ");
-					else
-						out.write("Failed to add notification ");
+					tutor = tutorDAO.getTutor(tutor_id);
+					tutor.setProfile_status("Dismissed");
+					session.setAttribute("TUTOR", tutor);
 					out.write("Application Dismissed");
 				}
 				else
@@ -373,7 +380,7 @@ public class TutorController extends HttpServlet {
 				break;
 			case"searchTutor":
 				subject_id=0;
-				if(request.getParameter("subject_id")!=null)
+				if(! request.getParameter("subject_id").isBlank())
 					subject_id = Integer.parseInt(request.getParameter("subject_id"));
 				String[] avail = request.getParameterValues("avail_days");
 				List<Integer> avail_days = new ArrayList<Integer>();

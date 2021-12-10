@@ -1053,6 +1053,18 @@ function changeTab(tabNo) {
                     $("#snackbar").html("Price Added");
                     $("#tab-selector_tab5").addClass("tab-selector_completed");
                     showToast();
+                }else if(response.msg.includes("Updated")){
+					const tr = $("#price_"+response.fees_id);
+                    tr.empty();
+                    tableRow=
+                        '<td>' + formData.subject_name + '</td>' +
+                        '<td> &#8377;' + formData.fee + '</td>' +
+                        '<td>' +
+                            '<a href="#" class="button small-round-button delete-button" onclick="deleteFees('+response.fees_id+')">Delete</a>' +
+                        '</td>'
+                    tr.append(tableRow);
+                    $("#snackbar").html("Price Updated");
+                    showToast();
                 } else {
                     $("#snackbar").html(response);
                     showToast();

@@ -23,7 +23,8 @@ create table user(user_id int auto_increment primary key,
                     joining_date date not null,
                     tutor_id int ,
                     wallet_id int,
-                    bank_acc_id int
+                    bank_acc_id int,
+                    FULLTEXT(fname,lname)
 					);
 create table tutor(tutor_id int auto_increment primary key,
                     bio varchar(300) not null,
@@ -96,7 +97,8 @@ create table course( course_id int auto_increment primary key,
 					);
 create table subject(subject_id int auto_increment primary key,
 					subject_name varchar(80) not null,
-                    subject_code varchar(10) unique not null
+                    subject_code varchar(10) unique not null,
+                    FULLTEXT(subject_name)
 					);
 create table course_sub(course_sub_id int auto_increment primary key,
 					course_id int not null,

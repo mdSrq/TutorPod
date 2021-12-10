@@ -212,6 +212,14 @@
     max-height: 70vh;
   }
 }
+@keyframes grow-limitless{
+  from{
+    max-height: 0;
+  }
+  to{
+    max-height: 999rem;
+  }
+}
 @keyframes shrink {
   from{
     max-height: 70vh;

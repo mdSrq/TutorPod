@@ -195,6 +195,7 @@
     &__notification,&__notification_header{
         width: 100%;
         background-color: $white;
+        box-shadow: $shadow5;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;

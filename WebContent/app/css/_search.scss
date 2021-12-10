@@ -82,6 +82,8 @@
             position: relative;
             width: 100%;
             background-color: $white;
+            overflow: hidden;
+            max-height: max-content;
         }
         &_course{
             background-color: $white;
@@ -182,6 +184,7 @@
         padding: 1rem;
         display: flex;
         flex-flow: row nowrap;
+        margin-bottom: 2rem;
         &_profile{
             padding: 1rem;
             flex: 1.2;
@@ -228,6 +231,59 @@
         }
         &_availability{
             flex: 3;
+        }
+    }
+    &__booking{
+        width: 60%;
+        display: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        &_tutor{
+            width: 23%;
+            padding: 1rem;
+            box-shadow: $shadow2;
+            border-radius: 0.5rem;
+            height: max-content;
+            border: 1px solid lightblue;
+            &_img{
+                width: 100%;
+                img{
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    margin: 0 auto;
+                }
+            }
+            p{
+                margin: 0;
+            }
+            &_info{
+                width: 100%;
+                text-align: center;
+               &_name,&_location,&_bio{
+                   width: 100%;
+                   padding: 0.1rem 0;
+               }
+               &_name{
+                   font-size: 1.2rem;
+                   padding-top: 0.5rem;
+               }
+            }
+            &_label{
+                width: 100%;
+                display: block;
+                text-align: center;
+                padding-bottom: 0.5rem;
+            }
+        }
+        &_form{
+            display: block;
+            width: 75%;
+            height: 100%;
+            padding: 1rem;
+            height: max-content;
         }
     }
 }

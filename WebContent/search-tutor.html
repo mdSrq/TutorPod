@@ -336,7 +336,7 @@
                 </div>
                 <div class="search__result_about">
                     <p class="search__result_about_name">Mohd Shariq</p>
-                    <p class="search__result_about_info">Delhi | 10 Students | 24 Lessons</p>
+                    <p class="search__result_about_info"><span class="location_icon"></span>Delhi | 10 Students | 24 Lessons</p>
                     <p class="search__result_about_sub-heading">Teaches</p>
                     <p class="search__result_about_details">English, Discrete Mathematics, C++ and more</p>
                     <p class="search__result_about_sub-heading">Speaks</p>
@@ -393,6 +393,51 @@
                 </div>
             </div>
         </section>
+        <div class="main__form_overlayform search__booking" tabindex="-1" style="display: flex;">
+            <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+            <h2 class="main__sub-heading">Book Lessons</h2>
+            <div class="search__booking_tutor">
+                <label class="search__booking_tutor_label">Selected Tutor</label>
+                <div class="search__booking_tutor_img">
+                    <img src="./images/user.png" alt="user_pic">
+                </div>
+                <div class="search__booking_tutor_info">
+                    <p class="search__booking_tutor_info_name">Mohd Shariq</p>
+                </div>
+            </div>
+            <form action="./TutorController" method="post" class="search__booking_form">
+                <div class="form-unit-half-container">
+                    <div class="form-unit form-unit-half">
+                        <label for="subject_id">Subject</label>
+                        <select name="subject_id" id="experience_type"
+                            class="input-with-icon input-with-icon_no-icon">
+                            <option value="default" selected disabled>Select Subject</option>
+                            <option value="Education">Education</option>
+                            <option value="Certification">Certification</option>
+                            <option value="Work Experience">Work Experience</option>
+                        </select>
+                    </div>
+                    <div class="form-unit form-unit-half">
+                        <label for="title">Price (1 Hr)</label>
+                        <input type="text" readonly class="input-with-icon input-with-icon_no-icon" name="title"
+                            placeholder="Price per hour" id="title" required />
+                    </div>
+                </div>
+                <div class="form-unit-half-container">
+                      <div class="form-unit form-unit-half">
+                          <label for="title">Lesson Length (Hr)</label>
+                          <input type="number" class="input-with-icon input-with-icon_no-icon" name="title"
+                              placeholder="Enter Length (in Hours)" id="title" required />
+                      </div>
+                    <div class="form-unit form-unit-half">
+                        <label for="title">No. Of Lessons</label>
+                        <input type="number" class="input-with-icon input-with-icon_no-icon" name="title"
+                            placeholder="Enter Number of Lessons" id="title" required />
+                    </div>
+                    <input type="submit" class="button flat-wide-button" value="Book Lesson" id="experience_submitBtn">
+                </div>
+            </form>
+        </div>
     </main>
     <script src="./app/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">

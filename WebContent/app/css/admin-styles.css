@@ -361,6 +361,22 @@
     max-height: 70vh;
   }
 }
+@-webkit-keyframes grow-limitless {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 999rem;
+  }
+}
+@keyframes grow-limitless {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 999rem;
+  }
+}
 @-webkit-keyframes shrink {
   from {
     max-height: 70vh;
@@ -664,6 +680,7 @@ button:active,
   box-shadow: none;
   font-size: 1rem;
   font-family: inherit;
+  width: 100%;
 }
 .flat-button-hallow:hover {
   box-shadow: none;
@@ -1584,14 +1601,12 @@ tbody tr:nth-child(even) {
 }
 
 .location_icon {
-  box-sizing: border-box;
   position: relative;
   display: inline-block;
   width: 16px;
   height: 16px;
   border: 5px solid #aa2ee6;
   border-radius: 100%;
-  z-index: 0;
 }
 .location_icon::after {
   position: absolute;
@@ -1652,6 +1667,11 @@ tbody tr:nth-child(even) {
 .grow {
   -webkit-animation: grow ease-in-out 0.4s forwards;
           animation: grow ease-in-out 0.4s forwards;
+}
+
+.grow-limitless {
+  -webkit-animation: grow-limitless ease-in-out 0.4s forwards;
+          animation: grow-limitless ease-in-out 0.4s forwards;
 }
 
 .flip::after {

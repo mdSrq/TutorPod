@@ -539,19 +539,11 @@ User user = null;
                         }
                         $.each(courses.courseSubjects, function (j, subjects) {
                             $("<li>").addClass("nav-dd_subject nav-dd_subject_" +
-                                    subjects
-                                    .course_id + "_" + subjects.duration_no)
-                                .appendTo($(
-                                    ".nav-dd_subjects"))
+                                    subjects.course_id + "_" + subjects.duration_no)
+                                .appendTo($(".nav-dd_subjects"))
                                 .append($("<a>").attr({
-                                    href: "./TutorController?cmd=searchBySubject&course_id=" +
-                                        subjects.course_id +
-                                        "&duration_no=" + subjects
-                                        .duration_no + "&subject_id=" +
-                                        subjects
-                                        .subject_id,
-                                }).text(subjects.subject_code + " - " + subjects
-                                    .subject_name));
+                                    href: "./SearchTutor?searchBy=subject&subject_id="+subjects.subject_id,
+                                }).text(subjects.subject_code + " - " + subjects.subject_name));
                         });
                     });
                 }

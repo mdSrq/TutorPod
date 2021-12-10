@@ -1,0 +1,46 @@
+.wallet{
+    &__tile{
+        width: 100%;
+        .main__tile_img{
+            width: 4rem;
+            flex: none;
+            margin: 1rem;
+            margin-right: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+        &_balance{
+            width: 10rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        &_title,&_num{
+            width: 100%;
+            display: block;
+            text-align: left;
+            padding-left: 1rem;
+        }
+        &_num{
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        &_btnunit{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: max-content;
+            margin-left: 1rem;
+            label{
+                padding: 0 1rem 0 0.5rem;
+                cursor: pointer;
+                color: $darkBlue;
+            }
+            button{
+                height: 3rem;
+                width: 3rem;
+            }
+        }
+    }
+}

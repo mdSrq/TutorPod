@@ -361,6 +361,22 @@
     max-height: 70vh;
   }
 }
+@-webkit-keyframes grow-limitless {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 999rem;
+  }
+}
+@keyframes grow-limitless {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 999rem;
+  }
+}
 @-webkit-keyframes shrink {
   from {
     max-height: 70vh;
@@ -664,6 +680,7 @@ button:active,
   box-shadow: none;
   font-size: 1rem;
   font-family: inherit;
+  width: 100%;
 }
 .flat-button-hallow:hover {
   box-shadow: none;
@@ -1584,14 +1601,12 @@ tbody tr:nth-child(even) {
 }
 
 .location_icon {
-  box-sizing: border-box;
   position: relative;
   display: inline-block;
   width: 16px;
   height: 16px;
   border: 5px solid #aa2ee6;
   border-radius: 100%;
-  z-index: 0;
 }
 .location_icon::after {
   position: absolute;
@@ -1652,6 +1667,11 @@ tbody tr:nth-child(even) {
 .grow {
   -webkit-animation: grow ease-in-out 0.4s forwards;
           animation: grow ease-in-out 0.4s forwards;
+}
+
+.grow-limitless {
+  -webkit-animation: grow-limitless ease-in-out 0.4s forwards;
+          animation: grow-limitless ease-in-out 0.4s forwards;
 }
 
 .flip::after {
@@ -2418,6 +2438,7 @@ tbody tr:nth-child(even) {
 .main__notification, .main__notification_header {
   width: 100%;
   background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -2651,6 +2672,10 @@ tbody tr:nth-child(even) {
   position: relative;
   width: 100%;
   background-color: #fff;
+  overflow: hidden;
+  max-height: -webkit-max-content;
+  max-height: -moz-max-content;
+  max-height: max-content;
 }
 .search__selector_course, .search__check_course {
   background-color: #fff;
@@ -2752,6 +2777,7 @@ tbody tr:nth-child(even) {
   padding: 1rem;
   display: flex;
   flex-flow: row nowrap;
+  margin-bottom: 2rem;
 }
 .search__result_profile {
   padding: 1rem;
@@ -2799,4 +2825,108 @@ tbody tr:nth-child(even) {
 }
 .search__result_availability {
   flex: 3;
+}
+.search__booking {
+  width: 60%;
+  display: none;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.search__booking_tutor {
+  width: 23%;
+  padding: 1rem;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  border-radius: 0.5rem;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  border: 1px solid lightblue;
+}
+.search__booking_tutor_img {
+  width: 100%;
+}
+.search__booking_tutor_img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.search__booking_tutor p {
+  margin: 0;
+}
+.search__booking_tutor_info {
+  width: 100%;
+  text-align: center;
+}
+.search__booking_tutor_info_name, .search__booking_tutor_info_location, .search__booking_tutor_info_bio {
+  width: 100%;
+  padding: 0.1rem 0;
+}
+.search__booking_tutor_info_name {
+  font-size: 1.2rem;
+  padding-top: 0.5rem;
+}
+.search__booking_tutor_label {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+.search__booking_form {
+  display: block;
+  width: 75%;
+  height: 100%;
+  padding: 1rem;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.wallet__tile {
+  width: 100%;
+}
+.wallet__tile .main__tile_img {
+  width: 4rem;
+  flex: none;
+  margin: 1rem;
+  margin-right: 0;
+  padding: 0;
+  background-color: transparent;
+}
+.wallet__tile_balance {
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wallet__tile_title, .wallet__tile_num {
+  width: 100%;
+  display: block;
+  text-align: left;
+  padding-left: 1rem;
+}
+.wallet__tile_num {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.wallet__tile_btnunit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin-left: 1rem;
+}
+.wallet__tile_btnunit label {
+  padding: 0 1rem 0 0.5rem;
+  cursor: pointer;
+  color: #23049d;
+}
+.wallet__tile_btnunit button {
+  height: 3rem;
+  width: 3rem;
 }/*# sourceMappingURL=style.css.map */
