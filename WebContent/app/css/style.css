@@ -1004,6 +1004,9 @@ tbody tr:nth-child(even) {
 .white-table tr:nth-child(even) {
   background: #fff;
 }
+.white-table tbody {
+  background-color: #fff;
+}
 .white-table td {
   border: solid #d7e3f5;
   border-width: 0 0 1.5px 0;
@@ -2509,10 +2512,31 @@ tbody tr:nth-child(even) {
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: flex-start;
+  align-content: flex-start;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
   min-height: 75vh;
+}
+.main__dashboard-container .table-wrapper {
+  width: 100%;
+  margin-top: 2rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.4rem;
+}
+.main__dashboard-container table {
+  padding: 1rem;
+  box-shadow: none;
+  width: 100%;
+}
+.main__dashboard-container table tbody {
+  width: 100%;
+}
+.main__dashboard-container table tbody tr {
+  background: #fff;
+  margin: 0.5rem 0;
 }
 .main__big-tile {
   width: 48%;
@@ -2523,6 +2547,7 @@ tbody tr:nth-child(even) {
   min-height: 15rem;
   padding: 1rem;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  margin-top: 2rem;
   border-radius: 0.4rem;
 }
 .main__big-tile p {
@@ -2568,6 +2593,52 @@ tbody tr:nth-child(even) {
   width: 100%;
   padding-left: 1rem;
   text-align: center;
+}
+.main__wallet__tile {
+  width: 100%;
+}
+.main__wallet__tile .main__tile_img {
+  width: 4rem;
+  flex: none;
+  margin: 1rem;
+  margin-right: 0;
+  padding: 0.5rem;
+  background-color: #d7e3f5;
+}
+.main__wallet__tile_balance {
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main__wallet__tile_title, .main__wallet__tile_num {
+  width: 100%;
+  display: block;
+  text-align: left;
+  padding-left: 1rem;
+}
+.main__wallet__tile_num {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.main__wallet__tile_btnunit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin-left: 1rem;
+}
+.main__wallet__tile_btnunit label {
+  padding: 0 1rem 0 0.5rem;
+  cursor: pointer;
+  color: #23049d;
+}
+.main__wallet__tile_btnunit button {
+  height: 3rem;
+  width: 3rem;
 }
 
 #finalMsg {
@@ -2882,51 +2953,4 @@ tbody tr:nth-child(even) {
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-}
-
-.wallet__tile {
-  width: 100%;
-}
-.wallet__tile .main__tile_img {
-  width: 4rem;
-  flex: none;
-  margin: 1rem;
-  margin-right: 0;
-  padding: 0;
-  background-color: transparent;
-}
-.wallet__tile_balance {
-  width: 10rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.wallet__tile_title, .wallet__tile_num {
-  width: 100%;
-  display: block;
-  text-align: left;
-  padding-left: 1rem;
-}
-.wallet__tile_num {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-.wallet__tile_btnunit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  margin-left: 1rem;
-}
-.wallet__tile_btnunit label {
-  padding: 0 1rem 0 0.5rem;
-  cursor: pointer;
-  color: #23049d;
-}
-.wallet__tile_btnunit button {
-  height: 3rem;
-  width: 3rem;
 }/*# sourceMappingURL=style.css.map */

@@ -238,22 +238,64 @@
         <main class="main">
             <h1 class="main__heading">My Wallet</h1>
             <div class="main__dashboard-container">
-                <div class="main__tile wallet__tile">
+                <div class="main__tile main__wallet__tile">
                     <div class="main__tile_img">
                         <img src="./images/wallet.png" alt="">
                     </div>
-                    <div class="wallet__tile_balance">
-                        <span class="wallet__tile_title">Wallet Balance</span>
-                        <span class="wallet__tile_num">&#8377;1500</span>
+                    <div class="main__wallet__tile_balance">
+                        <span class="main__wallet__tile_title">Wallet Balance</span>
+                        <span class="main__wallet__tile_num">&#8377;1500</span>
                     </div>
-                    <div class="wallet__tile_btnunit">
+                    <div class="main__wallet__tile_btnunit">
                         <button class=" button round-single-button addBtn" id="addBtn">+</button>
                         <label for="addBtn">Add Balance</label>
                     </div>
-                    <div class="wallet__tile_btnunit">
+                    <div class="main__wallet__tile_btnunit">
                         <button class=" button round-single-button subBtn" id="subBtn">-</button>
-                        <label for="subBtn">Request WIthdrawal</label>
+                        <label for="subBtn">Request Withdrawal</label>
                     </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="white-table">
+                        <thead>
+                            <th>Txn ID</th>
+                            <th>Date</th>
+                            <th>Credit</th>
+                            <th>Debit</th>
+                            <th>Balance</th>
+                            <th>Comment</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0001</td>
+                                <td>2021-09-02</td>
+                                <td>500</td>
+                                <td>0</td>
+                                <td>500</td>
+                                <td>Lesson bought</td>
+                                <td>Completed</td>
+                            </tr>
+                            <tr>
+                                <td>0001</td>
+                                <td>2021-09-02</td>
+                                <td>500</td>
+                                <td>0</td>
+                                <td>500</td>
+                                <td>Lesson bought</td>
+                                <td>Completed</td>
+                            </tr>
+                            <tr>
+                                <td>0001</td>
+                                <td>2021-09-02</td>
+                                <td>500</td>
+                                <td>0</td>
+                                <td>500</td>
+                                <td>Lesson bought</td>
+                                <td>Completed</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>

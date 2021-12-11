@@ -575,6 +575,9 @@ tbody tr:nth-child(even) {
   tr:nth-child(even){
     background: $white;
   }
+  tbody{
+    background-color: $white;
+  }
   td {
     border: solid $lightBlue;
     border-width: 0 0 1.5px 0;

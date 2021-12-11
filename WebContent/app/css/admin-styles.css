@@ -1004,6 +1004,9 @@ tbody tr:nth-child(even) {
 .white-table tr:nth-child(even) {
   background: #fff;
 }
+.white-table tbody {
+  background-color: #fff;
+}
 .white-table td {
   border: solid #d7e3f5;
   border-width: 0 0 1.5px 0;
