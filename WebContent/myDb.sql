@@ -110,6 +110,17 @@ create table wallet(wallet_id int auto_increment primary key,
 					balance double ,
                     user_id int unique not null
 					);
+create table wallet_transaction(wallet_transaction_id int auto_increment primary key,
+					wallet_id int not null,
+					amount double not null,
+					credit boolean ,
+					debit boolean,
+					balance double not null,
+					comment varchar(120) not null,
+					status enum('Completed','Pending','Failed') not null,
+					datetime datetime not null
+					);
+					
 create table transaction( transaction_id int auto_increment primary key,
 					payer enum('Admin','User') not null,
                     payer_id int not null,
@@ -146,18 +157,18 @@ create table booking(booking_id int auto_increment primary key,
 					tutor_id int not null,
                     user_id int not null,
                     suject_id int not null,
+                    price double not null,
                     duration double not null,
-                    booking_type varchar(12) not null,
+                    no_of_lesson int not null,
                     transaction_id int not null,
-                    time_from Time not null,
-                    time_to Time not null,
                     status varchar(10) not null
 					);
 create table withdraw_request(request_id int auto_increment primary key,
 					wallet_id int not null,
+					wallet_transaction_id int not null,
                     amount double not null,
-                    status varchar(10) not null,
-					remarks varchar(30) 
+                    status varchar(20) not null,
+					remarks varchar(80) 
 					);
 create table review(review_id int auto_increment primary key,
 					no_of_stars int not null,

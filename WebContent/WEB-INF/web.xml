@@ -201,4 +201,13 @@
 	    <servlet-name>search-tutor</servlet-name>
 	    <url-pattern>/SearchTutor</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>wallet</servlet-name>
+     	<jsp-file>/wallet.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>wallet</servlet-name>
+	    <url-pattern>/Wallet</url-pattern>
+	</servlet-mapping>
 </web-app>

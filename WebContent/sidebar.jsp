@@ -55,7 +55,7 @@
                     </div>
                     Orders
                 </a>
-                <a href="#" class="sidebar__link">
+                <a href="./Wallet" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/wallet.png" alt="" />
                     </div>

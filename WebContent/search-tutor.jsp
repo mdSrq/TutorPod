@@ -83,23 +83,24 @@
                         </select>
                     </div>
                     <div class="form-unit form-unit-half">
-                        <label for="title">Price (1 Hr)</label>
-                        <input type="text" readonly class="input-with-icon input-with-icon_no-icon" name="title"
+                        <label for="price">Price (1 Hr)</label>
+                        <input type="text" readonly class="input-with-icon input-with-icon_no-icon" name="price"
                             placeholder="Price per hour" id="pricePerHour" required />
                     </div>
                 </div>
                 <div class="form-unit-half-container">
                     <div class="form-unit form-unit-half">
-                        <label for="title">Lesson Length (Hr)</label>
-                        <input type="number" class="input-with-icon input-with-icon_no-icon" name="title"
+                        <label>Lesson Length (Hr)</label>
+                        <input type="number" class="input-with-icon input-with-icon_no-icon" name="duration"
                             placeholder="Enter Length (in Hours)" required />
                     </div>
                     <div class="form-unit form-unit-half">
-                        <label for="title">No. Of Lessons</label>
-                        <input type="number" class="input-with-icon input-with-icon_no-icon" name="title"
+                        <label>No. Of Lessons</label>
+                        <input type="number" class="input-with-icon input-with-icon_no-icon" name="no_of_lesson"
                             placeholder="Enter Number of Lessons" required />
                     </div>
                     <input type="hidden" name="tutor_id" id="tutor_id">
+                    <input type="hidden" name="cmd" value="addBooking">
                     <input type="submit" class="button flat-wide-button" value="Book Lesson">
                 </div>
             </form>
