@@ -98,9 +98,16 @@ public class BookingController extends HttpServlet {
 					double price = Double.parseDouble(request.getParameter("price"));
 					double duration = Double.parseDouble(request.getParameter("duration"));
 					int no_of_lesson = Integer.parseInt(request.getParameter("no_of_lesson"));
+					double subTotal = price*duration*no_of_lesson;
+					double total = subTotal+(subTotal/100)*5;
 					User user  = (User)session.getAttribute("USER");
+					Wallet wallet = walletDAO.getWalletByUserID(user.getUser_id());
+					DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
+					Instant instant = Instant.now();
+					String datetime = dateTimeFormatter.format(instant);
 					walletDAO.Rollback();
 					walletDAO.setAutoCommit(0);
+					if(walletDAO.addWalletTransaction(new WalletTransaction(wallet.getWallet_id(),total,false,true,wallet.getBalance()-total,"Lessong booking ","Completed",datetime)))
 					if(bookingDAO.addBooking(new Booking(tutor_id,user.getUser_id(),subject_id,price,duration,no_of_lesson,-1,"Incomplete"))) {
 						session.setAttribute("BOOKING", bookingDAO.getRecentBooking(user.getUser_id()));
 						out.write("Booking Saved");
@@ -116,7 +123,7 @@ public class BookingController extends HttpServlet {
 				e.printStackTrace(out);
 			}
 		}else
-			out.write("User Session Expired");
+			out.write("Please Login First");
 	}
 
 }

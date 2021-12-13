@@ -61,7 +61,7 @@
         </section>
         <section class="search__results_container">
         </section>
-        <div class="main__form_overlayform search__booking" tabindex="-1">
+        <div class="main__form_overlayform search__booking" tabindex="-1" id="bookingOverlay">
             <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
         <h2 class="main__sub-heading">Book Lessons</h2>
 
@@ -74,7 +74,7 @@
                     <p class="search__booking_tutor_info_name"></p>
                 </div>
             </div>
-            <form action="./TutorController" method="post" class="search__booking_form">
+            <form action="./BookingController" method="post" class="search__booking_form" id="bookingForm">
                 <div class="form-unit-half-container">
                     <div class="form-unit form-unit-half">
                         <label for="subject_id">Subject</label>
@@ -84,26 +84,88 @@
                     </div>
                     <div class="form-unit form-unit-half">
                         <label for="price">Price (1 Hr)</label>
-                        <input type="text" readonly class="input-with-icon input-with-icon_no-icon" name="price"
-                            placeholder="Price per hour" id="pricePerHour" required />
+                        <input type="text" readonly class="input-with-icon rupee" name="price"
+                            placeholder="Price per hour" id="price" required />
                     </div>
                 </div>
                 <div class="form-unit-half-container">
                     <div class="form-unit form-unit-half">
                         <label>Lesson Length (Hr)</label>
                         <input type="number" class="input-with-icon input-with-icon_no-icon" name="duration"
-                            placeholder="Enter Length (in Hours)" required />
+                            placeholder="Enter Length (in Hours)" id="duration" required />
                     </div>
                     <div class="form-unit form-unit-half">
                         <label>No. Of Lessons</label>
                         <input type="number" class="input-with-icon input-with-icon_no-icon" name="no_of_lesson"
-                            placeholder="Enter Number of Lessons" required />
+                            placeholder="Enter Number of Lessons" id="no_of_lesson" required />
                     </div>
                     <input type="hidden" name="tutor_id" id="tutor_id">
-                    <input type="hidden" name="cmd" value="addBooking">
-                    <input type="submit" class="button flat-wide-button" value="Book Lesson">
+                    <input type="submit" class="button flat-wide-button" id="bookBtn" value="Book Lesson">
                 </div>
             </form>
+        </div>
+        <div class="main__form_overlayform search__booking" tabindex="-1" id="paymentOverlay">
+        <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+        <h2 class="main__sub-heading">Payment</h2>
+            <div class="search__booking_walletDiv">
+                <span class="search__booking_walletDiv_heading">Wallet Status</span>
+                <a class="search__booking_walletDiv_heading_link" href="#">+ Add</a>
+                <span class="search__booking_walletDiv_info">
+                    <span class="search__booking_walletDiv_text">Amount present in wallet</span>
+                    <span class="search__booking_walletDiv_value" id="walletBalance">&#8377; 0</span>
+                </span>
+                <span class="search__booking_walletDiv_info">
+                    <span class="search__booking_walletDiv_text">Payment to be made</span>
+                    <span class="search__booking_walletDiv_value" id="showPrice">&#8377; 0</span>
+                </span>
+                <span class="search__booking_walletDiv_info">
+                    <span class="search__booking_walletDiv_text">Balance after payment</span>
+                    <span class="search__booking_walletDiv_value" id="afterMath">&#8377; 0</span>
+                </span>
+            </div>
+            <div class="search__booking_summary">
+                <span class="search__booking_summary_heading">Booking Summary</span>
+                <span class="search__booking_summary_mainItem">
+                    <span class="search__booking_summary_mainItem_text" id="mainLessons">2 Lessons</span>
+                    <span class="search__booking_summary_mainItem_value" id="mainLessonsPrice">&#8377; 500</span>
+                </span>
+                <span class="search__booking_summary_details">
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Subject :</span>
+                        <span class="search__booking_summary_value" id="subject_name"> BCS-011 - Computer Basics and PC Software</span>
+                    </span>
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Price :</span>
+                        <span class="search__booking_summary_value" id="detailsPrice"> &#8377; 500</span>
+                    </span>
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Duration :</span>
+                        <span class="search__booking_summary_value" id="detailsDuration"> 2 Hr</span>
+                    </span>
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Lessons Count :</span>
+                        <span class="search__booking_summary_value" id="detailsNOL"> 2</span>
+                    </span>
+                </span>
+                <span class="search__booking_summary_mainItem">
+                    <span class="search__booking_summary_mainItem_text">TutorPod Fee (5%)</span>
+                    <span class="search__booking_summary_mainItem_value" id="podFees">&#8377; 25</span>
+                </span>
+                <span class="search__booking_summary_mainItem total">
+                    <span class="search__booking_summary_mainItem_text">Total </span>
+                    <span class="search__booking_summary_mainItem_value" id="detailsTotal">&#8377; 525</span>
+                </span>
+                <form action="./BookingController" method="post" style="width:100%;">
+                    <input type="hidden" name="cmd" value="addBooking">
+                    <input type="hidden" name="tutor_id" id="pay_tutor_id">
+                    <input type="hidden" name="subject_id" id="pay_subject_id">
+                    <input type="hidden" name="price" id="pay_price">
+                    <input type="hidden" name="duration" id="pay_duration">
+                    <input type="hidden" name="no_of_lesson" id="pay_no_of_lesson">
+                    <input type="submit" class="button flat-wide-button" id="payBtn" value="Book Lesson">
+                    <button class="flat-button-hallow" id="backBtn">&lt; Back</button>
+                </form>
+            </div>
         </div>
     </main>
 <script type="text/javascript">
@@ -298,18 +360,64 @@
         console.log(tutorsMap);
     }
 
-    function showOverlayForm() {
+    function showOverlayForm(overlayID) {
         $("<div>").addClass("overlay-background").css("display", "block").appendTo($("body"));
-        $(".main__form_overlayform").css("display", "flex");
-        $(".main__form_overlayform").focus();
+        $("#"+overlayID).css("display", "flex");
+        $("#"+overlayID).focus();
     }
 
     function hideOverlayForm() {
         $(".main__form_overlayform").removeAttr("style");
         $(".overlay-background").remove();
     }
-
+    function preparePayment(){
+        showLoading();
+        $.ajax({
+            url: "./WalletController",
+            data: "cmd=loadBalance",
+            timeout: 800000,
+            success: function (response) {
+                hideLoading();
+                try{
+                    const type = parseFloat(response);
+                }catch(e){
+                    $("#snakbar").html("Session Expired Please Login");
+                    showToast();
+                    return;
+                }
+                const balance = response;
+                const price = parseFloat($("#pay_price").val());
+                const duration = parseFloat($("#pay_duration").val());
+                const no_of_lesson = parseInt($("#pay_no_of_lesson").val());
+                const sub_total = price*duration*no_of_lesson;
+                const total = sub_total+(sub_total/100)*5;
+                const subject_id = parseInt($("#pay_subject_id").val());
+                const tutor_id = parseInt($("#pay_tutor_id").val());
+                if(balance<total){
+                    $(".search__booking_walletDiv_heading").removeClass("green_circle").addClass("red_circle").text("Insufficient Balance in Wallet");
+                    $(".search__booking_walletDiv_heading_link").show();
+                    $("#payBtn").prop("disabled",true);
+                }else{
+                    $(".search__booking_walletDiv_heading").removeClass("red_circle").addClass("green_circle").text("Sufficient Balance in Wallet");
+                    $(".search__booking_walletDiv_heading_link").hide();
+                    $("#payBtn").prop("disabled",false);
+                }
+                $("#walletBalance").html("&#8377; "+balance);
+                $("#showPrice").html("&#8377; "+total);
+                $("#afterMath").html("&#8377; "+(balance-total));
+                $("#mainLessons").text(no_of_lesson+" Lessons");
+                $("#mainLessonsPrice").html("&#8377; "+sub_total);
+                $("#subject_name").text(tutorsMap.get(tutor_id).feesMap.get(subject_id).subject_name);
+                $("#detailsPrice").html("&#8377; "+price);
+                $("#detailsDuration").text(duration+" Hr");
+                $("#detailsNOL").text(no_of_lesson);
+                $("#podFees").html("&#8377; "+((sub_total/100)*5));
+                $("#detailsTotal").html("&#8377; "+total);
+            }
+        });
+    }
     function bookTutor(tutor_id) {
+    	<%if(session.getAttribute("USER")!=null){%>
         var tutor = tutorsMap.get(tutor_id);
         if(tutor.photo==null)
             $(".search__booking_tutor_img > img").prop("src","./images/user.png");
@@ -321,7 +429,10 @@
         $.each(tutor.fees,function(i,fee){
             $("#booking_subject_id").append($("<option>").prop("value",fee.subject_id).text(fee.subject_name));
         });
-        showOverlayForm();
+        showOverlayForm("bookingOverlay");
+        <%}else{%>
+        showSignInDiv();
+        <%}%>
     }
     $(document).ready(() => {
         loadSubjects();
@@ -375,7 +486,23 @@
             var subject_id = parseInt($(this).val());
             var tutor_id = parseInt($("#tutor_id").val());
             var fees = tutorsMap.get(tutor_id).feesMap.get(subject_id);
-            $("#pricePerHour").val(fees.fee);
+            $("#price").val(fees.fee);
+        });
+        $(document).on("submit","#bookingForm",function(event){
+            event.preventDefault();
+            $("#pay_tutor_id").val($("#tutor_id").val());
+            $("#pay_subject_id").val($("#booking_subject_id").val());
+            $("#pay_price").val($("#price").val());
+            $("#pay_duration").val($("#duration").val());
+            $("#pay_no_of_lesson").val($("#no_of_lesson").val());
+            preparePayment();
+            hideOverlayForm();
+            showOverlayForm("paymentOverlay");
+        });
+        $("#backBtn").click(function(event){
+            event.preventDefault();
+            hideOverlayForm();
+            showOverlayForm("bookingOverlay");
         });
     });
 </script>

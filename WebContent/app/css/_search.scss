@@ -285,5 +285,128 @@
             padding: 1rem;
             height: max-content;
         }
+        &_walletDiv{
+            width: 45%;
+            height: max-content;
+            border-radius: 0.4rem;
+            border: 1.5px solid $lightBlue;
+            display: flex;
+            flex-flow: row wrap;
+            padding: 1rem;
+            justify-content: space-between;
+            &_heading{
+                display: block;
+                width: max-content;
+                padding-bottom: 1rem;
+                font-weight: 600;
+                &_link{
+                    display: block;
+                }
+            }
+            .green_circle,.red_circle{
+                position: relative;
+                padding-left: 1.6rem;
+                &::after{
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 1.3rem;
+                    height: 1.3rem;
+                    text-align: center;
+                    color: $white;
+                    border-radius: 50%;
+                }
+            }
+            .green_circle{
+                &::after{
+                    content: "✔";
+                    background-color: $greenish;
+                    padding: 0rem;
+                    padding-bottom: 0.2rem;
+                    font-weight: normal;
+                }
+            }
+            .red_circle{
+                 &::after{
+                    content: "X";
+                    background-color: $lightRed;
+                    font-weight: bold;
+                }
+            }
+            &_info{
+                width: 100%;
+                display: flex;
+                flex-flow: row ;
+                &:not(:last-child){
+                    padding-bottom: 0.5rem;
+                }
+                justify-content: space-between;
+                span{
+                    width: max-content;
+                }
+            }
+            &_value{
+                font-weight: 600;
+            }
+        }
+        &_summary{
+            width: 55%;
+            padding: 1rem;
+            padding-top: 0;
+            form{
+                height: max-content;
+            }
+            &_heading{
+                padding: 0.5rem;
+                padding-top: 0;
+                display: block;
+                width: 100%;
+                font-size: 1.2rem;
+            }
+            &_mainItem{
+                padding: 0.25rem 0.5rem;
+                border-top: 1.5px solid $lightBlue;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                span{
+                    display: block;
+                    width: max-content;
+                }
+                &_text,&_value{
+                    font-weight: 600;
+                }
+            }
+            .total{
+                font-size: 1.15rem;
+                padding: 0.25rem 0.5rem;
+                border-style: solid;
+                border-color: $lightBlue;
+                border-width: 1.5px 0;
+            }
+            &_details{
+                padding: 0.5rem 0.5rem;
+                padding-top: 0;
+                display: block;
+            }
+            &_detail{
+                font-size: 0.8rem;
+                display: flex;
+                justify-content: flex-start;
+            }
+            &_text{
+                min-width: max-content;
+            }
+            &_value{
+                padding-left: 0.2rem;
+            }
+            .flat-button-hallow{
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin-top: 0.5rem
+            }
+        }
+
     }
 }
