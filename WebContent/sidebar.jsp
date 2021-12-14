@@ -49,7 +49,7 @@
                     </div>
                     Notifications
                 </a>
-                <a href="#" class="sidebar__link">
+                <a href="./Orders" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/order.png" alt="" />
                     </div>

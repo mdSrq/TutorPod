@@ -268,7 +268,6 @@
         min-height: 75vh;
         .table-wrapper{
             width: 100%;
-            margin-top: 2rem;
             box-shadow: $shadow5;
             background-color: $white;
             padding: 1rem;
@@ -344,6 +343,7 @@
     &__wallet{
         &__tile{
         width: 100%;
+        margin-bottom: 1.5rem;
         .main__tile_img{
             width: 4rem;
             flex: none;
@@ -387,6 +387,102 @@
         }
 
     }
+    }
+    &__lesson{
+        &_tile{
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+        &_schedule{
+            flex: 1;
+            &_time{
+                font-weight: 600;
+            }
+        }
+        &_info{
+            flex: 1.5;
+            &_text{
+                display: block;
+                font-weight: 600;
+                width: 100%;
+            }
+            &_tag{
+                margin-top: 0.5rem;
+                margin-right: 0.25rem;
+                font-size: 0.8rem;
+                display: inline-block;
+                padding: 0.1rem 0.5rem;
+                background-color: $lightBlue;
+                color: $darkBlue;
+                border-radius: 1rem;
+                width: max-content;
+            }
+        }
+        &_profile{
+            flex: 1;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-start;
+            &_img{
+                img{
+                    display: block;
+                    max-height: 5rem;
+                    width: auto;
+                }
+            }
+            &_info{
+                display: flex;
+                flex-flow: column wrap;
+                justify-content: space-between;
+                align-content: space-between;
+            }
+            &_name{
+                display: block;
+                width: 100%;
+                span{
+                    font-weight: 600;
+                    display: block;
+                }
+            }
+            &_buttons{
+                display: flex;
+                width: 100%;
+                flex-flow: row wrap;
+                button{
+                    display: block;
+                    height: 2rem;
+                    width: 2rem;
+                    padding: 0.2rem;
+                    border-radius: 0.4rem;
+                    background: $white;
+                    position: relative;
+                    border: 1.5px solid $dark;
+                    box-shadow: $shadow5;
+                    &:not(:first-child){
+                        margin-left: 0.5rem;
+                    }
+                    &:hover{
+                        background: $lightPurple;
+                        border-color: $lightPurple;
+                        img{
+                            filter: invert(1);
+                        }
+                    }
+                    &:active{
+                        background-color: $darkBlue;
+                        border-color: $darkBlue;
+                    }
+                    img{
+                        display: block;
+                        max-width: 100%;
+                        border-radius: 0.4rem;
+                    }
+                }
+            }
+        }
     }
 }
 #finalMsg{

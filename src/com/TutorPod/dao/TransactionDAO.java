@@ -68,16 +68,17 @@ public class TransactionDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public Transaction getTransaction(String transaction_code)throws Exception{
+	public Transaction getRecentTransaction(String payer,int payer_id)throws Exception{
 		Transaction transaction=null;
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "select * from transaction where transaction_code=?";
+			String sql = "select * from transaction where payer=? and payer_id=? order by transaction_id desc limit 1";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setString(1, transaction_code);
+			Stmt.setString(1, payer);
+			Stmt.setInt(2, payer_id);
 			Rs = Stmt.executeQuery();
 			if(Rs.next()) {
 				transaction = createTransaction(Rs);
@@ -88,15 +89,64 @@ public class TransactionDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public List<Transaction> getTransactionsByPayer(String payer,int payer_id)throws Exception{
+		List<Transaction> transactions = new ArrayList<>();
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from transaction where payer=? and payer_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setString(1, payer);
+			Stmt.setInt(2, payer_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				transactions.add(createTransaction(Rs));
+			}
+			return transactions;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public List<Transaction> getTransactionsByReceiver(String receiver,int receiver_id)throws Exception{
+		List<Transaction> transactions = new ArrayList<>();
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from transaction where receiver=? and receiver_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setString(1, receiver);
+			Stmt.setInt(2, receiver_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				transactions.add(createTransaction(Rs));
+			}
+			return transactions;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	
 	public boolean addTransaction(Transaction transaction)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "insert into transaction(transaction_name,transaction_code) values(?,?) ";
+			String sql = "insert into transaction(payer,payer_id,receiver,receiver_id,amount,description,date,datetime) values(?,?,?,?,?,?,?,?) ";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setString(1, transaction.getTransaction_name());
-			Stmt.setString(2, transaction.getTransaction_code());
+			Stmt.setString(1, transaction.getPayer());
+			Stmt.setInt(2, transaction.getPayer_id());
+			Stmt.setString(3, transaction.getReceiver());
+			Stmt.setInt(4, transaction.getReceiver_id());
+			Stmt.setDouble(5, transaction.getAmount());
+			Stmt.setString(6, transaction.getDescription());
+			Stmt.setString(7, transaction.getDate());
+			Stmt.setString(8, transaction.getDatetime());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else
@@ -111,11 +161,17 @@ public class TransactionDAO {
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "update transaction set transaction_name=?, transaction_code=? where transaction_id=? ";
+			String sql = "update transaction set payer=?,payer_id=?,receiver=?,receiver_id=?,amount=?,description=?,date=?,datetime=? where transaction_id=? ";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setString(1, transaction.getTransaction_name());
-			Stmt.setString(2, transaction.getTransaction_code());
-			Stmt.setInt(3, transaction.getTransaction_id());
+			Stmt.setString(1, transaction.getPayer());
+			Stmt.setInt(2, transaction.getPayer_id());
+			Stmt.setString(3, transaction.getReceiver());
+			Stmt.setInt(4, transaction.getReceiver_id());
+			Stmt.setDouble(5, transaction.getAmount());
+			Stmt.setString(6, transaction.getDescription());
+			Stmt.setString(7, transaction.getDate());
+			Stmt.setString(8, transaction.getDatetime());
+			Stmt.setInt(9, transaction.getTransaction_id());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else
@@ -163,9 +219,15 @@ public class TransactionDAO {
 	}
 	private Transaction createTransaction(ResultSet Rs)throws Exception {
 		int transaction_id = Rs.getInt("transaction_id");
-		String transaction_name = Rs.getString("transaction_name");
-		String transaction_code = Rs.getString("transaction_code");
+		String payer = Rs.getString("payer");
+		int payer_id = Rs.getInt("payer_id");
+		String receiver = Rs.getString("receiver");
+		int receiver_id = Rs.getInt("receiver_id");
+		double amount = Rs.getDouble("amount");
+		String description = Rs.getString("description");
+		String date = Rs.getString("date");
+		String datetime = Rs.getString("datetime");
 		
-		return new Transaction(transaction_id,transaction_name,transaction_code);
+		return new Transaction(transaction_id,payer,payer_id,receiver,receiver_id,amount,description,date,datetime);
 	}
 }

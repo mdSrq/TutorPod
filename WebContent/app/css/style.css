@@ -1623,6 +1623,15 @@ tbody tr:nth-child(even) {
   border-bottom: none;
 }
 
+.float-right {
+  position: absolute;
+  right: 11rem;
+  padding: 0.61rem 1rem;
+  border-radius: 0.2rem;
+  box-shadow: none;
+  cursor: pointer;
+}
+
 .reveal {
   -webkit-animation: reveal ease-in-out 0.3s forwards;
           animation: reveal ease-in-out 0.3s forwards;
@@ -2520,7 +2529,6 @@ tbody tr:nth-child(even) {
 }
 .main__dashboard-container .table-wrapper {
   width: 100%;
-  margin-top: 2rem;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   background-color: #fff;
   padding: 1rem;
@@ -2596,6 +2604,7 @@ tbody tr:nth-child(even) {
 }
 .main__wallet__tile {
   width: 100%;
+  margin-bottom: 1.5rem;
 }
 .main__wallet__tile .main__tile_img {
   width: 4rem;
@@ -2639,6 +2648,100 @@ tbody tr:nth-child(even) {
 .main__wallet__tile_btnunit button {
   height: 3rem;
   width: 3rem;
+}
+.main__lesson_tile {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.main__lesson_schedule {
+  flex: 1;
+}
+.main__lesson_schedule_time {
+  font-weight: 600;
+}
+.main__lesson_info {
+  flex: 1.5;
+}
+.main__lesson_info_text {
+  display: block;
+  font-weight: 600;
+  width: 100%;
+}
+.main__lesson_info_tag {
+  margin-top: 0.5rem;
+  margin-right: 0.25rem;
+  font-size: 0.8rem;
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  background-color: #d7e3f5;
+  color: #23049d;
+  border-radius: 1rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.main__lesson_profile {
+  flex: 1;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+.main__lesson_profile_img img {
+  display: block;
+  max-height: 5rem;
+  width: auto;
+}
+.main__lesson_profile_info {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  align-content: space-between;
+}
+.main__lesson_profile_name {
+  display: block;
+  width: 100%;
+}
+.main__lesson_profile_name span {
+  font-weight: 600;
+  display: block;
+}
+.main__lesson_profile_buttons {
+  display: flex;
+  width: 100%;
+  flex-flow: row wrap;
+}
+.main__lesson_profile_buttons button {
+  display: block;
+  height: 2rem;
+  width: 2rem;
+  padding: 0.2rem;
+  border-radius: 0.4rem;
+  background: #fff;
+  position: relative;
+  border: 1.5px solid #222;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.main__lesson_profile_buttons button:not(:first-child) {
+  margin-left: 0.5rem;
+}
+.main__lesson_profile_buttons button:hover {
+  background: #aa2ee6;
+  border-color: #aa2ee6;
+}
+.main__lesson_profile_buttons button:hover img {
+  filter: invert(1);
+}
+.main__lesson_profile_buttons button:active {
+  background-color: #23049d;
+  border-color: #23049d;
+}
+.main__lesson_profile_buttons button img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.4rem;
 }
 
 #finalMsg {
@@ -3083,4 +3186,11 @@ tbody tr:nth-child(even) {
   font-size: 1.2rem;
   font-weight: bold;
   margin-top: 0.5rem;
+}
+
+#successOverlay, #addOverlay {
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  align-content: flex-start;
 }/*# sourceMappingURL=style.css.map */

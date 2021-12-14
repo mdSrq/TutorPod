@@ -410,3 +410,9 @@
 
     }
 }
+#successOverlay,#addOverlay{
+    flex-flow: column;
+    justify-content: center;
+    align-items: center; 
+    align-content: flex-start;
+}

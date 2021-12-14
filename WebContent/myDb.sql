@@ -122,7 +122,7 @@ create table wallet_transaction(wallet_transaction_id int auto_increment primary
 					);
 					
 create table transaction( transaction_id int auto_increment primary key,
-					payer enum('Admin','User') not null,
+					payer enum('Admin','User','Booking') not null,
                     payer_id int not null,
                     receiver enum('Admin','User') not null,
                     receiver_id int not null,
@@ -161,7 +161,7 @@ create table booking(booking_id int auto_increment primary key,
                     duration double not null,
                     no_of_lesson int not null,
                     transaction_id int not null,
-                    status varchar(10) not null
+                    status varchar(20) not null
 					);
 create table withdraw_request(request_id int auto_increment primary key,
 					wallet_id int not null,

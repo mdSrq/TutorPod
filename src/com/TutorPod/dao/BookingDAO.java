@@ -61,7 +61,39 @@ public class BookingDAO {
 			
 			Stmt = Conn.prepareStatement(sql);
 			
-			Stmt.setInt(0, user_id);
+			Stmt.setInt(1, user_id);
+			// execute query
+			Rs = Stmt.executeQuery();
+			
+			// process result set
+			while (Rs.next()) {
+				
+				Booking tempBooking = createBooking(Rs);
+				bookings.add(tempBooking);				
+			}
+			
+			return bookings;		
+		}
+		finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public List<Booking> getBookingsForTutor(int tutor_id) throws Exception{
+		List<Booking> bookings = new ArrayList<>();
+		
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from booking where tutor_id=? order by booking_id desc";
+			
+			Stmt = Conn.prepareStatement(sql);
+			
+			Stmt.setInt(1, tutor_id);
 			// execute query
 			Rs = Stmt.executeQuery();
 			

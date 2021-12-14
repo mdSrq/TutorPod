@@ -210,4 +210,13 @@
 	    <servlet-name>wallet</servlet-name>
 	    <url-pattern>/Wallet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>orders</servlet-name>
+     	<jsp-file>/orders.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>orders</servlet-name>
+	    <url-pattern>/Orders</url-pattern>
+	</servlet-mapping>
 </web-app>

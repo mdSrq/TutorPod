@@ -62,6 +62,26 @@ public class UserDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public User getUserByTutorID(int tutor_id)throws Exception{
+		User user=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from user where tutor_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, tutor_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				user = createUser(Rs);
+			}
+			return user;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	public User getUser(String username)throws Exception{
 		User user=null;
 		Connection Conn = null;

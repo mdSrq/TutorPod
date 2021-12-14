@@ -148,14 +148,14 @@
                     </span>
                 </span>
                 <span class="search__booking_summary_mainItem">
-                    <span class="search__booking_summary_mainItem_text">TutorPod Fee (5%)</span>
+                    <span class="search__booking_summary_mainItem_text">TutorPod Fee (2.5%)</span>
                     <span class="search__booking_summary_mainItem_value" id="podFees">&#8377; 25</span>
                 </span>
                 <span class="search__booking_summary_mainItem total">
                     <span class="search__booking_summary_mainItem_text">Total </span>
                     <span class="search__booking_summary_mainItem_value" id="detailsTotal">&#8377; 525</span>
                 </span>
-                <form action="./BookingController" method="post" style="width:100%;">
+                <form action="./BookingController" method="post" style="width:100%;" id="paymentForm">
                     <input type="hidden" name="cmd" value="addBooking">
                     <input type="hidden" name="tutor_id" id="pay_tutor_id">
                     <input type="hidden" name="subject_id" id="pay_subject_id">
@@ -166,6 +166,24 @@
                     <button class="flat-button-hallow" id="backBtn">&lt; Back</button>
                 </form>
             </div>
+        </div>
+        <div class="main__form_overlayform" tabindex="-1" id="addOverlay">
+            <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+            <h2 class="main__sub-heading">Add Money </h2>
+            <form action="./WalletController" method="post" style="width: 100%;" class="scrollable" id="addMoneyForm">
+                <div class="form-unit form-unit-full">
+                    <label for="amount">Amount</label>
+                    <input type="number" class="input-with-icon input-with-icon rupee" name="amount"
+                        placeholder="Enter amount to add" required />
+                </div>
+                <input type="hidden" name="cmd" value="addMoney">
+                <input type="submit" class="button flat-wide-button" value="Add Money to Wallet">
+            </form>
+        </div>
+        <div class="main__form_overlayform search__booking tabindex="-1" id="successOverlay">
+            <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+            <span class="big-green-tick"></span>
+            <h1 class="thin-H1 ">Booking Completed!</h1>
         </div>
     </main>
 <script type="text/javascript">
@@ -248,8 +266,7 @@
                     .append($("<p>").addClass("search__result_profile_price").prop("id", "price_tutor_" + tutor
                         .tutor_id))
                     .append($("<div>").addClass("search__result_profile_buttons")
-                        .append($("<button>").addClass("flat-button-filled").text("Book Now").attr("onclick",
-                            "bookTutor(" + tutor.tutor_id + ")")))
+                        .append($("<button>").addClass("flat-button-filled").text("Book Now").attr({"onclick":"bookTutor(" + tutor.tutor_id + ")","id":"bookBtn_tutor_"+tutor.tutor_id})))
                     .append($("<button>").addClass("flat-button-hallow").text("View Profile").attr("onclick",
                         "viewTutor(" + tutor.tutor_id + ")")))
                 .append($("<div>").addClass("search__result_about")
@@ -320,6 +337,10 @@
             var min_fees = tutor.fees[0].fee;
             var max_fees = 0;
             var feesMap = new Map();
+            <%if(session.getAttribute("USER")!=null){%>
+            if(tutor.tutor_id===<%=((User)session.getAttribute("USER")).getTutor_id()%>)
+            $("#bookBtn_tutor_"+tutor.tutor_id).prop("disabled",true).css("cursor", "not-allowed");
+            <%}%>
             if(tutor.fees.length>3)
                var moreSubjects = $('<a href="#" onclick="viewTutor(' + tutor.tutor_id + ')"> ' + (tutor.fees.length - 3) +' More Subjects</a>');
             $.each(tutor.fees, function (i, fee) {
@@ -390,7 +411,7 @@
                 const duration = parseFloat($("#pay_duration").val());
                 const no_of_lesson = parseInt($("#pay_no_of_lesson").val());
                 const sub_total = price*duration*no_of_lesson;
-                const total = sub_total+(sub_total/100)*5;
+                const total = sub_total+(sub_total/100)*2.5;
                 const subject_id = parseInt($("#pay_subject_id").val());
                 const tutor_id = parseInt($("#pay_tutor_id").val());
                 if(balance<total){
@@ -411,7 +432,7 @@
                 $("#detailsPrice").html("&#8377; "+price);
                 $("#detailsDuration").text(duration+" Hr");
                 $("#detailsNOL").text(no_of_lesson);
-                $("#podFees").html("&#8377; "+((sub_total/100)*5));
+                $("#podFees").html("&#8377; "+((sub_total/100)*2.5));
                 $("#detailsTotal").html("&#8377; "+total);
             }
         });
@@ -503,6 +524,65 @@
             event.preventDefault();
             hideOverlayForm();
             showOverlayForm("bookingOverlay");
+        });
+        $(document).on("submit", "#paymentForm", function (event) {
+		event.preventDefault();
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }
+                if (response.includes("Booked")) {
+					$("#snackbar").html(response);
+					showToast();
+                    hideOverlayForm();
+                    showOverlayForm("successOverlay");
+                    loadNotifications();
+				}else{
+					$("#snackbar").html(response);
+					showToast();
+					console.log(response);
+				}
+            });
+        });
+        $(".search__booking_walletDiv_heading_link").click(function(event){
+            hideOverlayForm();
+            showOverlayForm("addOverlay");
+        });
+        $(document).on("submit", "#addMoneyForm", function (event) {
+		event.preventDefault();
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $form.trigger("reset");
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }
+                if (response.includes("Added")) {
+                    preparePayment();
+                    hideOverlayForm();
+                    showOverlayForm("paymentOverlay");
+				}else{
+					$("#snackbar").html(response);
+					showToast();
+					console.log(response);
+				}
+            });
         });
     });
 </script>

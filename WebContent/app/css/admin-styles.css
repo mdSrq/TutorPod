@@ -1623,6 +1623,15 @@ tbody tr:nth-child(even) {
   border-bottom: none;
 }
 
+.float-right {
+  position: absolute;
+  right: 11rem;
+  padding: 0.61rem 1rem;
+  border-radius: 0.2rem;
+  box-shadow: none;
+  cursor: pointer;
+}
+
 .reveal {
   -webkit-animation: reveal ease-in-out 0.3s forwards;
           animation: reveal ease-in-out 0.3s forwards;
