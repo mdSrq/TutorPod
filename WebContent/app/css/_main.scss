@@ -392,7 +392,7 @@
         &_tile{
             width: 100%;
             display: flex;
-            flex-flow: row wrap;
+            flex-flow: row-reverse wrap;
             justify-content: space-between;
             padding: 1rem;
             margin-bottom: 1.5rem;

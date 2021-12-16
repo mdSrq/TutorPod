@@ -1631,6 +1631,9 @@ tbody tr:nth-child(even) {
   box-shadow: none;
   cursor: pointer;
 }
+.float-right:focus, .float-right:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 @media (max-width: 59.9375em) {
   .float-right {
     position: static;
@@ -2658,7 +2661,7 @@ tbody tr:nth-child(even) {
 .main__lesson_tile {
   width: 100%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row-reverse wrap;
   justify-content: space-between;
   padding: 1rem;
   margin-bottom: 1.5rem;
