@@ -1631,6 +1631,12 @@ tbody tr:nth-child(even) {
   box-shadow: none;
   cursor: pointer;
 }
+@media (max-width: 59.9375em) {
+  .float-right {
+    position: static;
+    margin: 0 auto 0.5rem auto;
+  }
+}
 
 .reveal {
   -webkit-animation: reveal ease-in-out 0.3s forwards;

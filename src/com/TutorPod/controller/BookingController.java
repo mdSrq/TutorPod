@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.TutorPod.dao.BookingDAO;
+import com.TutorPod.dao.LessonDAO;
 import com.TutorPod.dao.NotificationDAO;
 import com.TutorPod.dao.SubjectDAO;
 import com.TutorPod.dao.TransactionDAO;
@@ -34,6 +35,7 @@ import com.TutorPod.model.User;
 import com.TutorPod.model.Wallet;
 import com.TutorPod.model.WalletTransaction;
 import com.TutorPod.model.BookingDetails;
+import com.TutorPod.model.Lesson;
 import com.google.gson.Gson;
 
 /**
@@ -51,6 +53,7 @@ public class BookingController extends HttpServlet {
 	UserDAO userDAO;
 	NotificationDAO notificationDAO;
 	SubjectDAO subjectDAO;
+	LessonDAO lessonDAO;
     public BookingController() {
         super();
     }
@@ -65,6 +68,7 @@ public class BookingController extends HttpServlet {
 			 userDAO = new UserDAO(dataSource);
 			 notificationDAO = new NotificationDAO(dataSource);
 			 subjectDAO = new SubjectDAO(dataSource);
+			 lessonDAO = new LessonDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -170,6 +174,8 @@ public class BookingController extends HttpServlet {
 									if(transactionDAO.addTransaction(new Transaction("Booking",booking_id,"Admin",-1,(subTotal/100)*5,"Booking payment ID:"+booking_id,date,datetime))) {
 										sendNotification(user.getUser_id(),"Your booking is completed. Click here to schedule your lessons.","./Orders",false);
 										sendNotification(tutor_id,"You have a new booking. Click to see details","./Orders",true);
+										for(int i=0;i<no_of_lesson;i++)
+											lessonDAO.addLesson(new Lesson(booking_id,null,null,null,null,null,"Unscheduled"));
 										walletDAO.Commit();
 										walletDAO.setAutoCommit(1);
 										out.write("Lesson Booked");

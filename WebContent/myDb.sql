@@ -139,9 +139,12 @@ create table fees(fees_id int auto_increment primary key,
 					);
 create table lesson(lesson_id int auto_increment primary key,
 					booking_id int not null,
-                    status varchar(10) not null,
-                    meeting_link varchar(40) not null,
-                    notes varchar(16)
+                    meeting_link varchar(120),
+                    notes varchar(16),
+                    time_from time,
+                    time_to time,
+                    date date,
+                    status varchar(20) not null
                     );
 create table availability (availability_id int auto_increment primary key,
 					tutor_id int  not null,
@@ -161,7 +164,7 @@ create table booking(booking_id int auto_increment primary key,
                     duration double not null,
                     no_of_lesson int not null,
                     transaction_id int not null,
-                    status varchar(20) not null
+                    booking_status varchar(20) not null
 					);
 create table withdraw_request(request_id int auto_increment primary key,
 					wallet_id int not null,

@@ -156,7 +156,7 @@ public class BookingDAO {
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "insert into booking(tutor_id,user_id,subject_id,price,duration,no_of_lesson,transaction_id,status) values(?,?,?,?,?,?,?,?) ";
+			String sql = "insert into booking(tutor_id,user_id,subject_id,price,duration,no_of_lesson,transaction_id,booking_status) values(?,?,?,?,?,?,?,?) ";
 			Stmt = Conn.prepareStatement(sql);
 			
 			Stmt.setInt(1, booking.getTutor_id());
@@ -166,7 +166,7 @@ public class BookingDAO {
 			Stmt.setDouble(5, booking.getDuration());
 			Stmt.setInt(6, booking.getNo_of_lesson());
 			Stmt.setInt(7, booking.getTransaction_id());
-			Stmt.setString(8, booking.getStatus());
+			Stmt.setString(8, booking.getBooking_status());
 			
 			if(Stmt.executeUpdate()>0)
 				return true;
@@ -182,7 +182,7 @@ public class BookingDAO {
 		PreparedStatement Stmt = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "update booking set tutor_id=?,user_id=?,subject_id=?,price=?,duration=?,no_of_lesson=?,transaction_id=?,status=? where booking_id=? ";
+			String sql = "update booking set tutor_id=?,user_id=?,subject_id=?,price=?,duration=?,no_of_lesson=?,transaction_id=?,booking_status=? where booking_id=? ";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, booking.getTutor_id());
 			Stmt.setInt(2, booking.getUser_id());
@@ -191,7 +191,7 @@ public class BookingDAO {
 			Stmt.setDouble(5, booking.getDuration());
 			Stmt.setInt(6, booking.getNo_of_lesson());
 			Stmt.setInt(7, booking.getTransaction_id());
-			Stmt.setString(8, booking.getStatus());
+			Stmt.setString(8, booking.getBooking_status());
 			Stmt.setInt(9, booking.getBooking_id());
 			if(Stmt.executeUpdate()>0)
 				return true;
@@ -247,8 +247,8 @@ public class BookingDAO {
 		double duration = Rs.getDouble("duration");
 		int no_of_lesson = Rs.getInt("no_of_lesson");
 		int transaction_id = Rs.getInt("transaction_id");
-		String status = Rs.getString("status");
+		String booking_status = Rs.getString("booking_status");
 		
-		return new Booking(booking_id,tutor_id,user_id,subject_id,price,duration,no_of_lesson,transaction_id,status);
+		return new Booking(booking_id,tutor_id,user_id,subject_id,price,duration,no_of_lesson,transaction_id,booking_status);
 	}
 }

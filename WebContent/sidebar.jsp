@@ -21,7 +21,7 @@
                    	 	Availability
                 	</a>
                <%}%>
-                <a href="#" class="sidebar__link">
+                <a href="./Lessons" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/document.png" alt="" />
                     </div>

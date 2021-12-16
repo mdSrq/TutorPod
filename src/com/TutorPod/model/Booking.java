@@ -9,7 +9,7 @@ public class Booking {
 	private double duration;
 	private int no_of_lesson;
 	private int transaction_id;
-	private String status;
+	private String booking_status;
 	public Booking(int booking_id, int tutor_id, int user_id, int subject_id, double price, double duration,
 			int no_of_lesson, int transaction_id, String status) {
 		super();
@@ -21,7 +21,7 @@ public class Booking {
 		this.duration = duration;
 		this.no_of_lesson = no_of_lesson;
 		this.transaction_id = transaction_id;
-		this.status = status;
+		this.booking_status = status;
 	}
 	public Booking(int tutor_id, int user_id, int subject_id, double price, double duration, int no_of_lesson,
 			int transaction_id, String status) {
@@ -33,7 +33,7 @@ public class Booking {
 		this.duration = duration;
 		this.no_of_lesson = no_of_lesson;
 		this.transaction_id = transaction_id;
-		this.status = status;
+		this.booking_status = status;
 	}
 	public int getBooking_id() {
 		return booking_id;
@@ -83,10 +83,10 @@ public class Booking {
 	public void setTransaction_id(int transaction_id) {
 		this.transaction_id = transaction_id;
 	}
-	public String getStatus() {
-		return status;
+	public String getBooking_status() {
+		return booking_status;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setBooking_status(String booking_status) {
+		this.booking_status = booking_status;
 	}
 }

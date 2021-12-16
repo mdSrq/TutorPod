@@ -34,6 +34,7 @@
                         </tbody>
                     </table>
                 </div>
+                <h2 class="main__sub-heading" id="noNotif">No Orders</h2>
             </div>
         </main>
        </div>
@@ -45,9 +46,11 @@
             success: function(response){
                 if(response.length<1){
                     $(".table-wrapper").hide();
+                    $("#noNotif").show();
                     return;
-                }
-                $.each(response,function(i,bkn){
+                }else{
+                    $("#noNotif").hide();
+                    $.each(response,function(i,bkn){
                     $("<tr>").appendTo( $("#bookingsTable tbody"))
                         .append($("<td>").text((i+1)))
                         .append($("<td>").text(bkn.booking.booking_id))
@@ -62,8 +65,9 @@
                         <%}else{%>
                         .append($("<td>").html("&#8377; " +bkn.totalForTutor))
                         <%}%>
-                        .append($("<td>").text(bkn.booking.status))
+                        .append($("<td>").text(bkn.booking.booking_status))
                 });
+                }
             }
         });
     }

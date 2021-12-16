@@ -219,4 +219,13 @@
 	    <servlet-name>orders</servlet-name>
 	    <url-pattern>/Orders</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>lessons</servlet-name>
+     	<jsp-file>/lessons.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>lessons</servlet-name>
+	    <url-pattern>/Lessons</url-pattern>
+	</servlet-mapping>
 </web-app>

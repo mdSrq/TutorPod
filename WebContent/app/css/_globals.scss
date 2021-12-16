@@ -1267,6 +1267,10 @@ tbody tr:nth-child(even) {
   border-radius: 0.2rem;
   box-shadow: none;
   cursor: pointer;
+  @include breakpoint-down(medium) {
+    position: static;
+    margin: 0 auto 0.5rem auto;
+  }
 }
 
 .reveal {
