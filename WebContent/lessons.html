@@ -280,11 +280,53 @@
                         </div>
                     </div>
                 </div>
+                <div class="main__form_overlayform main__lesson__overlay " tabindex="-1" id="scheduleOverlay">
+                    <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+                    <h2 class="main__sub-heading">Schedule Lesson</h2>
+                    <form action="./LessonController" method="post" class="main__lesson__overlay_form">
+                        <div class="form-unit-half-container">
+                            <div class="form-unit  form-unit-half">
+                                <label for="date">Select Date</label>
+                                <input type="date" name="date" id="date" class="input-with-icon input-with-icon_no-icon">
+                            </div>
+                            <div class="form-unit  form-unit-half">
+                                <div class="form-unit  form-unit-half">
+                                    <label for="time_from">From</label>
+                                    <input type="time" name="time_from" readonly id="time_from" class="input-with-icon input-with-icon_no-icon">
+                                </div>
+                                <div class="form-unit form-unit-half">
+                                    <label for="time_to">To</label>
+                                    <input type="time" name="time_to" readonly id="time_to" class="input-with-icon input-with-icon_no-icon">
+                                </div>
+                            </div>
+                            <div class="form-unit form-unit-full">
+                                <div class="main__lesson__overlay_label">
+                                    <label for="">Select Start Time</label>
+                                    <div>
+                                        <span><span class="dot green_unit"></span> Available</span>
+                                        <span><span class="dot red_unit"></span> Booked</span>
+                                        <span><span class="dot"></span> Not Available</span>
+                                    </div>
+                                </div>
+                                <div class="main__lesson__overlay_avail scrollable">
+                                    <div class="avail_unit green_unit" id="12"><span>12:00</span></div>
+                                    <div class="avail_unit red_unit" id="12.5"><span>12:30</span></div>
+                                </div>
+                                <input type="submit" class="button flat-wide-button" id="scheduleBtn" value="Schedule Lesson">
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
     </div>
+    <script src="./app/js/jquery-3.6.0.min.js"></script>
+    <script src="./app/js/script.js"></script>
     <script type="text/javascript">
-
+        var d = new Date();
+        var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        $("#date").prop("min",date);
+        console.log(day);
     </script>
     <footer>
 

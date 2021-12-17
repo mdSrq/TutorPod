@@ -777,7 +777,7 @@ textarea:focus {
   display: block;
   width: 100%;
   font-size: 1rem;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.3rem;
 }
 
 .form-unit-full {
@@ -786,6 +786,11 @@ textarea:focus {
 
 .form-unit-half {
   width: 48%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 @media (max-width: 59.9375em) {
   .form-unit-half {

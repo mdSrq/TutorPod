@@ -355,7 +355,7 @@ textarea {
     display: block;
     width: 100%;
     font-size: 1rem;
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.3rem;
   }
 }
 
@@ -365,7 +365,11 @@ textarea {
 
 .form-unit-half {
   width: 48%;
-
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
   @include breakpoint-down(medium) {
     width: 100%;
   }

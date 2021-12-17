@@ -28,6 +28,7 @@
                             <th>Details</th>
                             <th>Total Amount</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </thead>
                         <tbody>
                             
@@ -66,6 +67,9 @@
                         .append($("<td>").html("&#8377; " +bkn.totalForTutor))
                         <%}%>
                         .append($("<td>").text(bkn.booking.booking_status))
+                        .append($("<td>").append($("<a>").attr({
+                                href: "./Lessons?booking_id=" + bkn.booking.booking_id,
+                                }).text("See Lessons")))
                 });
                 }
             }

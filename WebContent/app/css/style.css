@@ -777,7 +777,7 @@ textarea:focus {
   display: block;
   width: 100%;
   font-size: 1rem;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.3rem;
 }
 
 .form-unit-full {
@@ -786,6 +786,11 @@ textarea:focus {
 
 .form-unit-half {
   width: 48%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 @media (max-width: 59.9375em) {
   .form-unit-half {
@@ -2752,6 +2757,59 @@ tbody tr:nth-child(even) {
   display: block;
   max-width: 100%;
   border-radius: 0.4rem;
+}
+.main__lesson__overlay {
+  height: 85vh;
+  padding-bottom: 0;
+}
+.main__lesson__overlay form {
+  padding-bottom: 0;
+}
+.main__lesson__overlay_avail {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: #d7e3f5;
+  max-height: 12rem;
+}
+.main__lesson__overlay_avail .avail_unit {
+  flex: 1;
+  font-size: 0.75rem;
+  cursor: pointer;
+  min-height: 2rem;
+  min-width: 2rem;
+  position: relative;
+  padding: 0.5rem;
+  color: #fff;
+  font-weight: 600;
+}
+.main__lesson__overlay_avail .avail_unit:not(:last-child) {
+  border-bottom: 1.5px solid #fff;
+}
+.main__lesson__overlay_label {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.main__lesson__overlay_label label {
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+}
+
+.dot {
+  display: inline-block;
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 50%;
+  background-color: #d7e3f5;
+}
+
+.green_unit {
+  background-color: #5ce49a;
+}
+
+.red_unit {
+  background-color: #f76363;
 }
 
 #finalMsg {

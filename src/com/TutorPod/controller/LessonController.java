@@ -71,6 +71,9 @@ public class LessonController extends HttpServlet {
 				switch(request.getParameter("cmd")) {
 				case"loadLessons":
 					String selector = request.getParameter("filter");
+					int booking_id=-1;
+					if(request.getParameter("booking_id")!=null)
+						booking_id = Integer.parseInt(request.getParameter("booking_id"));
 					String responseJSON="[]";
 					response.setContentType("application/json");
 					User user  = (User)session.getAttribute("USER");
@@ -78,10 +81,10 @@ public class LessonController extends HttpServlet {
 					ListIterator<LessonDetails> itr;
 					List<LessonDetails> lessons = new ArrayList<>();
 					if(dashboardType.equals("USER")) {
-						itr = lessonDAO.getLessonByUserID(user.getUser_id(),selector).listIterator();
+						itr = lessonDAO.getLessonByUserID(user.getUser_id(),selector,booking_id).listIterator();
 					}
 					else {
-						itr = lessonDAO.getLessonByTutorID(user.getTutor_id(),selector).listIterator();
+						itr = lessonDAO.getLessonByTutorID(user.getTutor_id(),selector,booking_id).listIterator();
 					}
 					while(itr.hasNext()) {
 						LessonDetails lessonDtl = itr.next();

@@ -62,7 +62,7 @@ public class LessonDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public List<LessonDetails> getLessonByTutorID(int tutor_id,String selector)throws Exception{
+	public List<LessonDetails> getLessonByTutorID(int tutor_id,String selector,int booking_id)throws Exception{
 		List<LessonDetails> lessons = new ArrayList<>();
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
@@ -84,9 +84,13 @@ public class LessonDAO {
 				sql += "and status='Cancelled'";
 				break;
 			}
+			if(booking_id>0)
+				sql+=" and lesson.booking_id=? ";
 			sql+=" order by lesson_id desc";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, tutor_id);
+			if(booking_id>0)
+				Stmt.setInt(2, booking_id);
 			Rs = Stmt.executeQuery();
 			while(Rs.next()) {
 				lessons.add(createLessonDetails(Rs));
@@ -97,7 +101,7 @@ public class LessonDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public List<LessonDetails> getLessonByUserID(int user_id,String selector)throws Exception{
+	public List<LessonDetails> getLessonByUserID(int user_id,String selector,int booking_id)throws Exception{
 		List<LessonDetails> lessons = new ArrayList<>();
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
@@ -119,9 +123,13 @@ public class LessonDAO {
 				sql += "and status='Cancelled'";
 				break;
 			}
+			if(booking_id>0)
+				sql+=" and lesson.booking_id=?";
 			sql+=" order by lesson_id desc";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, user_id);
+			if(booking_id>0)
+				Stmt.setInt(2, booking_id);
 			Rs = Stmt.executeQuery();
 			while(Rs.next()) {
 				lessons.add(createLessonDetails(Rs));
