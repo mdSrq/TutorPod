@@ -101,6 +101,26 @@ public class LessonDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public List<LessonDetails> getLessonsTutorID(int tutor_id)throws Exception{
+		List<LessonDetails> lessons = new ArrayList<>();
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from lesson inner join booking on lesson.booking_id = booking.booking_id where booking.tutor_id=? and lesson.status='Scheduled' order by lesson_id desc";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, tutor_id);
+			Rs = Stmt.executeQuery();
+			while(Rs.next()) {
+				lessons.add(createLessonDetails(Rs));
+			}
+			return lessons;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	public List<LessonDetails> getLessonByUserID(int user_id,String selector,int booking_id)throws Exception{
 		List<LessonDetails> lessons = new ArrayList<>();
 		Connection Conn = null;
@@ -140,21 +160,21 @@ public class LessonDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public Lesson getLesson(int lesson_id)throws Exception{
-		Lesson lesson=null;
+	public LessonDetails getLesson(int lesson_id)throws Exception{
+		LessonDetails lessonDetails=null;
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "select * from lesson where lesson_id=?";
+			String sql = "select * from lesson inner join booking on lesson.booking_id = booking.booking_id where lesson_id=?";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, lesson_id);
 			Rs = Stmt.executeQuery();
 			if(Rs.next()) {
-				lesson = createLesson(Rs);
+				lessonDetails = createLessonDetails(Rs);
 			}
-			return lesson;
+			return lessonDetails;
 		}finally {
 			// close JDBC objects
 			close(Conn,Stmt,Rs);
@@ -183,7 +203,7 @@ public class LessonDAO {
 			close(Conn,Stmt,null);
 		}	
 	}
-	public boolean updateLesson(Lesson lesson)throws Exception{
+	public boolean updateLesson(LessonDetails lesson)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		try {

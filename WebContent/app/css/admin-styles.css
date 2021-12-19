@@ -704,6 +704,28 @@ select:focus {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
+input[type=text]:-moz-read-only, input[type=number]:-moz-read-only, input[type=time]:-moz-read-only {
+  box-shadow: none;
+  cursor: not-allowed;
+  outline-width: 1.5px;
+}
+
+input[type=text]:read-only, input[type=number]:read-only, input[type=time]:read-only {
+  box-shadow: none;
+  cursor: not-allowed;
+  outline-width: 1.5px;
+}
+input[type=text]:-moz-read-only:focus, input[type=number]:-moz-read-only:focus, input[type=time]:-moz-read-only:focus {
+  box-shadow: none;
+}
+input[type=text]:read-only:focus, input[type=number]:read-only:focus, input[type=time]:read-only:focus {
+  box-shadow: none;
+}
+
+input[type=time] {
+  padding-right: 0;
+}
+
 .input-with-icon {
   font-size: 1rem;
   padding: 1rem;

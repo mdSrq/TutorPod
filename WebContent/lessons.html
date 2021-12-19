@@ -280,7 +280,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="main__form_overlayform main__lesson__overlay " tabindex="-1" id="scheduleOverlay">
+                <div class="main__form_overlayform main__lesson__overlay " style="display: block;" tabindex="-1" id="scheduleOverlay">
                     <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
                     <h2 class="main__sub-heading">Schedule Lesson</h2>
                     <form action="./LessonController" method="post" class="main__lesson__overlay_form">
@@ -311,6 +311,7 @@
                                 <div class="main__lesson__overlay_avail scrollable">
                                     <div class="avail_unit green_unit" id="12"><span>12:00</span></div>
                                     <div class="avail_unit red_unit" id="12.5"><span>12:30</span></div>
+                                    <div class="avail_unit" id="12.5"><span>12:30</span></div>
                                 </div>
                                 <input type="submit" class="button flat-wide-button" id="scheduleBtn" value="Schedule Lesson">
                             </div>

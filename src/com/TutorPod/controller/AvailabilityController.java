@@ -51,6 +51,13 @@ public class AvailabilityController extends HttpServlet {
 					responseJSON = new Gson().toJson(availabilityDAO.getWeeklyAvailability(tutor.getTutor_id()));
 				    out.write(responseJSON);
 					break;
+				case"loadTutorAvailability":
+					int tutor_id = Integer.parseInt(request.getParameter("tutor_id"));
+					responseJSON="[]";
+					response.setContentType("application/json");
+					responseJSON = new Gson().toJson(availabilityDAO.getAvailabilityByTutorID(tutor_id));
+					out.write(responseJSON);
+					break;
 				default:
 					out.write("Invalid Request");
 				}

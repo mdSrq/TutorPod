@@ -704,6 +704,28 @@ select:focus {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
+input[type=text]:-moz-read-only, input[type=number]:-moz-read-only, input[type=time]:-moz-read-only {
+  box-shadow: none;
+  cursor: not-allowed;
+  outline-width: 1.5px;
+}
+
+input[type=text]:read-only, input[type=number]:read-only, input[type=time]:read-only {
+  box-shadow: none;
+  cursor: not-allowed;
+  outline-width: 1.5px;
+}
+input[type=text]:-moz-read-only:focus, input[type=number]:-moz-read-only:focus, input[type=time]:-moz-read-only:focus {
+  box-shadow: none;
+}
+input[type=text]:read-only:focus, input[type=number]:read-only:focus, input[type=time]:read-only:focus {
+  box-shadow: none;
+}
+
+input[type=time] {
+  padding-right: 0;
+}
+
 .input-with-icon {
   font-size: 1rem;
   padding: 1rem;
@@ -2673,9 +2695,14 @@ tbody tr:nth-child(even) {
 }
 .main__lesson_schedule {
   flex: 1;
+  line-height: 1.4;
 }
 .main__lesson_schedule_time {
   font-weight: 600;
+}
+.main__lesson_schedule_timer {
+  color: #aa2ee6;
+  font-style: italic;
 }
 .main__lesson_info {
   flex: 1.5;
@@ -2768,22 +2795,53 @@ tbody tr:nth-child(even) {
 .main__lesson__overlay_avail {
   display: flex;
   flex-flow: column nowrap;
-  background-color: #d7e3f5;
+  overflow-x: auto;
   max-height: 12rem;
+  padding: 0.5rem 0;
 }
 .main__lesson__overlay_avail .avail_unit {
+  margin-left: 4.5rem;
   flex: 1;
   font-size: 0.75rem;
-  cursor: pointer;
+  color: #222;
   min-height: 2rem;
   min-width: 2rem;
   position: relative;
   padding: 0.5rem;
-  color: #fff;
   font-weight: 600;
+  border-bottom: 1.5px solid #aa2ee6;
 }
-.main__lesson__overlay_avail .avail_unit:not(:last-child) {
-  border-bottom: 1.5px solid #fff;
+.main__lesson__overlay_avail .avail_unit:last-child {
+  min-height: 0;
+  padding: 0;
+  border: none;
+}
+.main__lesson__overlay_avail .avail_unit:first-child {
+  border-top: 1.5px solid #aa2ee6;
+}
+.main__lesson__overlay_avail .avail_unit span {
+  position: absolute;
+  top: -0.55rem;
+  left: -4.5rem;
+  width: 3.5rem;
+  text-align: right;
+  background: linear-gradient(to right, #ff79cd, #aa2ee6);
+  padding: 0rem 0.2rem;
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
+  color: #fff;
+  z-index: 5;
+}
+.main__lesson__overlay_avail .avail_unit span::after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: -1.01rem;
+  top: 0;
+  border-top: 0.5rem solid transparent;
+  border-left: 1rem solid #aa2ee6;
+  border-bottom: 0.5rem solid transparent;
 }
 .main__lesson__overlay_label {
   display: flex;
@@ -2806,10 +2864,18 @@ tbody tr:nth-child(even) {
 
 .green_unit {
   background-color: #5ce49a;
+  color: #fff;
+  cursor: pointer;
 }
 
 .red_unit {
   background-color: #f76363;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.selected_unit {
+  background: linear-gradient(to right, #b3c6fd, #a2b7f7);
 }
 
 #finalMsg {

@@ -57,10 +57,39 @@
                     </div>
                 </div>
             </div>
+            <div class="main__form_overlayform" tabindex="-1" id="addLink">
+                <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+                <h2 class="main__sub-heading">Add Meeting Link </h2>
+                <form action="./LessonController" method="post" style="width: 100%;" class="scrollable"
+                    id="addLinkForm">
+                    <div class="form-unit form-unit-full">
+                        <label for="amount">Link</label>
+                        <input type="text" class="input-with-icon input-with-icon_no-icon" name="amount"
+                            placeholder="Enter link to the meeting" required />
+                    </div>
+                    <input type="hidden" name="cmd" value="addLessonLink">
+                    <input type="hidden" name="lesson_id" id="addLinkLessonID">
+                    <input type="submit" class="button flat-wide-button" value="Add Meeting Link">
+                </form>
+            </div>
+            <div class="main__form_overlayform" tabindex="-1" id="reSchedule">
+                <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+                <h2 class="main__sub-heading">Re-Schedule Request </h2>
+                <form action="./LessonController" method="post" style="width: 100%;" class="scrollable"
+                    id="reScheduleForm">
+                    <div class="form-unit form-unit-full">
+                        <label for="message">Write Message</label>
+                        <textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Write a message to learner." required></textarea>
+                    </div>
+                    <input type="hidden" name="cmd" value="reSchedule">
+                    <input type="hidden" name="lesson_id" id="reScheduleLessonID">
+                    <input type="submit" class="button flat-wide-button" value="Send Re-Schedule Request">
+                </form>
+            </div>
             <div class="main__form_overlayform main__lesson__overlay " tabindex="-1" id="scheduleOverlay">
                     <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
                     <h2 class="main__sub-heading">Schedule Lesson</h2>
-                    <form action="./LessonController" method="post" class="main__lesson__overlay_form">
+                    <form action="./LessonController" method="post" class="main__lesson__overlay_form" id="scheduleForm">
                         <div class="form-unit-half-container">
                             <div class="form-unit  form-unit-half">
                                 <label for="date">Select Date</label>
@@ -76,7 +105,7 @@
                                     <input type="time" name="time_to" readonly id="time_to" class="input-with-icon input-with-icon_no-icon">
                                 </div>
                             </div>
-                            <div class="form-unit form-unit-full">
+                            <div class="form-unit form-unit-full" id="scheduleDiv">
                                 <div class="main__lesson__overlay_label">
                                     <label for="">Select Start Time</label>
                                     <div>
@@ -89,8 +118,10 @@
                                     <div class="avail_unit green_unit" id="12"><span>12:00</span></div>
                                     <div class="avail_unit red_unit" id="12.5"><span>12:30</span></div>
                                 </div>
-                                <input type="submit" class="button flat-wide-button" id="scheduleBtn" value="Schedule Lesson">
                             </div>
+                            <input type="hidden" name="lesson_id" id="lesson_id">
+                            <input type="hidden" name="cmd" value="scheduleLesson">
+                            <input type="submit" class="button flat-wide-button" id="scheduleBtn" value="Schedule Lesson">
                         </div>
                     </form>
                 </div>
@@ -100,11 +131,12 @@
     let lessonsMap = new Map();
     let days_of_week = new Array();
     let availMap = new Map();
+    let scheduleMap = new Map();
     daysObj = {
         1:"Monday",
         2:"Tuesday",
         3:"Wednesday",
-        4:"Thrusday",
+        4:"Thursday",
         5:"Friday",
         6:"Saturday",
         7:"Sunday"
@@ -140,27 +172,76 @@
                                 .append($("<div>").addClass("main__lesson_profile_img"))
                                 .append($("<div>").addClass("main__lesson_profile_info")
                                     .append($("<div>").addClass("main__lesson_profile_name"))
-                                    .append($("<div>").addClass("main__lesson_profile_buttons")
-                                        .append($("<button>").addClass("joinBtn").prop("title","Join Meeting").append('<img src="./images/enter.png" alt="">'))
-                                            .append($("<button>").addClass("cancelBtn").prop("title","Cancel Lesson").append('<img src="./images/cancel.png" alt="">'))
-                                            .append($("<button>").addClass("scheduleBtn").prop("title","Schedule Lesson").attr("onclick","showScheduleLessonForm("+lesson.lesson_id+")") .append('<img src="./images/clock.png" alt="">'))
-                                    )
-                                )
+                                    .append($("<div>").addClass("main__lesson_profile_buttons")))
                             );
                             <%if(dashboardType.equals("TUTOR")){%>
                             if(lesson.user.photo===undefined)
-                            	tile.children(".main__lesson_profile").children(".main__lesson_profile_img").append('<img src="./images/user.png" alt="Tutor Photo">');
+                            	tile.find(".main__lesson_profile_img")
+                                    .append('<img src="./images/user.png" alt="Tutor Photo">');
                             else
-                            	tile.children(".main__lesson_profile").children(".main__lesson_profile_img").append('<img src="/TutorPod_Photos/Users/"'+lesson.user.photo+' alt='+lesson.user.fname+" "+lesson.user.lname+"'s Photo>");
-                            tile.children(".main__lesson_profile").children(".main__lesson_profile_info").children(".main__lesson_profile_name").append("<span>"+lesson.user.fname+" "+lesson.user.lname+"</span>");
-                            tile.children(".main__lesson_profile").children(".main__lesson_profile_info").children(".main__lesson_profile_buttons").append('<button class="linkBtn" title="Add Meeting Link"><img src="./images/link.png" alt=""></button>');
+                            	tile.find(".main__lesson_profile_img")
+                                    .append('<img src="/TutorPod_Photos/Users/"'+lesson.user.photo+' alt='+lesson.user.fname+" "+lesson.user.lname+"'s Photo>");
+                            tile.find(".main__lesson_profile_name")
+                                .append("<span>"+lesson.user.fname+" "+lesson.user.lname+"</span>");
+                            tile.find(".main__lesson_profile_buttons")
+                                .append($("<button>").addClass("linkBtn").prop("title","Add Meeing Link")
+                                .attr("onclick","showAddLinkForm("+lesson.lesson_id+")")
+                                .append('<img src="./images/link.png" alt="">'));
+                            if(lesson.status==="Scheduled")
+                                tile.find(".main__lesson_profile_buttons")
+                                    .append($("<button>").addClass("scheduleBtn").prop("title","Re-Schedule")
+                                    .attr("onclick","showReScheduleForm("+lesson.lesson_id+")") 
+                                    .append('<img src="./images/clock.png" alt="">'));
                             <%}else{%>
                             if(lesson.tutorUser.photo===undefined)
-                            	tile.children(".main__lesson_profile").children(".main__lesson_profile_img").append('<img src="./images/user.png" alt="Student Photo">');
+                            	tile.find(".main__lesson_profile_img")
+                                    .append('<img src="./images/user.png" alt="Student Photo">');
                             else
-                            	tile.children(".main__lesson_profile").children(".main__lesson_profile_img").append('<img src="/TutorPod_Photos/Users/"'+lesson.tutorUser.photo+' alt='+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"'s Photo>");
-                            tile.children(".main__lesson_profile").children(".main__lesson_profile_info").children(".main__lesson_profile_name").append("<span>"+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"</span>");
+                            	tile.find(".main__lesson_profile_img")
+                                    .append('<img src="/TutorPod_Photos/Users/"'+lesson.tutorUser.photo+' alt='+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"'s Photo>");
+                            tile.find(".main__lesson_profile_name")
+                                .append("<span>"+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"</span>");
+                            if(lesson.status==="Unscheduled"||lesson.status==="Need Re-Scheduling"||lesson.status==="Scheduled"){
+                                const title = lesson.status==="Unscheduled"?"Schedule Lesson":"Re-Schedule Lesson"
+                                tile.find(".main__lesson_profile_buttons")
+                                    .append($("<button>").addClass("scheduleBtn").prop("title",title)
+                                    .attr("onclick","showScheduleLessonForm("+lesson.tutor_id+","+lesson.lesson_id+")") 
+                                    .append('<img src="./images/clock.png" alt="">'));
+                                }
                             <%}%>
+                            if(lesson.status!=="Completed")
+                                tile.find(".main__lesson_profile_buttons")
+                                    .append($("<button>").addClass("cancelBtn").prop("title","Cancel Lesson")
+                                    .append('<img src="./images/cancel.png" alt="">'));
+                            if(lesson.meeting_link!==undefined)
+                                tile.find(".main__lesson_profile_buttons")
+                                    .append($("<button>").addClass("joinBtn").prop("title","Join Meeting")
+                                    .append('<img src="./images/enter.png" alt="">'))
+                            if(lesson.status==="Scheduled"){
+                                let dateParts = lesson.date.split('-');
+                                let timeParts1 = lesson.time_from.split(':');
+                                let timeParts2 = lesson.time_to.split(':');
+                                const datetime1 = new Date(dateParts[0], dateParts[1]-1,dateParts[2],timeParts1[0],timeParts1[1],timeParts1[2]);
+                                let time_from = (parseInt(timeParts1[0])*1000*60*60)+(parseInt(timeParts1[1])*1000*60);
+                                let time_to = (parseInt(timeParts2[0])*1000*60*60)+(parseInt(timeParts2[1])*1000*60);
+                                tile.find(".main__lesson_schedule_time").text(tConvert(time_from,12)+" to "+tConvert(time_to,12))
+                                tile.find(".main__lesson_schedule_date").text(datetime1.toDateString())
+                                setInterval(() => {
+                                    const datetime2 = new Date();
+                                    const diff = Math.abs(datetime1 - datetime2);
+                                    const secs = Math.floor(diff/1000);
+                                    const sec = Math.floor(secs%60);
+                                    const mins = Math.floor(secs/60);
+                                    const min = Math.floor(mins%60);
+                                    const hours = Math.floor(mins/60);
+                                    const hour = Math.floor(hours%60);
+                                    if(hours>24){
+                                        const days = Math.floor(hours/24);
+                                        tile.find(".main__lesson_schedule_timer").text(days+" Days "+hour+"Hr left");
+                                    }else
+                                        tile.find(".main__lesson_schedule_timer").text(hour+"Hr "+min+"min "+sec+"sec left");
+                                }, 1000);
+                            }
                             lessonsMap.set(lesson.lesson_id,lesson);
                     });
                 }
@@ -177,27 +258,85 @@
         $(".main__form_overlayform").removeAttr("style");
         $(".overlay-background").remove();
     }
-    function showScheduleLessonForm(lesson_id){
+    function showScheduleLessonForm(tutor_id,lesson_id){
         showLoading();
+        $("#scheduleDiv").hide();
+        $(".main__lesson__overlay_avail").empty();
+        $("#scheduleForm").trigger("reset");
+        $("#lesson_id").val(lesson_id);
         $.ajax({
             url:"./AvailabilityController",
-            data:"cmd=loadWeeklyAvailability",
+            data:"cmd=loadTutorAvailability&tutor_id="+tutor_id,
             success: function(response){    
                 hideLoading();
                 $.each(response,function(i,av){
                     days_of_week.push(daysObj[av.day_of_week]);
-                    availMap.set(av.day_of_week,av);
+                    availMap.set(daysObj[av.day_of_week],av);
                 });
+                console.log(response);
+            }
+        });
+        showLoading();
+        $.ajax({
+            url:"./LessonController",
+            data:"cmd=loadScheduledLessons&tutor_id="+tutor_id,
+            success: function(response){    
+                hideLoading();
+                console.log(response);
+                $.each(response,function(i,schedule){
+                    if(scheduleMap.has(schedule.date)){
+                        const scheduleArray = scheduleMap.get(schedule.date);
+                        scheduleArray.push(schedule);
+                        scheduleMap.set(schedule.date,scheduleArray);
+                    }else{
+                        let scheduleArray = new Array();
+                        scheduleArray.push(schedule);
+                        scheduleMap.set(schedule.date,scheduleArray);
+                    }
+                });
+                console.log(response);
             }
         });
         showOverlayForm("scheduleOverlay");
     }
+    function showAddLinkForm(lesson_id){
+        $("#addLinkLessonID").val(lesson_id);
+        showOverlayForm("addLink");
+    }
+    function showReScheduleForm(lesson_id){
+        $("#reScheduleLessonID").val(lesson_id);
+        showOverlayForm("reSchedule");
+    }
     function validateDate(date){
-        const day = (new Date(date)).toLocaleDateString('en-US', { weekday: 'long' });
+        const parts = date.split('-');
+        const day = (new Date(parts[0], parts[1]-1, parts[2])).toLocaleDateString('en-US', { weekday: 'long' });
         if(days_of_week.indexOf(day)===-1)
             return false;
         else
             return true;
+    }
+    function tConvert (start_time,format) {
+        const start_mins = Math.floor((start_time/1000)/60);
+        const start_min = Math.floor(start_mins%60);
+        const start_hr = Math.floor((start_mins - start_min)/60);
+        let time="";
+        start_hr<10? time="0":time+="";
+        time+=start_hr+":";
+        start_min<10? time += "0":time+="";
+        time+=start_min;
+    if(format===24){
+        return time;
+    }else{
+        // Check correct time format and split into components
+            time = time.match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+            if (time.length > 1) { // If time format correct
+                time = time.slice (1);  // Remove full string match value
+                time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+                time[0] = +time[0] % 12 || 12; // Adjust hours
+            }
+            return time.join (''); // return adjusted time or original string
+    }
     }
     $(document).ready(function(event){
     	<%if(request.getParameter("booking_id")!=null){%>
@@ -209,6 +348,7 @@
         $("#filterSelector").change(function(event){
             loadLessons($(this).val(),null);
         });
+        $("#scheduleDiv").hide();
         var d = new Date();
         var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
         $("#date").prop("min",date);
@@ -219,9 +359,121 @@
                 $.each(days_of_week,function(i,day){
                     alertMsg += day+" ";
                 });
+                $("#scheduleDiv").hide();
                 alert(alertMsg);
                 alertMsg = "Tutor is not available on this day. Choose a date on following days: ";
+            }else{
+                const parts = $(this).val().split('-');
+                const day = (new Date(parts[0], parts[1]-1, parts[2])).toLocaleDateString('en-US', { weekday: 'long' });
+                const avail = availMap.get(day);
+                let dateParts = $(this).val().split('-');
+                let timeParts1 = avail.time_from.split(':');
+                let timeParts2 = avail.time_to.split(':');
+                const datetime1 = new Date(dateParts[0], dateParts[1]-1,
+                dateParts[2],timeParts1[0],timeParts1[1],timeParts1[2]);
+                const datetime2 = new Date(dateParts[0], dateParts[1]-1,
+                dateParts[2],timeParts2[0],timeParts2[1]);
+                const diff = Math.abs(datetime1 - datetime2);
+                const mins = Math.floor((diff/1000)/60);
+                const no_of_units = Math.floor(mins/30);
+                const avail_div = $(".main__lesson__overlay_avail");
+                let start_time = (parseInt(timeParts1[0])*1000*60*60)+(parseInt(timeParts1[1])*1000*60);
+                avail_div.empty();
+                $("#scheduleDiv").show();
+                for(let i=0;i<=no_of_units;i++){
+                    let avail_unit = $("<div>").addClass("avail_unit green_unit")
+                                               .append($("<span>").text(tConvert(start_time,12)))
+                                               .append($("<i>").addClass("unit_value").text(start_time).css("display","none"));
+                    $.each(scheduleMap.get($(this).val()),function(i,schedule){
+                        const time_parts = schedule.time_from.split(":");
+                         const time_parts1 = schedule.time_to.split(":");
+                        let scheduleStartTime = (parseInt(time_parts[0])*1000*60*60)+(parseInt(time_parts[1])*1000*60);
+                        let scheduleEndTime = (parseInt(time_parts1[0])*1000*60*60)+(parseInt(time_parts1[1])*1000*60);
+                        if(start_time>=scheduleStartTime && start_time<scheduleEndTime)
+                            avail_unit.addClass("red_unit");
+                        const lesson = lessonsMap.get(parseInt($("#lesson_id").val()));
+                        const lessonTime = (lesson.duration-0.5)*1000*60*60;
+                        if(start_time >= (scheduleStartTime - lessonTime) && start_time < scheduleStartTime)
+                            avail_unit.addClass("overlapingTime");
+                    });
+                    avail_div.append(avail_unit);
+                    start_time += 30*1000*60;
+                }
             }
+        });
+        $(document).on("click",".avail_unit",function(event){
+            const avail_unit = $(this);
+            const lesson = lessonsMap.get(parseInt($("#lesson_id").val()));
+            if(avail_unit.hasClass("red_unit"))
+                return;
+            if(avail_unit.hasClass("overlapingTime"))
+                alert("You or Tutor will not be available for "+lesson.duration+" Hr from selected starting time");
+            else{
+                console.log("clicked");
+                const start_time = parseInt(avail_unit.children(".unit_value").text());
+                const time_from = tConvert(start_time,24);
+                const time_to = tConvert(start_time + lesson.duration*1000*60*60,24);
+                $("#time_from").val(time_from);
+                $("#time_to").val(time_to);
+                let nextUnit = avail_unit;
+                $(".selected_unit").removeClass("selected_unit");
+                for(i=0;i<lesson.duration*2;i++){
+                    nextUnit.addClass("selected_unit");
+                    nextUnit = nextUnit.next();
+                }
+            }
+        });
+        $(document).on("submit", "#scheduleForm", function (event) {
+		event.preventDefault();
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $form.trigger("reset");
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }
+                if(response.includes("Scheduled")) {
+                    loadLessons("All",null);
+                    hideOverlayForm();
+				}else{
+					$("#snackbar").html(response);
+					showToast();
+					console.log(response);
+				}
+            });
+        });
+        $(document).on("submit", "#addLinkForm", function (event) {
+		event.preventDefault();
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $form.trigger("reset");
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }
+                if(response.includes("Added")) {
+                    loadLessons("All",null);
+                    hideOverlayForm();
+				}else{
+					$("#snackbar").html(response);
+					showToast();
+					console.log(response);
+				}
+            });
         });
     });
 </script>

@@ -98,6 +98,37 @@ public class AvailabilityDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public List<Availability> getAvailabilityByTutorID(int tutor_id) throws Exception{
+		List<Availability> availability = new ArrayList<>();
+		
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from availability where tutor_id = ?";
+			
+			
+			Stmt = Conn.prepareStatement(sql);
+			
+			Stmt.setInt(1, tutor_id);
+			
+			// execute query
+			Rs = Stmt.executeQuery();
+			
+			// process result set
+			while (Rs.next())
+				availability.add(createAvailability(Rs));
+			
+			return availability;		
+		}
+		finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	public Availability getAvailability(int availability_id)throws Exception{
 		Availability availability=null;
 		Connection Conn = null;

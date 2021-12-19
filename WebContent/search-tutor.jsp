@@ -382,7 +382,8 @@
     }
 
     function showOverlayForm(overlayID) {
-        $("<div>").addClass("overlay-background").css("display", "block").appendTo($("body"));
+        if($(".overlay-background").length<1)
+            $("<div>").addClass("overlay-background").css("display", "block").appendTo($("body"));
         $("#"+overlayID).css("display", "flex");
         $("#"+overlayID).focus();
     }
@@ -390,6 +391,9 @@
     function hideOverlayForm() {
         $(".main__form_overlayform").removeAttr("style");
         $(".overlay-background").remove();
+    }
+    function hideForm(overlayID){
+        $("#"+overlayID).removeAttr("style");
     }
     function preparePayment(){
         showLoading();
@@ -516,13 +520,18 @@
             $("#pay_price").val($("#price").val());
             $("#pay_duration").val($("#duration").val());
             $("#pay_no_of_lesson").val($("#no_of_lesson").val());
+            if($("#booking_subject_id").val()===null || $("#pay_subject_id").val()===null ){
+                $("#snackbar").html("Select a subject");
+                showToast();
+                return;
+            }
             preparePayment();
-            hideOverlayForm();
+            hideForm("bookingOverlay");
             showOverlayForm("paymentOverlay");
         });
         $("#backBtn").click(function(event){
             event.preventDefault();
-            hideOverlayForm();
+            hideForm("paymentOverlay");
             showOverlayForm("bookingOverlay");
         });
         $(document).on("submit", "#paymentForm", function (event) {
@@ -541,9 +550,7 @@
 					});
                 }
                 if (response.includes("Booked")) {
-					$("#snackbar").html(response);
-					showToast();
-                    hideOverlayForm();
+                    hideForm("paymentOverlay");
                     showOverlayForm("successOverlay");
                     loadNotifications();
 				}else{
@@ -554,7 +561,7 @@
             });
         });
         $(".search__booking_walletDiv_heading_link").click(function(event){
-            hideOverlayForm();
+            hideForm("paymentOverlay");
             showOverlayForm("addOverlay");
         });
         $(document).on("submit", "#addMoneyForm", function (event) {
@@ -575,7 +582,7 @@
                 }
                 if (response.includes("Added")) {
                     preparePayment();
-                    hideOverlayForm();
+                    hideForm("addOverlay");
                     showOverlayForm("paymentOverlay");
 				}else{
 					$("#snackbar").html(response);

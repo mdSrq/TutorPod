@@ -400,8 +400,13 @@
     }
     &_schedule {
       flex: 1;
+      line-height: 1.4;
       &_time {
         font-weight: 600;
+      }
+      &_timer{
+        color: $lightPurple;
+        font-style: italic;
       }
     }
     &_info {
@@ -494,20 +499,51 @@
       &_avail {
         display: flex;
         flex-flow: column nowrap;
-        background-color: $lightBlue;
+        overflow-x: auto;
         max-height: 12rem;
+        padding: 0.5rem 0;
         .avail_unit {
+          margin-left: 4.5rem;
           flex: 1;
           font-size: 0.75rem;
-          cursor: pointer;
+          color: $dark;
           min-height: 2rem;
           min-width: 2rem;
           position: relative;
           padding: 0.5rem;
-          color: $white;
           font-weight: 600;
-          &:not(:last-child) {
-            border-bottom: 1.5px solid $white;
+          border-bottom: 1.5px solid $lightPurple;
+          &:last-child{
+            min-height: 0;
+            padding: 0;
+            border: none;
+          }
+          &:first-child{
+            border-top: 1.5px solid $lightPurple;
+          }
+          span{
+            position: absolute;
+            top: -0.55rem;
+            left: -4.5rem;
+            width: 3.5rem;
+            text-align: right;
+            background:linear-gradient(to right,$kindaPink,$lightPurple);
+            padding: 0rem 0.2rem;
+            border-top-left-radius: 0.2rem;
+            border-bottom-left-radius: 0.2rem;
+            color: $white;
+            z-index: 5;
+            &::after{
+              content: "";
+              width: 0;
+              height: 0;
+              position: absolute;
+              right: -1.01rem;
+              top: 0;
+              border-top: 0.5rem solid transparent;
+              border-left: 1rem solid $lightPurple;
+              border-bottom: 0.5rem solid transparent;
+            }
           }
         }
       }
@@ -531,9 +567,16 @@
 }
 .green_unit {
   background-color: $greenish;
+  color: $white;
+  cursor: pointer;
 }
 .red_unit {
   background-color: $lightRed;
+  color: $white;
+  cursor: not-allowed;
+}
+.selected_unit{
+  background: linear-gradient(to right,#b3c6fd,#a2b7f7);
 }
 #finalMsg {
   display: none;

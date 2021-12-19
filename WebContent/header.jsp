@@ -100,7 +100,7 @@ User user = null;
                         <%}else{%>
                         <a href="#">My Teachers</a>
                         <%} %>
-                        <a href="#">Lessons</a>
+                        <a href="./Lessons">Lessons</a>
                         <a href="./AccountSettings">Settings</a>
                         <a href="./UserController?cmd=logout">Logout</a>
                     </div>

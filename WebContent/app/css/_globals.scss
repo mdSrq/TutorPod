@@ -295,7 +295,19 @@ select {
     box-shadow: $shadow3;
   }
 }
-
+input[type="text"],input[type="number"],input[type="time"]{
+  &:read-only{
+    box-shadow: none;
+    cursor: not-allowed;
+    outline-width: 1.5px;
+    &:focus{
+      box-shadow: none;
+    }
+  }
+}
+input[type="time"]{
+  padding-right: 0;
+}
 .input-with-icon {
   font-size: 1rem;
   padding: 1rem;
