@@ -27,6 +27,7 @@ import com.TutorPod.dao.TransactionDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.dao.WalletDAO;
 import com.TutorPod.dao.WithdrawRequestDAO;
+import com.TutorPod.model.Lesson;
 import com.TutorPod.model.LessonDetails;
 import com.TutorPod.model.Notification;
 import com.TutorPod.model.User;
@@ -90,13 +91,9 @@ public class LessonController extends HttpServlet {
 					else {
 						itr = lessonDAO.getLessonByTutorID(user.getTutor_id(),selector,booking_id).listIterator();
 					}
-					while(itr.hasNext()) {
-						LessonDetails lessonDtl = itr.next();
-						lessonDtl.setUser(userDAO.getUser(lessonDtl.getUser_id()));
-						lessonDtl.setTutorUser(userDAO.getUserByTutorID(lessonDtl.getTutor_id()));
-						lessonDtl.setSubject(subjectDAO.getSubject(lessonDtl.getSubject_id()));
-						lessons.add(lessonDtl);
-					}
+					while(itr.hasNext())				
+						lessons.add(createLessonDetails(itr.next()));
+					
 					responseJSON = new Gson().toJson(lessons);
 					out.write(responseJSON);
 					break;
@@ -131,17 +128,50 @@ public class LessonController extends HttpServlet {
 					String date = request.getParameter("date");
 					String time_from = request.getParameter("time_from");
 					String time_to = request.getParameter("time_to");
-					LessonDetails lessonDetails = lessonDAO.getLesson(lesson_id);
+					LessonDetails lessonDetails = createLessonDetails(lessonDAO.getLessonDetails(lesson_id));
 					lessonDetails.setTime_from(time_from);
 					lessonDetails.setTime_to(time_to);
 					lessonDetails.setDate(date);
 					lessonDetails.setStatus("Scheduled");
 					if(lessonDAO.updateLesson(lessonDetails)) {
-						sendNotification(lessonDetails.getTutor_id(),"Lesson ID:"+lessonDetails.getLesson_id()+" is scheduled by learner. Click to see details","./Lessons",true);
+						sendNotification(lessonDetails.getTutor_id(),lessonDetails.getUser().getFname()+" "+lessonDetails.getUser().getLname()+" has scheduled their lesson. Click to see details","./Lessons",true);
 						out.write("Lesson Scheduled");
 					}
 					else
 						out.write("Failed to Schedule Lesson");
+					break;
+				case"addMeetingLink":
+					lesson_id = Integer.parseInt(request.getParameter("lesson_id"));
+					String meeting_link = request.getParameter("meeting_link");
+					Lesson lesson = lessonDAO.getLesson(lesson_id);
+					lesson.setMeeting_link(meeting_link);
+					if(lessonDAO.updateLesson(lesson))
+						out.write("Meeting Link Added");
+					else
+						out.write("Faield to add meeting link");
+					break;
+				case"requestSchedule":
+					lesson_id = Integer.parseInt(request.getParameter("lesson_id"));
+					String message = request.getParameter("message");
+					lessonDetails = createLessonDetails(lessonDAO.getLessonDetails(lesson_id));
+					lessonDetails.setStatus("Need Re-Scheduling");
+					lessonDetails.setTime_from(null);
+					lessonDetails.setTime_to(null);
+					if(
+					lessonDAO.updateLesson(lessonDetails)
+					&&
+					sendNotification(lessonDetails.getUser_id(),
+					"Re-Schedule Request from "+
+					lessonDetails.getTutorUser().getFname()+" "+
+					lessonDetails.getTutorUser().getLname()+": "+message +" Click to go to lessons",
+					"./Lessons",false)
+					)
+						out.write("Notification Sent");
+					else
+						out.write("Failed to send Notification");
+					break;
+				case"cancelLesson":
+					lesson_id = Integer.parseInt(request.getParameter("lesson_id"));
 					break;
 				default:
 					out.write("Invalid Request");
@@ -161,4 +191,11 @@ public class LessonController extends HttpServlet {
 		else
 			return notificationDAO.addNotification(new Notification(message,link,datetime,id,-1,false,false));
 	}
+	private LessonDetails createLessonDetails(LessonDetails lessonDtl)throws Exception{
+		lessonDtl.setUser(userDAO.getUser(lessonDtl.getUser_id()));
+		lessonDtl.setTutorUser(userDAO.getUserByTutorID(lessonDtl.getTutor_id()));
+		lessonDtl.setSubject(subjectDAO.getSubject(lessonDtl.getSubject_id()));
+		return lessonDtl;
+	}
+	
 }

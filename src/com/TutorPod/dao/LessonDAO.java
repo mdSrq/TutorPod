@@ -43,6 +43,9 @@ public class LessonDAO {
 			case"Cancelled":
 				sql += "where status='Cancelled' ";
 				break;
+			case"Need Re-Scheduling":
+				sql += "where status='Need Re-Scheduling' ";
+				break;
 			}
 			sql+="order by lesson_id desc";
 			Stmt = Conn.createStatement();
@@ -83,6 +86,9 @@ public class LessonDAO {
 			case"Cancelled":
 				sql += "and status='Cancelled'";
 				break;
+			case"Need Re-Scheduling":
+				sql += "and status='Need Re-Scheduling' ";
+				break;	
 			}
 			if(booking_id>0)
 				sql+=" and lesson.booking_id=? ";
@@ -142,6 +148,9 @@ public class LessonDAO {
 			case"Cancelled":
 				sql += "and status='Cancelled'";
 				break;
+			case"Need Re-Scheduling":
+				sql += "and status='Need Re-Scheduling' ";
+				break;
 			}
 			if(booking_id>0)
 				sql+=" and lesson.booking_id=?";
@@ -160,7 +169,27 @@ public class LessonDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
-	public LessonDetails getLesson(int lesson_id)throws Exception{
+	public Lesson getLesson(int lesson_id)throws Exception{
+		Lesson lessonDetails=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from lesson where lesson_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, lesson_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				lessonDetails = createLesson(Rs);
+			}
+			return lessonDetails;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public LessonDetails getLessonDetails(int lesson_id)throws Exception{
 		LessonDetails lessonDetails=null;
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
@@ -194,6 +223,30 @@ public class LessonDAO {
 			Stmt.setString(5, lesson.getTime_to());
 			Stmt.setString(6, lesson.getDate());
 			Stmt.setString(7, lesson.getStatus());
+			if(Stmt.executeUpdate()>0)
+				return true;
+			else
+				return false;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,null);
+		}	
+	}
+	public boolean updateLesson(Lesson lesson)throws Exception{
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "update lesson set booking_id=?,meeting_link=?,notes=?,time_from=?,time_to=?,date=?,status=? where lesson_id=? ";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, lesson.getBooking_id());
+			Stmt.setString(2, lesson.getMeeting_link());
+			Stmt.setString(3, lesson.getNotes());
+			Stmt.setString(4, lesson.getTime_from());
+			Stmt.setString(5, lesson.getTime_to());
+			Stmt.setString(6, lesson.getDate());
+			Stmt.setString(7, lesson.getStatus());
+			Stmt.setInt(8, lesson.getLesson_id());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else

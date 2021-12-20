@@ -172,8 +172,8 @@ public class BookingController extends HttpServlet {
 									tutorWallet.setBalance(tutorWallet.getBalance()+totalReceived);
 									walletDAO.updateWallet(tutorWallet);
 									if(transactionDAO.addTransaction(new Transaction("Booking",booking_id,"Admin",-1,(subTotal/100)*5,"Booking payment ID:"+booking_id,date,datetime))) {
-										sendNotification(user.getUser_id(),"Your booking is completed. Click here to schedule your lessons.","./Orders",false);
-										sendNotification(tutor_id,"You have a new booking. Click to see details","./Orders",true);
+										sendNotification(user.getUser_id(),"Your booking ( Booking ID:"+booking_id+" ) is completed. Click here to see your bookings.","./Orders",false);
+										sendNotification(tutor_id,"You have a new booking ( Booking ID:\"+booking_id+\" ). Click to see details","./Orders",true);
 										for(int i=0;i<no_of_lesson;i++)
 											lessonDAO.addLesson(new Lesson(booking_id,null,null,null,null,null,"Unscheduled"));
 										walletDAO.Commit();

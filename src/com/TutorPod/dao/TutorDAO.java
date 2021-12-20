@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.sql.DataSource;
 
@@ -100,7 +101,7 @@ public class TutorDAO {
 		List<Tutor> tutors = new ArrayList<>();
 		
 		Connection Conn = null;
-		Statement Stmt = null;
+		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
@@ -127,12 +128,11 @@ public class TutorDAO {
 			}
 			sql+="where tutor.profile_status like 'Tutor' ";
 			if(filterSubject)
-				sql += "and fees.subject_id="+subject_id+" ";
+				sql += "and fees.subject_id=? ";
 			if(filterAvailability) {
 			  sql += "and availability.day_of_week in(";
 			  for(int i=0;i<avail.size();i++){
-				  int avail_day = avail.get(i);
-				  sql += avail_day;
+				  sql += "?";
 				  if(!(i==avail.size()-1))
 					  sql+=", ";
 				  else
@@ -141,19 +141,42 @@ public class TutorDAO {
 			}
 			if(filterKeyword) {
 				keyword = keyword.toUpperCase();
-				sql+="and MATCH(user.fname,user.lname) AGAINST('"+keyword+"' IN NATURAL LANGUAGE MODE) or MATCH(subject.subject_name) AGAINST('";
-				for(String word : keyword.split(" ")) {
-					sql+="+"+word+" ";
+				sql+="and MATCH(user.fname,user.lname) AGAINST(? IN NATURAL LANGUAGE MODE) or MATCH(subject.subject_name) AGAINST(";
+				for(int i=0;i<keyword.split(" ").length;i++) {
+					sql+="+? ";
 				}
-				sql+="' IN BOOLEAN MODE)  "
-					+"or subject.subject_code = '"+keyword+"' ";
+				sql+=" IN BOOLEAN MODE)  "
+					+"or subject.subject_code = ? ";
 			}
 			sql+="group by tutor.tutor_id ";
 			if(filterAvailability)
 				sql+=" having count(*)="+avail.size();
-			Stmt = Conn.createStatement();
+			Stmt = Conn.prepareStatement(sql);
 			
-			Rs = Stmt.executeQuery(sql);
+			int paramIndex = 1;
+			
+			if(filterSubject) {
+				Stmt.setInt(paramIndex, subject_id);
+				paramIndex++;
+			}
+			if(filterAvailability) {
+				ListIterator<Integer> itr = avail.listIterator();
+				while(itr.hasNext()) {
+					Stmt.setInt(paramIndex, itr.next());
+					paramIndex++;
+				}
+			}
+			if(filterKeyword) {
+				keyword = keyword.toUpperCase();
+				Stmt.setString(paramIndex, keyword);
+				paramIndex++;
+				for(String word : keyword.split(" ")) {
+					Stmt.setString(paramIndex, word);
+					paramIndex++;
+				}
+				Stmt.setString(paramIndex, keyword);
+			}
+			Rs = Stmt.executeQuery();
 			
 			while (Rs.next()) {
 				

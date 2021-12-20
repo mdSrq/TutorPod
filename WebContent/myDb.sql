@@ -181,7 +181,7 @@ create table review(review_id int auto_increment primary key,
                     tutor_id int not null
 					);
 create table notification(notification_id int auto_increment primary key,
-					notification varchar(150) not null,
+					notification varchar(900) not null,
                     link varchar(100) not null,
                     datetime datetime not null,
                     user_id int,

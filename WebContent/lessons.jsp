@@ -13,6 +13,7 @@
                 <option value="Completed">Completed</option>
                 <option value="Scheduled">Scheduled</option>
                 <option value="Unscheduled">Unscheduled</option>
+                <option value="Need Re-Scheduling">Need Re-Scheduling</option>
                 <option value="Cancelled">Cancelled</option>
             </select>
             <%if(dashboardType.equals("USER")){
@@ -64,11 +65,11 @@
                     id="addLinkForm">
                     <div class="form-unit form-unit-full">
                         <label for="amount">Link</label>
-                        <input type="text" class="input-with-icon input-with-icon_no-icon" name="amount"
+                        <input type="text" class="input-with-icon input-with-icon_no-icon" name="meeting_link"
                             placeholder="Enter link to the meeting" required />
                     </div>
-                    <input type="hidden" name="cmd" value="addLessonLink">
-                    <input type="hidden" name="lesson_id" id="addLinkLessonID">
+                    <input type="hidden" name="cmd" value="addMeetingLink" required>
+                    <input type="hidden" name="lesson_id" id="addLinkLessonID" required>
                     <input type="submit" class="button flat-wide-button" value="Add Meeting Link">
                 </form>
             </div>
@@ -81,8 +82,23 @@
                         <label for="message">Write Message</label>
                         <textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Write a message to learner." required></textarea>
                     </div>
-                    <input type="hidden" name="cmd" value="reSchedule">
+                    <input type="hidden" name="cmd" value="requestSchedule">
                     <input type="hidden" name="lesson_id" id="reScheduleLessonID">
+                    <input type="submit" class="button flat-wide-button" value="Send Re-Schedule Request">
+                </form>
+            </div>
+            <div class="main__form_overlayform" tabindex="-1" id="cancelLesson">
+                <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+                <h2 class="main__sub-heading">Cancel Lesson </h2>
+                <form action="./LessonController" method="post" style="width: 100%;" class="scrollable"
+                    id="reScheduleForm">
+                    <div class="form-unit form-unit-full">
+                        <label for="message">Cancelation Reason</label>
+                        <textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon"
+                            placeholder="Write the reason for cancelation." required></textarea>
+                    </div>
+                    <input type="hidden" name="cmd" value="cancelLesson">
+                    <input type="hidden" name="lesson_id" id="cancelLessonID">
                     <input type="submit" class="button flat-wide-button" value="Send Re-Schedule Request">
                 </form>
             </div>
@@ -167,13 +183,55 @@
                             .append($("<div>").addClass("main__lesson_info")
                                 .append($("<span>").addClass("main__lesson_info_text").text(lesson.subject.subject_name))
                                 .append($("<span>").addClass("main__lesson_info_tag").text("Length: "+lesson.duration+" Hr"))
-                                .append($("<span>").addClass("main__lesson_info_tag").text(lesson.status)))
+                                .append($("<span>").addClass("main__lesson_info_tag status_tag").text(lesson.status)))
                             .append($("<div>").addClass("main__lesson_profile")
                                 .append($("<div>").addClass("main__lesson_profile_img"))
                                 .append($("<div>").addClass("main__lesson_profile_info")
                                     .append($("<div>").addClass("main__lesson_profile_name"))
                                     .append($("<div>").addClass("main__lesson_profile_buttons")))
                             );
+                            let ongoing =false;
+                            let timePassed = false;
+                            
+                            if(lesson.status==="Scheduled"){
+                                let dateParts = lesson.date.split('-');
+                                let timeParts1 = lesson.time_from.split(':');
+                                let timeParts2 = lesson.time_to.split(':');
+                                const datetime1 = new Date(dateParts[0], dateParts[1]-1,dateParts[2],timeParts1[0],timeParts1[1],timeParts1[2]);
+                                let time_from = (parseInt(timeParts1[0])*1000*60*60)+(parseInt(timeParts1[1])*1000*60);
+                                let time_to = (parseInt(timeParts2[0])*1000*60*60)+(parseInt(timeParts2[1])*1000*60);
+                                tile.find(".main__lesson_schedule_time").text(tConvert(time_from,12)+" to "+tConvert(time_to,12));
+                                tile.find(".main__lesson_schedule_date").text(datetime1.toDateString());
+                                const lessonTime = (lesson.duration)*1000*60*60;
+                                const interval = setInterval(() => {
+                                    const datetime2 = new Date();
+                                    const diff = datetime1 - datetime2;
+                                    if(diff<=0){
+                                        ongoing=true;
+                                        const diff1 = (datetime1+lessonTime) - datetime2;
+                                        tile.find("status_tag").text("Ongoing");
+                                        if(diff1<=0){
+                                            tile.find(".main__lesson_schedule_timer").text("Time has passed");
+                                            tile.find("status_tag").text("Time Over");
+                                            timePassed=true;
+                                            clearInterval(interval);
+                                        }else
+                                        tile.find(".main__lesson_schedule_timer").text("Ongoing");
+                                    }else{
+                                        const secs = Math.floor(diff/1000);
+                                        const sec = Math.floor(secs%60);
+                                        const mins = Math.floor(secs/60);
+                                        const min = Math.floor(mins%60);
+                                        const hours = Math.floor(mins/60);
+                                        const hour = Math.floor(hours%60);
+                                        if(hours>24){
+                                            const days = Math.floor(hours/24);
+                                            tile.find(".main__lesson_schedule_timer").text(days+" Days "+hour+"Hr left");
+                                        }else
+                                            tile.find(".main__lesson_schedule_timer").text(hour+"Hr "+min+"min "+sec+"sec left");
+                                    }
+                                }, 1000);
+                            }
                             <%if(dashboardType.equals("TUTOR")){%>
                             if(lesson.user.photo===undefined)
                             	tile.find(".main__lesson_profile_img")
@@ -183,10 +241,12 @@
                                     .append('<img src="/TutorPod_Photos/Users/"'+lesson.user.photo+' alt='+lesson.user.fname+" "+lesson.user.lname+"'s Photo>");
                             tile.find(".main__lesson_profile_name")
                                 .append("<span>"+lesson.user.fname+" "+lesson.user.lname+"</span>");
+                            if(!timePassed && !ongoing)
                             tile.find(".main__lesson_profile_buttons")
                                 .append($("<button>").addClass("linkBtn").prop("title","Add Meeing Link")
                                 .attr("onclick","showAddLinkForm("+lesson.lesson_id+")")
                                 .append('<img src="./images/link.png" alt="">'));
+                            if(!ongoing)
                             if(lesson.status==="Scheduled")
                                 tile.find(".main__lesson_profile_buttons")
                                     .append($("<button>").addClass("scheduleBtn").prop("title","Re-Schedule")
@@ -201,6 +261,7 @@
                                     .append('<img src="/TutorPod_Photos/Users/"'+lesson.tutorUser.photo+' alt='+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"'s Photo>");
                             tile.find(".main__lesson_profile_name")
                                 .append("<span>"+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"</span>");
+                            if(!ongoing)
                             if(lesson.status==="Unscheduled"||lesson.status==="Need Re-Scheduling"||lesson.status==="Scheduled"){
                                 const title = lesson.status==="Unscheduled"?"Schedule Lesson":"Re-Schedule Lesson"
                                 tile.find(".main__lesson_profile_buttons")
@@ -209,38 +270,22 @@
                                     .append('<img src="./images/clock.png" alt="">'));
                                 }
                             <%}%>
-                            if(lesson.status!=="Completed")
+                            if(lesson.meeting_link!==undefined && !timePassed && ongoing)
                                 tile.find(".main__lesson_profile_buttons")
-                                    .append($("<button>").addClass("cancelBtn").prop("title","Cancel Lesson")
+                                    .append($("<a>").prop({"href":lesson.meeting_link,"target":"_blank"})
+                                        .append($("<button>").addClass("joinBtn").prop("title","Join Meeting")
+                                        .append('<img src="./images/enter.png" alt="">')));
+                            if(lesson.status!=="Completed" && !ongoing && !timePassed)
+                                tile.find(".main__lesson_profile_buttons")
+                                    .append($("<button>").addClass("cancelBtn").prop("title","Cancel Lesson").attr("onclick","showCancelForm("+lesson.lesson_id+")")
                                     .append('<img src="./images/cancel.png" alt="">'));
-                            if(lesson.meeting_link!==undefined)
+                            if(timePassed){
                                 tile.find(".main__lesson_profile_buttons")
-                                    .append($("<button>").addClass("joinBtn").prop("title","Join Meeting")
-                                    .append('<img src="./images/enter.png" alt="">'))
-                            if(lesson.status==="Scheduled"){
-                                let dateParts = lesson.date.split('-');
-                                let timeParts1 = lesson.time_from.split(':');
-                                let timeParts2 = lesson.time_to.split(':');
-                                const datetime1 = new Date(dateParts[0], dateParts[1]-1,dateParts[2],timeParts1[0],timeParts1[1],timeParts1[2]);
-                                let time_from = (parseInt(timeParts1[0])*1000*60*60)+(parseInt(timeParts1[1])*1000*60);
-                                let time_to = (parseInt(timeParts2[0])*1000*60*60)+(parseInt(timeParts2[1])*1000*60);
-                                tile.find(".main__lesson_schedule_time").text(tConvert(time_from,12)+" to "+tConvert(time_to,12))
-                                tile.find(".main__lesson_schedule_date").text(datetime1.toDateString())
-                                setInterval(() => {
-                                    const datetime2 = new Date();
-                                    const diff = Math.abs(datetime1 - datetime2);
-                                    const secs = Math.floor(diff/1000);
-                                    const sec = Math.floor(secs%60);
-                                    const mins = Math.floor(secs/60);
-                                    const min = Math.floor(mins%60);
-                                    const hours = Math.floor(mins/60);
-                                    const hour = Math.floor(hours%60);
-                                    if(hours>24){
-                                        const days = Math.floor(hours/24);
-                                        tile.find(".main__lesson_schedule_timer").text(days+" Days "+hour+"Hr left");
-                                    }else
-                                        tile.find(".main__lesson_schedule_timer").text(hour+"Hr "+min+"min "+sec+"sec left");
-                                }, 1000);
+                                    .append($("<button>").addClass("tickBtn").prop("title","Mark As Completed").attr("onclick","markCompleted("+lesson.lesson_id+")")
+                                    .append('<img src="./images/check.png" alt="">'));
+                                tile.find(".main__lesson_profile_buttons")
+                                    .append($("<button>").addClass("cancelBtn").prop("title","Mark As Incomplete").attr("onclick","markInComplete("+lesson.lesson_id+")")
+                                    .append('<img src="./images/cancel.png" alt="">'));
                             }
                             lessonsMap.set(lesson.lesson_id,lesson);
                     });
@@ -306,6 +351,10 @@
     function showReScheduleForm(lesson_id){
         $("#reScheduleLessonID").val(lesson_id);
         showOverlayForm("reSchedule");
+    }
+    function showCancelForm(lesson_id){
+        $("#cancelLessonID").val(lesson_id);
+        showOverlayForm("cancelLesson");
     }
     function validateDate(date){
         const parts = date.split('-');
@@ -378,24 +427,28 @@
                 const no_of_units = Math.floor(mins/30);
                 const avail_div = $(".main__lesson__overlay_avail");
                 let start_time = (parseInt(timeParts1[0])*1000*60*60)+(parseInt(timeParts1[1])*1000*60);
+                let end_time = (parseInt(timeParts2[0])*1000*60*60)+(parseInt(timeParts2[1])*1000*60);
                 avail_div.empty();
                 $("#scheduleDiv").show();
                 for(let i=0;i<=no_of_units;i++){
                     let avail_unit = $("<div>").addClass("avail_unit green_unit")
                                                .append($("<span>").text(tConvert(start_time,12)))
                                                .append($("<i>").addClass("unit_value").text(start_time).css("display","none"));
+                    const lesson = lessonsMap.get(parseInt($("#lesson_id").val()));
+                    const lessonTime = (lesson.duration-0.5)*1000*60*60;
                     $.each(scheduleMap.get($(this).val()),function(i,schedule){
                         const time_parts = schedule.time_from.split(":");
                          const time_parts1 = schedule.time_to.split(":");
                         let scheduleStartTime = (parseInt(time_parts[0])*1000*60*60)+(parseInt(time_parts[1])*1000*60);
                         let scheduleEndTime = (parseInt(time_parts1[0])*1000*60*60)+(parseInt(time_parts1[1])*1000*60);
+                        if($("#lesson_id").val()!=schedule.lesson_id)
                         if(start_time>=scheduleStartTime && start_time<scheduleEndTime)
                             avail_unit.addClass("red_unit");
-                        const lesson = lessonsMap.get(parseInt($("#lesson_id").val()));
-                        const lessonTime = (lesson.duration-0.5)*1000*60*60;
                         if(start_time >= (scheduleStartTime - lessonTime) && start_time < scheduleStartTime)
                             avail_unit.addClass("overlapingTime");
                     });
+                    if(start_time >= end_time - lessonTime)
+                        avail_unit.addClass("overlapingTime");
                     avail_div.append(avail_unit);
                     start_time += 30*1000*60;
                 }
@@ -441,6 +494,8 @@
                 }
                 if(response.includes("Scheduled")) {
                     loadLessons("All",null);
+                    $("#snackbar").html(response);
+                    showToast();
                     hideOverlayForm();
 				}else{
 					$("#snackbar").html(response);
@@ -466,7 +521,37 @@
 					});
                 }
                 if(response.includes("Added")) {
+                     loadLessons("All",null);
+                     $("#snackbar").html(response);
+                     showToast();
+                     hideOverlayForm();
+				}else{
+					$("#snackbar").html(response);
+					showToast();
+					console.log(response);
+				}
+            });
+        });
+        $(document).on("submit", "#reScheduleForm", function (event) {
+		event.preventDefault();
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $form.trigger("reset");
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }
+                if(response.includes("Sent")) {
                     loadLessons("All",null);
+                    $("#snackbar").html("Reqeust Sent");
+                    showToast();
                     hideOverlayForm();
 				}else{
 					$("#snackbar").html(response);

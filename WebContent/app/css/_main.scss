@@ -458,6 +458,9 @@
         display: flex;
         width: 100%;
         flex-flow: row wrap;
+        a{
+          margin-left: 0.5rem;
+        }
         button {
           display: block;
           height: 2rem;

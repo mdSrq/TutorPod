@@ -2755,6 +2755,9 @@ tbody tr:nth-child(even) {
   width: 100%;
   flex-flow: row wrap;
 }
+.main__lesson_profile_buttons a {
+  margin-left: 0.5rem;
+}
 .main__lesson_profile_buttons button {
   display: block;
   height: 2rem;
