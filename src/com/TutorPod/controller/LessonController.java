@@ -221,6 +221,25 @@ public class LessonController extends HttpServlet {
 							}
 						}
 					}
+					
+					break;
+				case"markLessonCompleted":
+					lesson_id = Integer.parseInt(request.getParameter("lesson_id"));
+					message = request.getParameter("message");
+					if(!message.isEmpty()) {
+						lessonDetails = createLessonDetails(lessonDAO.getLessonDetails(lesson_id));
+						lessonDetails.setStatus("Completed");
+						if(lessonDAO.updateLesson(lessonDetails)) {
+							sendNotification(lessonDetails.getTutor_id(),lessonDetails.getUser().getFname()+" "+lessonDetails.getUser().getLname()+" wrote feedback for Lesson ID:"+lessonDetails.getLesson_id()+". Feeback: "+message,"./Notification",true);
+							out.write("Lesson Marked As Completed");
+						}
+					}else {
+						lesson = lessonDAO.getLesson(lesson_id);
+						lesson.setStatus("Completed");
+						if(lessonDAO.updateLesson(lesson))
+							out.write("Lesson Marked As Completed");
+					}
+					
 					break;
 				default:
 					out.write("Invalid Request");

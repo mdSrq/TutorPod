@@ -102,6 +102,36 @@
                     <input type="submit" class="button flat-wide-button" value="Cancel Lesson">
                 </form>
             </div>
+            <div class="main__form_overlayform" tabindex="-1" id="markCompleted">
+                <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+                <h2 class="main__sub-heading">Lesson Completed </h2>
+                <form action="./LessonController" method="post" style="width: 100%;" class="scrollable"
+                    id="markCompletedForm">
+                    <div class="form-unit form-unit-full">
+                        <label for="message">Feedback for tutor (Optional)</label>
+                        <textarea name="message" class="input-with-icon input-with-icon_no-icon"
+                            placeholder="Write a feedback for the tutor."></textarea>
+                    </div>
+                    <input type="hidden" name="cmd" value="markLessonCompleted">
+                    <input type="hidden" name="lesson_id" id="markCompletedLessonID">
+                    <input type="submit" class="button flat-wide-button" value="Mark as Completed">
+                </form>
+            </div>
+            <div class="main__form_overlayform" tabindex="-1" id="reportIssue">
+                <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+                <h2 class="main__sub-heading">Report An Issue </h2>
+                <form action="./LessonController" method="post" style="width: 100%;" class="scrollable"
+                    id="reportIssueForm">
+                    <div class="form-unit form-unit-full">
+                        <label for="message">Issue Faced</label>
+                        <textarea name="message" class="input-with-icon input-with-icon_no-icon" required
+                            placeholder="Write the issue that you have faced."></textarea>
+                    </div>
+                    <input type="hidden" name="cmd" value="reportIssue">
+                    <input type="hidden" name="lesson_id" id="reportIssueLessonID">
+                    <input type="submit" class="button flat-wide-button" value="Report Issue">
+                </form>
+            </div>
             <div class="main__form_overlayform main__lesson__overlay " tabindex="-1" id="scheduleOverlay">
                     <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
                     <h2 class="main__sub-heading">Schedule Lesson</h2>
@@ -194,7 +224,7 @@
                             let ongoing =false;
                             let timePassed = false;
                             
-                            if(lesson.status==="Scheduled"){
+                            if(lesson.status==="Scheduled"||lesson.status==="Completed"){
                                 let dateParts = lesson.date.split('-');
                                 let timeParts1 = lesson.time_from.split(':');
                                 let timeParts2 = lesson.time_to.split(':');
@@ -203,6 +233,7 @@
                                 let time_to = (parseInt(timeParts2[0])*1000*60*60)+(parseInt(timeParts2[1])*1000*60);
                                 tile.find(".main__lesson_schedule_time").text(tConvert(time_from,12)+" to "+tConvert(time_to,12));
                                 tile.find(".main__lesson_schedule_date").text(datetime1.toDateString());
+                                if(lesson.status==="Scheduled"){
                                 const lessonTime = (lesson.duration)*1000*60*60;
                                 let datetime2 = new Date();
                                 let diff = datetime1 - datetime2;
@@ -237,6 +268,7 @@
                                             tile.find(".main__lesson_schedule_timer").text(hour+"Hr "+min+"min "+sec+"sec left");
                                     }
                                 }, 1000);
+                                }
                             }
                             <%if(dashboardType.equals("TUTOR")){%>
                             if(lesson.user.photo===undefined)
@@ -247,7 +279,7 @@
                                     .append('<img src="/TutorPod_Photos/Users/"'+lesson.user.photo+' alt='+lesson.user.fname+" "+lesson.user.lname+"'s Photo>");
                             tile.find(".main__lesson_profile_name")
                                 .append("<span>"+lesson.user.fname+" "+lesson.user.lname+"</span>");
-                            if(!timePassed && lesson.status!=="Cancelled")
+                            if(!timePassed && lesson.status!=="Cancelled" && lesson.status!=="Completed")
                             tile.find(".main__lesson_profile_buttons")
                                 .append($("<button>").addClass("linkBtn").prop("title","Add Meeing Link")
                                 .attr("onclick","showAddLinkForm("+lesson.lesson_id+")")
@@ -277,10 +309,10 @@
                                 }
                             if(timePassed){
                                 tile.find(".main__lesson_profile_buttons")
-                                    .append($("<button>").addClass("tickBtn").prop("title","Mark As Completed").attr("onclick","markCompleted("+lesson.lesson_id+")")
+                                    .append($("<button>").addClass("tickBtn").prop("title","Mark As Completed").attr("onclick","showMarkAsCompletedForm("+lesson.lesson_id+")")
                                     .append('<img src="./images/check.png" alt="">'));
                                 tile.find(".main__lesson_profile_buttons")
-                                    .append($("<button>").addClass("issueBtn").prop("title","Report Issue").attr("onclick","reportIssue("+lesson.lesson_id+")")
+                                    .append($("<button>").addClass("issueBtn").prop("title","Report Issue").attr("onclick","showReportIssueForm("+lesson.lesson_id+")")
                                     .append('<img src="./images/exclamation.png" alt="">'));
                             }
                             <%}%>
@@ -361,6 +393,14 @@
     function showCancelForm(lesson_id){
         $("#cancelLessonID").val(lesson_id);
         showOverlayForm("cancelLesson");
+    }
+    function showReportIssueForm(lesson_id){
+        $("#reportIssueLessonID").val(lesson_id);
+        showOverlayForm("reportIssue");
+    }
+    function showMarkAsCompletedForm(lesson_id){
+        $("#markCompletedLessonID").val(lesson_id);
+        showOverlayForm("markCompleted");
     }
     function validateDate(date){
         const parts = date.split('-');
@@ -585,6 +625,62 @@
                 if(response.includes("Cancelled")) {
                     loadLessons("All",null);
                     $("#snackbar").html("Lesson Cancelled");
+                    showToast();
+                    hideOverlayForm();
+				}else{
+					$("#snackbar").html(response);
+					showToast();
+					console.log(response);
+				}
+            });
+        });
+        $(document).on("submit", "#markCompletedForm", function (event) {
+		event.preventDefault();
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $form.trigger("reset");
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }
+                if(response.includes("Completed")) {
+                    loadLessons("All",null);
+                    $("#snackbar").html("Lesson Completed");
+                    showToast();
+                    hideOverlayForm();
+				}else{
+					$("#snackbar").html(response);
+					showToast();
+					console.log(response);
+				}
+            });
+        });
+        $(document).on("submit", "#reportIssueForm", function (event) {
+		event.preventDefault();
+            var $form = $(this);
+            showLoading();
+            $.post($form.attr("action"), $form.serialize(), function (response) {
+                hideLoading();
+                $form.trigger("reset");
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }
+                if(response.includes("Reported")) {
+                    loadLessons("All",null);
+                    $("#snackbar").html("Issue Reported");
                     showToast();
                     hideOverlayForm();
 				}else{
