@@ -48,7 +48,7 @@
     function fetchSubjectData() {
         $.ajax({
             url: "../SubjectController",
-            data: "cmd=editSubject&course_sub_id=<%=request.getParameter("course_sub_id ")%>",
+            data: "cmd=editSubject&course_sub_id=<%=request.getParameter("course_sub_id")%>",
             dataType: "json",
             processData: true,
             success: function (res) {

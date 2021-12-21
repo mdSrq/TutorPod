@@ -163,7 +163,7 @@ public class BookingController extends HttpServlet {
 					walletDAO.setAutoCommit(0);
 					if(transactionDAO.addTransaction(new Transaction("User",user.getUser_id(),"User",tutor_id,totalReceived,"Booking payment - 2.5%(TutorPod fee)",date,datetime))) {
 						int transaction_id = transactionDAO.getRecentTransaction("User",user.getUser_id()).getTransaction_id();
-						if(bookingDAO.addBooking(new Booking(tutor_id,user.getUser_id(),subject_id,price,duration,no_of_lesson,transaction_id,"Unscheduled"))) {
+						if(bookingDAO.addBooking(new Booking(tutor_id,user.getUser_id(),subject_id,price,duration,no_of_lesson,transaction_id,"Completed"))) {
 							int booking_id = bookingDAO.getRecentBooking(user.getUser_id()).getBooking_id();
 							if(walletDAO.addWalletTransaction(new WalletTransaction(useWallet.getWallet_id(),totalPaid,false,true,useWallet.getBalance()-totalPaid,"Booking Made with ID:"+booking_id,"Completed",datetime))) {
 								useWallet.setBalance(useWallet.getBalance()-totalPaid);

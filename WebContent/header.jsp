@@ -220,7 +220,7 @@ User user = null;
         var mostRecentNotificationID; 
         <%if (session.getAttribute("USER") != null) { %>
             loadNotifications();
-            setInterval(loadNotifications, 1000 * 60); 
+            setInterval(loadNotifications, 1000 * 5); 
         <%}%>
         function showSubjectsDropdown() {
                     $(".nav-dd").css("display", "block");

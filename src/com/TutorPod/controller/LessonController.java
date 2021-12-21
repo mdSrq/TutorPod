@@ -30,7 +30,10 @@ import com.TutorPod.dao.WithdrawRequestDAO;
 import com.TutorPod.model.Lesson;
 import com.TutorPod.model.LessonDetails;
 import com.TutorPod.model.Notification;
+import com.TutorPod.model.Transaction;
 import com.TutorPod.model.User;
+import com.TutorPod.model.Wallet;
+import com.TutorPod.model.WalletTransaction;
 import com.google.gson.Gson;
 
 @WebServlet("/LessonController")
@@ -172,6 +175,52 @@ public class LessonController extends HttpServlet {
 					break;
 				case"cancelLesson":
 					lesson_id = Integer.parseInt(request.getParameter("lesson_id"));
+					message = request.getParameter("message");
+					String dashboardType = session.getAttribute("DASHBOARD_TYPE").toString();
+					lessonDetails = createLessonDetails(lessonDAO.getLessonDetails(lesson_id));
+					Wallet userWallet = walletDAO.getWalletByUserID(lessonDetails.getUser_id());
+					Wallet tutorWallet = walletDAO.getWallet(lessonDetails.getTutorUser().getWallet_id());
+					DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
+					DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
+					Instant instant = Instant.now();
+					String datetime = dateTimeFormatter.format(instant);
+					date = dateTimeFormatter1.format(instant);
+					double total = lessonDetails.getPrice()*lessonDetails.getDuration();
+					walletDAO.Rollback();
+					walletDAO.setAutoCommit(0);
+					if(transactionDAO.addTransaction(new Transaction("User",lessonDetails.getTutor_id(),"User",lessonDetails.getUser_id(),total,"Refund for Lesson ID:"+lessonDetails.getLesson_id(),date,datetime))) {
+						if(walletDAO.addWalletTransaction(new WalletTransaction(tutorWallet.getWallet_id(),total,false,true,tutorWallet.getBalance()-total,"Refund Paid for Lesson ID:"+lessonDetails.getLesson_id(),"Completed",datetime))) {
+							tutorWallet.setBalance(tutorWallet.getBalance()-total);
+							walletDAO.updateWallet(tutorWallet);
+							if(walletDAO.addWalletTransaction(new WalletTransaction(userWallet.getWallet_id(),total,true,false,userWallet.getBalance()+total,"Refund Received for Lesson ID:"+lessonDetails.getLesson_id(),"Completed",datetime))) {
+								userWallet.setBalance(userWallet.getBalance()+total);
+								walletDAO.updateWallet(userWallet);
+								lessonDetails.setDate(null);
+								lessonDetails.setTime_from(null);
+								lessonDetails.setTime_to(null);
+								lessonDetails.setMeeting_link(null);
+								lessonDetails.setStatus("Cancelled");
+								if(lessonDAO.updateLesson(lessonDetails)) {
+									if(dashboardType.equals("USER")) {
+										sendNotification(lessonDetails.getTutor_id(),
+										lessonDetails.getUser().getFname()+" "+lessonDetails.getUser().getLname()
+										+" has cancelled lesson (Lesson ID:"+lessonDetails.getLesson_id()+"). Cancellation Reason: "+message,"./Notifications",true);
+										
+									}
+									else {
+										sendNotification(lessonDetails.getUser_id(),
+										lessonDetails.getTutorUser().getFname()+" "+lessonDetails.getTutorUser().getLname()
+										+" has cancelled lesson (Lesson ID:"+lessonDetails.getLesson_id()+"). Cancellation Reason: "+message,"./Notifications",false);
+									}
+									sendNotification(lessonDetails.getUser_id(),"Refund amount of Rs."+total+" for Lesson ID:"+lessonDetails.getLesson_id()+" has been transfered to your wallet. Click to see details","./Wallet",false);
+									walletDAO.Commit();
+									walletDAO.setAutoCommit(1);
+									out.write("Lesson Cancelled");
+									return;
+								}
+							}
+						}
+					}
 					break;
 				default:
 					out.write("Invalid Request");

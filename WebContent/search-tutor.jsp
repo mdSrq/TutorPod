@@ -180,7 +180,7 @@
                 <input type="submit" class="button flat-wide-button" value="Add Money to Wallet">
             </form>
         </div>
-        <div class="main__form_overlayform search__booking tabindex="-1" id="successOverlay">
+        <div class="main__form_overlayform search__booking" tabindex="-1" id="successOverlay">
             <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
             <span class="big-green-tick"></span>
             <h1 class="thin-H1 ">Booking Completed!</h1>
