@@ -57,6 +57,23 @@ public class AdminBankAccDAO {
 			close(Conn,Stmt,Rs);
 		}
 	}
+	public AdminBankAcc getSelectedAdminBankAcc()throws Exception{
+		Connection Conn = null;
+		Statement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from admin_bank_acc where selected=1 ";
+			Stmt = Conn.createStatement();
+			Rs = Stmt.executeQuery(sql);
+			if(Rs.next())
+				return createAdminBankAcc(Rs);
+			else 
+				return null;
+		}finally {
+			close(Conn,Stmt,Rs);
+		}
+	}
 	public boolean addBankAcc(AdminBankAcc adminBankAcc)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;

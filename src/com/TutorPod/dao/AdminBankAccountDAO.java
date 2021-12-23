@@ -42,7 +42,7 @@ public class AdminBankAccountDAO {
 			close(Conn,Stmt,Rs);
 		}
 	}
-	public AdminBankAccount getAdminBankAccount(int admin_bank_acc_no)throws Exception{
+	public AdminBankAccount getAdminBankAccount(int admin_bank_acc_id)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
@@ -53,8 +53,28 @@ public class AdminBankAccountDAO {
 					+ "inner join admin on admin_bank_acc.admin_id = admin.admin_id "
 					+ "where admin_bank_acc_id=? ";
 			Stmt = Conn.prepareStatement(sql);
-			Stmt.setInt(1, admin_bank_acc_no);
+			Stmt.setInt(1, admin_bank_acc_id);
 			Rs = Stmt.executeQuery();
+			if(Rs.next())
+				return createAdminBankAcc(Rs);
+			else 
+				return null;
+		}finally {
+			close(Conn,Stmt,Rs);
+		}
+	}
+	public AdminBankAccount getSelectedAdminBankAccount()throws Exception{
+		Connection Conn = null;
+		Statement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from admin_bank_acc "
+					+ "inner join bank_acc on admin_bank_acc.bank_acc_id = bank_acc.bank_acc_id "
+					+ "inner join admin on admin_bank_acc.admin_id = admin.admin_id "
+					+ "where admin_bank_acc.selected=1 ";
+			Stmt = Conn.createStatement();
+			Rs = Stmt.executeQuery(sql);
 			if(Rs.next())
 				return createAdminBankAcc(Rs);
 			else 

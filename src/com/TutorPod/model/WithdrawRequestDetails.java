@@ -1,33 +1,27 @@
 package com.TutorPod.model;
 
-public class WithdrawRequest {
+public class WithdrawRequestDetails {
 	private int request_id;
 	private int wallet_id;
 	private int wallet_transaction_id;
 	private double amount;
 	private String status;
-	private String remarks;
 	private String date;
-	public WithdrawRequest(int wallet_id, int wallet_transaction_id, double amount, String status, String remarks,
-			String date) {
-		super();
-		this.wallet_id = wallet_id;
-		this.wallet_transaction_id = wallet_transaction_id;
-		this.amount = amount;
-		this.status = status;
-		this.remarks = remarks;
-		this.date = date;
-	}
-	public WithdrawRequest(int request_id, int wallet_id, int wallet_transaction_id, double amount, String status,
-			String remarks, String date) {
+	private String remarks;
+	private User user;
+	private BankAcc bankAcc;
+	public WithdrawRequestDetails(int request_id, int wallet_id, int wallet_transaction_id, double amount,
+			String status, String date, String remarks, User user, BankAcc bankAcc) {
 		super();
 		this.request_id = request_id;
 		this.wallet_id = wallet_id;
 		this.wallet_transaction_id = wallet_transaction_id;
 		this.amount = amount;
 		this.status = status;
-		this.remarks = remarks;
 		this.date = date;
+		this.remarks = remarks;
+		this.user = user;
+		this.bankAcc = bankAcc;
 	}
 	public int getRequest_id() {
 		return request_id;
@@ -59,23 +53,29 @@ public class WithdrawRequest {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getRemarks() {
-		return remarks;
-	}
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
 	public String getDate() {
 		return date;
 	}
 	public void setDate(String date) {
 		this.date = date;
 	}
-	@Override
-	public String toString() {
-		return "WithdrawRequest [request_id=" + request_id + ", wallet_id=" + wallet_id + ", wallet_transaction_id="
-				+ wallet_transaction_id + ", amount=" + amount + ", status=" + status + ", remarks=" + remarks
-				+ ", date=" + date + "]";
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public BankAcc getBankAcc() {
+		return bankAcc;
+	}
+	public void setBankAcc(BankAcc bankAcc) {
+		this.bankAcc = bankAcc;
 	}
 	
 }

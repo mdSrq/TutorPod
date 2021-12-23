@@ -185,15 +185,16 @@ public class LessonController extends HttpServlet {
 					Instant instant = Instant.now();
 					String datetime = dateTimeFormatter.format(instant);
 					date = dateTimeFormatter1.format(instant);
-					double total = lessonDetails.getPrice()*lessonDetails.getDuration();
+					double totalRefund = lessonDetails.getPrice()*lessonDetails.getDuration();
+					double tutorRefundValue = totalRefund - (totalRefund/100)*2.5;
 					walletDAO.Rollback();
 					walletDAO.setAutoCommit(0);
-					if(transactionDAO.addTransaction(new Transaction("User",lessonDetails.getTutor_id(),"User",lessonDetails.getUser_id(),total,"Refund for Lesson ID:"+lessonDetails.getLesson_id(),date,datetime))) {
-						if(walletDAO.addWalletTransaction(new WalletTransaction(tutorWallet.getWallet_id(),total,false,true,tutorWallet.getBalance()-total,"Refund Paid for Lesson ID:"+lessonDetails.getLesson_id(),"Completed",datetime))) {
-							tutorWallet.setBalance(tutorWallet.getBalance()-total);
+					if(transactionDAO.addTransaction(new Transaction("User",lessonDetails.getTutor_id(),"User",lessonDetails.getUser_id(),totalRefund,"Refund for Lesson ID:"+lessonDetails.getLesson_id(),date,datetime))) {
+						if(walletDAO.addWalletTransaction(new WalletTransaction(tutorWallet.getWallet_id(),tutorRefundValue,false,true,tutorWallet.getBalance()-tutorRefundValue,"Refund Paid for Lesson ID:"+lessonDetails.getLesson_id(),"Completed",datetime))) {
+							tutorWallet.setBalance(tutorWallet.getBalance()-tutorRefundValue);
 							walletDAO.updateWallet(tutorWallet);
-							if(walletDAO.addWalletTransaction(new WalletTransaction(userWallet.getWallet_id(),total,true,false,userWallet.getBalance()+total,"Refund Received for Lesson ID:"+lessonDetails.getLesson_id(),"Completed",datetime))) {
-								userWallet.setBalance(userWallet.getBalance()+total);
+							if(walletDAO.addWalletTransaction(new WalletTransaction(userWallet.getWallet_id(),totalRefund,true,false,userWallet.getBalance()+totalRefund,"Refund Received for Lesson ID:"+lessonDetails.getLesson_id(),"Completed",datetime))) {
+								userWallet.setBalance(userWallet.getBalance()+totalRefund);
 								walletDAO.updateWallet(userWallet);
 								lessonDetails.setDate(null);
 								lessonDetails.setTime_from(null);
@@ -212,7 +213,7 @@ public class LessonController extends HttpServlet {
 										lessonDetails.getTutorUser().getFname()+" "+lessonDetails.getTutorUser().getLname()
 										+" has cancelled lesson (Lesson ID:"+lessonDetails.getLesson_id()+"). Cancellation Reason: "+message,"./Notifications",false);
 									}
-									sendNotification(lessonDetails.getUser_id(),"Refund amount of Rs."+total+" for Lesson ID:"+lessonDetails.getLesson_id()+" has been transfered to your wallet. Click to see details","./Wallet",false);
+									sendNotification(lessonDetails.getUser_id(),"Refund amount of Rs."+totalRefund+" for Lesson ID:"+lessonDetails.getLesson_id()+" has been transfered to your wallet. Click to see details","./Wallet",false);
 									walletDAO.Commit();
 									walletDAO.setAutoCommit(1);
 									out.write("Lesson Cancelled");

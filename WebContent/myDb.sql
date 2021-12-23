@@ -122,12 +122,12 @@ create table wallet_transaction(wallet_transaction_id int auto_increment primary
 					);
 					
 create table transaction( transaction_id int auto_increment primary key,
-					payer enum('Admin','User','Booking') not null,
+					payer varchar(20) not null,
                     payer_id int not null,
-                    receiver enum('Admin','User') not null,
+                    receiver varchar(20) not null,
                     receiver_id int not null,
                     amount double,
-                    description varchar(40) not null,
+                    description varchar(150) not null,
                     date date not null,
                     datetime datetime not null
 					);
@@ -171,7 +171,8 @@ create table withdraw_request(request_id int auto_increment primary key,
 					wallet_transaction_id int not null,
                     amount double not null,
                     status varchar(20) not null,
-					remarks varchar(80) 
+					remarks varchar(80),
+					date date not null
 					);
 create table review(review_id int auto_increment primary key,
 					no_of_stars int not null,

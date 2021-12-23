@@ -9,16 +9,16 @@ if (session.getAttribute("ADMIN") == null) {
 <main class="main">
 	<div class="main__preview main__table">
 		<table aria-label="Course Data" id="default_table">
-			<h1 class="main__heading">Tutor Applications</h1>
+			<h1 class="main__heading">Withdraw Requests</h1>
 			<thead>
 				<tr>
-					<th scope="...">S.No.</th>
-					<th scope="...">Full Name</th>
-					<th scope="...">Contact Info</th>
-					<th scope="...">Bio</th>
+					<th scope="...">ID</th>
+					<th scope="...">User Details</th>
+					<th scope="...">Amount</th>
+					<th scope="...">Bank Details</th>
+					<th scope="...">Date</th>
 					<th scope="...">Status</th>
-					<th scope="...">Details</th>
-					<th scope="...">Action</th>
+					<th scope="..." id="actionTh">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,22 +28,17 @@ if (session.getAttribute("ADMIN") == null) {
 	</div>
 	<div class="main_overlayform" tabindex="-1">
 		<a href="#" class="main_overlayform_cross" onclick="hideOverlayForm()">X</a>
-		<h2 class="main__sub-heading">Dismiss Application</h2>
+		<h2 class="main__sub-heading">Dismiss Request</h2>
 		<form action="../TutorController" method="post" class="scrollable" id="dimissForm">
 			<div class="form-unit form-unit-full">
 				<label for="message">Dismiss Message</label>
-				<textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Enter reasons for dismissing application" required>
+				<textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Enter reasons for dismissing request" required>
 					
 				</textarea>
 			</div>
-			<div class="form-unit form-unit-full">
-				<label for="link">Link</label>
-				<input type="text" class="input-with-icon input-with-icon_no-icon" name="link" placeholder="Enter link for user to address the issue"
-					id="link" required />
-			</div>
-			<input type="hidden" name="cmd" value="dismissApplication">
-			<input type="hidden" name="tutor_id" id="tutor_id">
-			<input type="submit" class="button flat-wide-button red-button" value="Dismiss Application">
+			<input type="hidden" name="cmd" value="dismissWithdrawRequests">
+			<input type="hidden" name="user_id" id="user_id">
+			<input type="submit" class="button flat-wide-button red-button" value="Dismiss Request">
 		</form>
 	</div>
 </main>
@@ -57,50 +52,54 @@ if (session.getAttribute("ADMIN") == null) {
         $(".main_overlayform").removeAttr("style");
         $(".overlay-background").remove();
     }
-	function dismissTutor(tutor_id){
+	function dismissRequest(user_id){
 		showOverlayForm();
-		$("#tutor_id").val(tutor_id);
+		$("#user_id").val(user_id);
 	}
-	function loadAppliedTutors(){
+	function loadWithdrawRequests(){
 		showLoading();
 		$.ajax({
-            url: "../TutorController",
-            data: "cmd=loadAppliedTutors",
+            url: "../WalletController",
+            data: "cmd=loadWithdrawRequests&status=<%=request.getParameter("status")%>",
             success: function (response) {
                 hideLoading();
 				if (response.length < 1) {
                     $("thead").hide();
                     $("#NoData").remove();
                     $(".main__preview").append(
-                        "<p style=\"text-align:center\" id=\"NoData\">No Applications Found</p>");
+                        "<p style=\"text-align:center\" id=\"NoData\">No Request Found</p>");
                 } else {
                     $("thead").show();
                     $("#NoData").remove();
                 }
 				$("tbody").empty();
-                $.each(response,function(i,tutor){
+                $.each(response,function(i,rqst){
+					const tr =
 					$("<tr>").appendTo($("#default_table tbody"))
-						.append($("<td>").text(i+1))
-						.append($("<td>").text(tutor.fname+" "+tutor.lname))
-						.append($("<td>").html(tutor.mobile_no+"<br>"+tutor.email_id))
-						.append($("<td>").text(tutor.bio))
-						.append($("<td>").text(tutor.profile_status))
-						.append($("<td>")
-							.append($("<a>").text("See Details").prop({
-								"href":"#",
-								"onlick":"showDetails("+tutor.tutor_id+")"
-							})))
-						.append($("<td>")
-							.append($("<a>").html("&nbsp;&nbsp; &#10004; &nbsp;&nbsp;").prop({
-								"href":"#",
+						.append($("<td>").text(rqst.request_id))
+						.append($("<td>").html("Name: "+rqst.user.fname+" "+rqst.user.lname+"<br>"+
+											   "Email ID: "+rqst.user.email_id+"<br>"+
+											   "Mobile No.: "+rqst.user.mobile_no+"<br>").css("text-align","left"))
+						.append($("<td>").text(rqst.amount))
+						.append($("<td>").html("Bank: "+rqst.bankAcc.bank_name+"<br>"+
+											   "Holder: "+rqst.bankAcc.holder_name+"<br>"+
+											   "Acc No.: "+rqst.bankAcc.acc_no+"<br>"+
+											   "IFSC: "+rqst.bankAcc.ifsc_code+"<br>").css("text-align","left"))
+						.append($("<td>").text(rqst.date))
+						.append($("<td>").text(rqst.status))
+					if(rqst.status==="Pending"){
+						$("<td>").appendTo(tr)
+							.append($("<span>").html("&nbsp;&nbsp; &#10004; &nbsp;&nbsp;").prop({
 								"class":"button small-round-button green-button",
 								"title":"Approve"
-							}).attr("onclick","approveTutor("+tutor.tutor_id+")"))
-							.append($("<a>").html("&nbsp;&nbsp; &#10006; &nbsp;&nbsp;").prop({
-								"href":"#",
+							}).attr("onclick","approveRequest("+rqst.request_id+")"))
+							.append($("<span>").html("&nbsp;&nbsp; &#10006; &nbsp;&nbsp;").prop({
 								"class":"button small-round-button delete-button",
 								"title":"Dimiss"
-							}).attr("onclick","dismissTutor("+tutor.tutor_id+")")))
+							}).attr("onclick","dismissRequest("+rqst.request_id+")"));
+					}else{
+						$("#actionTh").remove();
+					}
 				});
             }
         });
@@ -120,7 +119,7 @@ if (session.getAttribute("ADMIN") == null) {
 		});
 	}
 	$(document).ready(()=>{
-		loadAppliedTutors();
+		loadWithdrawRequests();
 		$(".main_overlayform").focusout(function () {
             if ($(".main_overlayform :hover").length > 0)
                 return;

@@ -52,9 +52,9 @@
     <ul class="sidebar__dropdown acc_dropdown">
         <li class="sidebar__dropdown_title">Withdraw Requests <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">
-            <li><a href="#">Pending Requests</a></li>
-            <li><a href="#">Approved Requests</a></li>
-            <li><a href="#">Rejected Requests</a></li>
+            <li><a href="./WithdrawRequest?status=Pending">Pending Requests</a></li>
+            <li><a href="./WithdrawRequest?status=Approved">Approved Requests</a></li>
+            <li><a href="./WithdrawRequest?status=Rejected">Rejected Requests</a></li>
         </ul>
     </ul>
     <ul class="sidebar__dropdown">

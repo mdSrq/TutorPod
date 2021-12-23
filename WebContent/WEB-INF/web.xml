@@ -228,4 +228,13 @@
 	    <servlet-name>lessons</servlet-name>
 	    <url-pattern>/Lessons</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>withdraw-request</servlet-name>
+     	<jsp-file>/Admin/withdraw-request.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>withdraw-request</servlet-name>
+	    <url-pattern>/Admin/WithdrawRequest</url-pattern>
+	</servlet-mapping>
 </web-app>

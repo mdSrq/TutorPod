@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.TutorPod.dao.AdminBankAccDAO;
+import com.TutorPod.dao.BankAccDAO;
 import com.TutorPod.dao.BookingDAO;
 import com.TutorPod.dao.LessonDAO;
 import com.TutorPod.dao.NotificationDAO;
@@ -27,6 +29,7 @@ import com.TutorPod.dao.TransactionDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.dao.WalletDAO;
 import com.TutorPod.dao.WithdrawRequestDAO;
+import com.TutorPod.model.BankAcc;
 import com.TutorPod.model.Booking;
 import com.TutorPod.model.Notification;
 import com.TutorPod.model.Subject;
@@ -54,6 +57,8 @@ public class BookingController extends HttpServlet {
 	NotificationDAO notificationDAO;
 	SubjectDAO subjectDAO;
 	LessonDAO lessonDAO;
+	AdminBankAccDAO adminBankAccDAO;
+	BankAccDAO bankAccDAO;
     public BookingController() {
         super();
     }
@@ -69,6 +74,8 @@ public class BookingController extends HttpServlet {
 			 notificationDAO = new NotificationDAO(dataSource);
 			 subjectDAO = new SubjectDAO(dataSource);
 			 lessonDAO = new LessonDAO(dataSource);
+			 bankAccDAO = new BankAccDAO(dataSource);
+			 adminBankAccDAO = new AdminBankAccDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -171,9 +178,12 @@ public class BookingController extends HttpServlet {
 								if(walletDAO.addWalletTransaction(new WalletTransaction(tutorWallet.getWallet_id(),totalReceived,true,false,tutorWallet.getBalance()+totalReceived,"Booking payment - 2.5%(TutorPod fee) for Booking ID:"+booking_id,"Completed",datetime))) {
 									tutorWallet.setBalance(tutorWallet.getBalance()+totalReceived);
 									walletDAO.updateWallet(tutorWallet);
-									if(transactionDAO.addTransaction(new Transaction("Booking",booking_id,"Admin",-1,(subTotal/100)*5,"Booking payment ID:"+booking_id,date,datetime))) {
+									BankAcc adminBankAcc = bankAccDAO.getBankAcc(adminBankAccDAO.getSelectedAdminBankAcc().getBank_acc_id());
+									if(transactionDAO.addTransaction(new Transaction("Booking",booking_id,"AdminBankAcc",adminBankAcc.getBank_acc_id(),(subTotal/100)*5,"Booking payment ID:"+booking_id,date,datetime))) {
+										adminBankAcc.setBalance(adminBankAcc.getBalance()+(long)(subTotal/100)*5);
+										bankAccDAO.updateBankAcc(adminBankAcc);
 										sendNotification(user.getUser_id(),"Your booking ( Booking ID:"+booking_id+" ) is completed. Click here to see your bookings.","./Orders",false);
-										sendNotification(tutor_id,"You have a new booking ( Booking ID:\"+booking_id+\" ). Click to see details","./Orders",true);
+										sendNotification(tutor_id,"You have a new booking ( Booking ID:"+booking_id+" ). Click to see details","./Orders",true);
 										for(int i=0;i<no_of_lesson;i++)
 											lessonDAO.addLesson(new Lesson(booking_id,null,null,null,null,null,"Unscheduled"));
 										walletDAO.Commit();
