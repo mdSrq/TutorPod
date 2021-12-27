@@ -43,8 +43,13 @@ public class AvailabilityDAO {
 			// process result set
 			while (Rs.next()) {
 
-				Availability tempAvailability = createAvailability(Rs);
-				availability.add(tempAvailability);
+				Availability avl = createAvailability(Rs);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("KK:mm a", Locale.ENGLISH);
+				LocalTime t = LocalTime.parse(avl.getTime_from());
+				LocalTime t1 = LocalTime.parse(avl.getTime_to());
+				avl.setTime_from(t.format(formatter));
+				avl.setTime_to(t1.format(formatter));
+				availability.add(avl);
 			}
 			
 			return availability;		
@@ -85,6 +90,37 @@ public class AvailabilityDAO {
 				avl.setTime_to(t1.format(formatter));
 				availability.add(avl);
 			}
+			
+			return availability;		
+		}
+		finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public List<Availability> getAvailabilityByTutorID(int tutor_id) throws Exception{
+		List<Availability> availability = new ArrayList<>();
+		
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from availability where tutor_id = ?";
+			
+			
+			Stmt = Conn.prepareStatement(sql);
+			
+			Stmt.setInt(1, tutor_id);
+			
+			// execute query
+			Rs = Stmt.executeQuery();
+			
+			// process result set
+			while (Rs.next())
+				availability.add(createAvailability(Rs));
 			
 			return availability;		
 		}

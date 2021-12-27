@@ -140,6 +140,42 @@
 	</servlet-mapping>
 	
 	<servlet>
+   		<servlet-name>see-users</servlet-name>
+    	<jsp-file>/Admin/see-users.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-users</servlet-name>
+	    <url-pattern>/Admin/SeeUsers</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-tutors</servlet-name>
+    	<jsp-file>/Admin/see-tutors.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-tutors</servlet-name>
+	    <url-pattern>/Admin/SeeTutors</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-orders</servlet-name>
+    	<jsp-file>/Admin/see-orders.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-orders</servlet-name>
+	    <url-pattern>/Admin/SeeOrders</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>see-lessons</servlet-name>
+    	<jsp-file>/Admin/see-lessons.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>see-lessons</servlet-name>
+	    <url-pattern>/Admin/SeeLessons</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
    		<servlet-name>dashboard</servlet-name>
     	<jsp-file>/dashboard.jsp</jsp-file>
 	</servlet>	
@@ -200,5 +236,41 @@
 	<servlet-mapping>
 	    <servlet-name>search-tutor</servlet-name>
 	    <url-pattern>/SearchTutor</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>wallet</servlet-name>
+     	<jsp-file>/wallet.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>wallet</servlet-name>
+	    <url-pattern>/Wallet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>orders</servlet-name>
+     	<jsp-file>/orders.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>orders</servlet-name>
+	    <url-pattern>/Orders</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>lessons</servlet-name>
+     	<jsp-file>/lessons.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>lessons</servlet-name>
+	    <url-pattern>/Lessons</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>withdraw-request</servlet-name>
+     	<jsp-file>/Admin/withdraw-request.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>withdraw-request</servlet-name>
+	    <url-pattern>/Admin/WithdrawRequest</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -23,7 +23,8 @@ create table user(user_id int auto_increment primary key,
                     joining_date date not null,
                     tutor_id int ,
                     wallet_id int,
-                    bank_acc_id int
+                    bank_acc_id int,
+                    FULLTEXT(fname,lname)
 					);
 create table tutor(tutor_id int auto_increment primary key,
                     bio varchar(300) not null,
@@ -96,7 +97,8 @@ create table course( course_id int auto_increment primary key,
 					);
 create table subject(subject_id int auto_increment primary key,
 					subject_name varchar(80) not null,
-                    subject_code varchar(10) unique not null
+                    subject_code varchar(10) unique not null,
+                    FULLTEXT(subject_name)
 					);
 create table course_sub(course_sub_id int auto_increment primary key,
 					course_id int not null,
@@ -108,13 +110,24 @@ create table wallet(wallet_id int auto_increment primary key,
 					balance double ,
                     user_id int unique not null
 					);
+create table wallet_transaction(wallet_transaction_id int auto_increment primary key,
+					wallet_id int not null,
+					amount double not null,
+					credit boolean ,
+					debit boolean,
+					balance double not null,
+					comment varchar(120) not null,
+					status enum('Completed','Pending','Failed') not null,
+					datetime datetime not null
+					);
+					
 create table transaction( transaction_id int auto_increment primary key,
-					payer enum('Admin','User') not null,
+					payer varchar(20) not null,
                     payer_id int not null,
-                    receiver enum('Admin','User') not null,
+                    receiver varchar(20) not null,
                     receiver_id int not null,
                     amount double,
-                    description varchar(40) not null,
+                    description varchar(150) not null,
                     date date not null,
                     datetime datetime not null
 					);
@@ -126,9 +139,12 @@ create table fees(fees_id int auto_increment primary key,
 					);
 create table lesson(lesson_id int auto_increment primary key,
 					booking_id int not null,
-                    status varchar(10) not null,
-                    meeting_link varchar(40) not null,
-                    notes varchar(16)
+                    meeting_link varchar(120),
+                    notes varchar(16),
+                    time_from time,
+                    time_to time,
+                    date date,
+                    status varchar(20) not null
                     );
 create table availability (availability_id int auto_increment primary key,
 					tutor_id int  not null,
@@ -143,19 +159,20 @@ create table availability (availability_id int auto_increment primary key,
 create table booking(booking_id int auto_increment primary key,
 					tutor_id int not null,
                     user_id int not null,
-                    suject_id int not null,
+                    subject_id int not null,
+                    price double not null,
                     duration double not null,
-                    booking_type varchar(12) not null,
+                    no_of_lesson int not null,
                     transaction_id int not null,
-                    time_from Time not null,
-                    time_to Time not null,
-                    status varchar(10) not null
+                    booking_status varchar(20) not null
 					);
 create table withdraw_request(request_id int auto_increment primary key,
 					wallet_id int not null,
+					wallet_transaction_id int not null,
                     amount double not null,
-                    status varchar(10) not null,
-					remarks varchar(30) 
+                    status varchar(20) not null,
+					remarks varchar(80),
+					date date not null
 					);
 create table review(review_id int auto_increment primary key,
 					no_of_stars int not null,
@@ -165,7 +182,7 @@ create table review(review_id int auto_increment primary key,
                     tutor_id int not null
 					);
 create table notification(notification_id int auto_increment primary key,
-					notification varchar(150) not null,
+					notification varchar(900) not null,
                     link varchar(100) not null,
                     datetime datetime not null,
                     user_id int,

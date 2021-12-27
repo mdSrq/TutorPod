@@ -23,22 +23,23 @@
     <ul class="sidebar__dropdown">
         <li class="sidebar__dropdown_title">Users <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">
-            <li><a href="#">See All Users</a></li>
+            <li><a href="./SeeUsers">See All Users</a></li>
         </ul>
     </ul>
     <ul class="sidebar__dropdown">
         <li class="sidebar__dropdown_title">Tutors <span class="sidebar__dot sidebar__dot_outter" id="tutorOutter"></span> <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">
-            <li><a href="./TutorApplications">Tutor Applications <span class="sidebar__dot" id="tutorApplicationsDot">2</span></a></li>
-            <li><a href="#">See All Tutors</a></li>
+            <li><a href="./TutorApplications">Tutor Applications <span class="sidebar__dot" id="tutorApplicationsDot"></span></a></li>
+            <li><a href="./SeeTutors">See All Tutors</a></li>
         </ul>
     </ul>
     <ul class="sidebar__dropdown">
         <li class="sidebar__dropdown_title">Orders <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">
-            <li><a href="#">See Placed Orders</a></li>
-            <li><a href="#">Pending Lessons</a></li>
-            <li><a href="#">See All Lessons</a></li>
+            <li><a href="./SeeOrders">See Placed Orders</a></li>
+            <li><a href="./SeeLessons?filter=Unscheduled">Pending Lessons</a></li>
+            <li><a href="./SeeLessons?filter=Completed">Completed Lessons</a></li>
+            <li><a href="./SeeLessons?filter=All">See All Lessons</a></li>
         </ul>
     </ul>
     <ul class="sidebar__dropdown">
@@ -46,15 +47,15 @@
         <ul class="sidebar__dropdown_items">
             <li><a href="./AddAdminBankAcc">Add Admin Bank Acc</a></li>
             <li><a href="./SeeAdminBankAcc">See Admins Bank Acc(s)</a></li>
-            <li><a href="#">See User Bank Acc(s)</a></li>
+            <li><a href="./SeeUserBankAcc">See User Bank Acc(s)</a></li>
         </ul>
     </ul>
     <ul class="sidebar__dropdown acc_dropdown">
-        <li class="sidebar__dropdown_title">Withdraw Requests <span class="sidebar__dropdown_title_arrow">></span></li>
+        <li class="sidebar__dropdown_title">Withdraw Requests <span class="sidebar__dot sidebar__dot_outter" id="withdrawalOutter"></span> <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">
-            <li><a href="#">Pending Requests</a></li>
-            <li><a href="#">Approved Requests</a></li>
-            <li><a href="#">Rejected Requests</a></li>
+            <li><a href="./WithdrawRequest?status=Pending">Pending Requests <span class="sidebar__dot" id="withdrawalDot"></span></a></li>
+            <li><a href="./WithdrawRequest?status=Completed">Approved Requests</a></li>
+            <li><a href="./WithdrawRequest?status=Dimissed">Rejected Requests</a></li>
         </ul>
     </ul>
     <ul class="sidebar__dropdown">
@@ -101,8 +102,39 @@
             }
         });
     }
+    function loadPendingRequestCount(){
+        showLoading();
+        $.ajax({
+            url: "../WalletController",
+            data: "cmd=loadPendingRequestCount",
+            success: function (response) {
+                hideLoading();
+                if (response.includes("Exception")) {
+                    $("<pre>").addClass("overlay-background").css({
+						"display": "block",
+						"background-color": "rgba(0, 0, 0, 0.85)"
+					}).html(response).appendTo("body");
+					$(".overlay-background").click(() => {
+						$(".overlay-background").remove();
+					});
+                }else{
+                    if(response>0){
+                        $("#withdrawalOutter").css("display","inline-block");
+                        if(response>9)
+                            $("#withdrawalDot").text("9+").css("display","inline-block");
+                        else
+                            $("#withdrawalDot").text(response).css("display","inline-block");
+                    }else{
+                        $("#withdrawalOutter").css("display","none");
+                        $("#withdrawalDot").css("display","none");
+                    }
+                }
+            }
+        });
+    }
     $(document).ready(function(){
         loadTutorApplied();
+        loadPendingRequestCount();
     });
     $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
         $("#snackbar").html("Some error occured see the log");

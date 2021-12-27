@@ -336,7 +336,7 @@
                 </div>
                 <div class="search__result_about">
                     <p class="search__result_about_name">Mohd Shariq</p>
-                    <p class="search__result_about_info">Delhi | 10 Students | 24 Lessons</p>
+                    <p class="search__result_about_info"><span class="location_icon"></span>Delhi | 10 Students | 24 Lessons</p>
                     <p class="search__result_about_sub-heading">Teaches</p>
                     <p class="search__result_about_details">English, Discrete Mathematics, C++ and more</p>
                     <p class="search__result_about_sub-heading">Speaks</p>
@@ -393,6 +393,62 @@
                 </div>
             </div>
         </section>
+        <div class="main__form_overlayform" tabindex="-1" style="display: flex;">
+            <a href="#" class="main__form_overlayform_cross" onclick="hideOverlayForm()">X</a>
+            <h2 class="main__sub-heading">Payment</h2>
+            <div class="search__booking_walletDiv">
+                <span class="search__booking_walletDiv_heading green_circle">Sufficient Balance in Wallet</span>
+                <span class="search__booking_walletDiv_heading red_circle">Insufficient Balance in Wallet</span>
+                <a class="search__booking_walletDiv_heading_link" href="#">+ Add</a>
+                <span class="search__booking_walletDiv_info">
+                    <span class="search__booking_walletDiv_text">Amount present in wallet</span>
+                    <span class="search__booking_walletDiv_value">&#8377; 1500</span>
+                </span>
+                <span class="search__booking_walletDiv_info">
+                    <span class="search__booking_walletDiv_text">Payment to be made</span>
+                    <span class="search__booking_walletDiv_value">&#8377; 500</span>
+                </span>
+                <span class="search__booking_walletDiv_info">
+                    <span class="search__booking_walletDiv_text">Balance after payment</span>
+                    <span class="search__booking_walletDiv_value">&#8377; 1000</span>
+                </span>
+            </div>
+            <div class="search__booking_summary">
+                <span class="search__booking_summary_heading">Booking Summary</span>
+                <span class="search__booking_summary_mainItem">
+                    <span class="search__booking_summary_mainItem_text">2 Lessons</span>
+                    <span class="search__booking_summary_mainItem_value">&#8377; 500</span>
+                </span>
+                <span class="search__booking_summary_details">
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Subject :</span>
+                        <span class="search__booking_summary_value"> BCS-011 - Computer Basics and PC Software</span>
+                    </span>
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Price :</span>
+                        <span class="search__booking_summary_value"> &#8377; 500</span>
+                    </span>
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Duration :</span>
+                        <span class="search__booking_summary_value"> 2 Hr</span>
+                    </span>
+                    <span class="search__booking_summary_detail">
+                        <span class="search__booking_summary_text">Lessons Count :</span>
+                        <span class="search__booking_summary_value"> 2</span>
+                    </span>
+                </span>
+                <span class="search__booking_summary_mainItem">
+                    <span class="search__booking_summary_mainItem_text">TutorPod Fee (5%)</span>
+                    <span class="search__booking_summary_mainItem_value">&#8377; 25</span>
+                </span>
+                <span class="search__booking_summary_mainItem total">
+                    <span class="search__booking_summary_mainItem_text">Total </span>
+                    <span class="search__booking_summary_mainItem_value">&#8377; 525</span>
+                </span>
+                <input type="submit" class="button flat-wide-button" value="Book Lesson">
+                <button class="flat-button-hallow">&lt; Back</button>
+            </div>
+        </div>
     </main>
     <script src="./app/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">

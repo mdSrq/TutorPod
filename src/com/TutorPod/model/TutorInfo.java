@@ -20,10 +20,11 @@ public class TutorInfo {
 	private List<String[]> languages;
 	private List<Experience> experiences;
 	private List<Fees> fees;
+	private List<Availability> availability;
 	public TutorInfo(int user_id, String fname, String lname, String username, String email_id, String mobile_no,
 			String gender, String photo, String joining_date, int tutor_id, String bio, String approval_date,
 			String profile_status, Address address, List<String[]> languages, List<Experience> experiences,
-			List<Fees> fees) {
+			List<Fees> fees, List<Availability> availability) {
 		super();
 		this.user_id = user_id;
 		this.fname = fname;
@@ -42,6 +43,7 @@ public class TutorInfo {
 		this.languages = languages;
 		this.experiences = experiences;
 		this.fees = fees;
+		this.availability = availability;
 	}
 	public int getUser_id() {
 		return user_id;

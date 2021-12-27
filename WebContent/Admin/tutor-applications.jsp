@@ -31,9 +31,8 @@ if (session.getAttribute("ADMIN") == null) {
 		<h2 class="main__sub-heading">Dismiss Application</h2>
 		<form action="../TutorController" method="post" class="scrollable" id="dimissForm">
 			<div class="form-unit form-unit-full">
-				<label for="message">Dimiss Message</label>
-				<input type="text" class="input-with-icon input-with-icon_no-icon" name="message"
-					placeholder="Enter reasons for dismissing application" id="message" required />
+				<label for="message">Dismiss Message</label>
+				<textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Enter reasons for dismissing application" required></textarea>
 			</div>
 			<div class="form-unit form-unit-full">
 				<label for="link">Link</label>

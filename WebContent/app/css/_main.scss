@@ -1,334 +1,597 @@
 .main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex: 1;
+  min-height: 88vh;
+  margin: 1.5rem 3rem;
+  position: relative;
+
+  @include breakpoint-down(medium) {
+    width: 100%;
+    flex: unset;
+    margin: 0;
+  }
+
+  &__acc-forms-container {
+    background-color: $white;
+    box-shadow: $shadow1;
+    border-radius: 0.4rem;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    flex: 1;
-    min-height: 88vh;
-    margin: 1.5rem 3rem;
-    position: relative;
-    
+    justify-content: center;
+    padding-top: 1rem;
+    width: 100%;
+  }
+
+  &__heading,
+  &__sub-heading {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    padding-bottom: 1rem;
+  }
+
+  &__heading {
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: left;
     @include breakpoint-down(medium) {
-        width: 100%;
-        flex: unset;
-        margin: 0;
+      padding: 1rem;
+      text-align: center;
     }
+  }
 
-    &__acc-forms-container {
-        background-color: $white;
-        box-shadow: $shadow1;
-        border-radius: 0.4rem;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding-top: 1rem;
+  &__sub-heading {
+    width: 100%;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  &__container_inner {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+
+    &_photo {
+      width: 30%;
+      padding: 1rem;
+
+      @include breakpoint-down(medium) {
         width: 100%;
-    }
+      }
 
-    &__heading,
-    &__sub-heading {
-        padding: 0;
-        margin: 0;
-        font-weight: normal;
-        padding-bottom: 1rem;
-    }
-
-    &__heading {
-        font-size: 1.5rem;
+      &_img {
         width: 100%;
-        text-align: left;
-        @include breakpoint-down(medium) {
-            padding: 1rem;
-            text-align: center;
-        }
-    }
-
-    &__sub-heading {
-        width: 100%;
-        font-size: 1.25rem;
-        text-align: center;
-    }
-
-    &__container_inner {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        padding: 0.5rem;
         height: auto;
+        box-shadow: $shadow1;
 
-        &_photo {
-            width: 30%;
-            padding: 1rem;
-
-            @include breakpoint-down(medium) {
-                width: 100%;
-            }
-
-            &_img {
-                width: 100%;
-                padding: 0.5rem;
-                height: auto;
-                box-shadow: $shadow1;
-
-                img {
-                    max-width: 100%;
-                    height: auto;
-                }
-            }
-
-            &_buttons {
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                button {
-                    font-size: 0.8rem;
-                    font-weight: normal;
-                    width: 48%;
-                    padding: 0.5rem 1rem;
-                }
-            }
+        img {
+          max-width: 100%;
+          height: auto;
         }
-    }
+      }
 
-    &__form-container {
-        width: 70%;
-        padding: 1rem;
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: center;
-        border-radius: 0.25rem;
-        @include breakpoint-down(medium) {
-            width: 100%;
-            padding: 1rem;
-        }
-        &_wider{
-            width: 100%;
-        }
-        &_shadowed{
-            background-color: $white;
-            box-shadow: $shadow2;
-            margin: 0 auto;
-            .tab-selector{
-                width: 100%;
-            }
-        }
-    }
-
-    &__form {
-        max-width: 100%;
-        padding: 3rem;
-        padding-top: 0.5rem;
-        @include breakpoint-down(medium) {
-            padding: 0;
-            width: 100%;
-        }
-        &_footer{
-            max-width: 100%;
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            bottom: 0;
-        }
-        &_overlayform{
-            display: none;
-            position: fixed;
-            background-color: $white;
-            box-shadow: $shadow2;
-            border-radius: 0.5rem;
-            top: 4.5rem;
-            width: 50%;
-            height: 80vh;
-            left: 50%;
-            transform: translate(-50%);
-            padding: 1rem 0.5rem;
-            z-index: 99;
-            @include breakpoint-down(medium) {
-                width: 95%;
-            }
-            form{
-                overflow-y: auto;
-                overflow-x: auto;
-                height: 90%;
-                padding: 1rem;
-                padding-bottom: 2rem;
-            }
-            &_cross{
-                position: absolute;
-                display: block;
-                text-align: center;
-                height: 2rem;
-                width: 2rem;
-                top: 0.5rem;
-                border-radius: 50%;
-                right: 0.5rem;
-                font-size: 1.5rem;
-                font-weight: bolder;
-                color: $lightPurple;
-                background-color: $white;
-                box-shadow: $shadow8;
-                transition: all 0.2s ease-in-out;
-                &:hover{
-                    background-color: $lightPurple;
-                    color: $white;
-                }
-                &:active{
-                    transform: scale(0.90);
-                }
-            }
-        }
-    }
-    &__form-section{
-        padding-top: 1rem;
+      &_buttons {
         width: 100%;
-        min-height: 60vh;
-    }
-    
-    &__notifications-container{
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding-top: 1rem;
-        width: 100%;
-    }
-    &__notification,&__notification_header{
-        width: 100%;
-        background-color: $white;
-        display: flex;
-        flex-flow: row wrap;
         justify-content: space-between;
         align-items: center;
-        height: max-content;
-        padding: 1rem;
-        border-radius: 0.4rem;
-        margin-bottom: 1rem;
-        &_left{
-            width: max-content;
-            .check-container{
-                display: block;
-                top: -0.4rem;
-                padding-right: 1rem;
-            }
+
+        button {
+          font-size: 0.8rem;
+          font-weight: normal;
+          width: 48%;
+          padding: 0.5rem 1rem;
         }
-        &_middle{
-            flex: 8;
-            font-size: 1rem;
-            @include breakpoint-down(medium) {
-                font-size: 0.9rem;
-            }
-            a{
-                color: $dark;
-            }
-        }
-        &_right{
-            flex: 2;
-            @include breakpoint-down(medium) {
-                text-align: end;
-                font-size: 0.8rem;
-                flex: none;
-                margin-top: 0.5rem;
-                width: 100%;
-            }
-        }
+      }
     }
-    &__notification_header{
-        .main__notification_middle{
-            display: flex;
-            flex-flow: row wrap;
-        }
-    }
-    &__availability{
-        &_container{
-            width: 100%;
-            display: flex;
-            flex-flow: row wrap;
-            
-        }
-        &_form,&_calendar{
-            background-color: $white;
-            box-shadow: $shadow1;
-            flex: 1;
-            border-radius: 0.4rem;
-            padding: 1rem 1rem 2rem;
-        }
-        &_form{
-            margin-right: 2rem;
-        }
-    }
-    &__dashboard-container{
-        width: 100%;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between; 
-        align-items: flex-start;  
-        height: max-content;
-        min-height: 75vh;
-    }
-    &__big-tile{
-        width: 48%;
-        background-color: $white;
-        height: max-content;
-        min-height: 15rem;
-        padding: 1rem;
-        box-shadow: $shadow1;
-        border-radius: 0.4rem;
-        p{
-            text-align: center;
-        }
-    }
-    &__tile{
-        background-color: $white;
-        box-shadow: $shadow1;
-        border-radius: 0.4rem;
-        display: flex;
-        flex-flow: row wrap;
-        width: 30%;
-        &_title{
-            display: block;
-            width: 100%;
-            text-align: center;
-            padding: 1rem;
-        }
-        &_img{
-            width: 25%;
-            padding: 1rem;
-            background-color: $lightBlue;
-            border-radius: 50%;
-            margin: 0 0 1rem 1rem;
-            img{
-                display: block;
-                max-width: 100%;
-                height: auto;
-            }
-        }
-        &_number{
-            width: 63%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            align-content: center;
-            margin: 0 1rem 1rem 0;
-            span{
-                display: block;
-                font-size: 1.6rem;
-                width: 100%;
-                padding-left: 1rem;
-                text-align: center;
-            }
-        }
-    }
-}
-#finalMsg{
-    display: none;
-}
-.grey-container{
-    height: 100%;
-    min-height: 95vh;
-    background-color: #eeeff2;
-    margin-top: -0.5rem;
-    padding: 1.5rem;
+  }
+
+  &__form-container {
+    width: 70%;
+    padding: 1rem;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    border-radius: 0.25rem;
     @include breakpoint-down(medium) {
-        padding: 0;
+      width: 100%;
+      padding: 1rem;
     }
+    &_wider {
+      width: 100%;
+    }
+    &_shadowed {
+      background-color: $white;
+      box-shadow: $shadow2;
+      margin: 0 auto;
+      .tab-selector {
+        width: 100%;
+      }
+    }
+  }
+
+  &__form {
+    max-width: 100%;
+    padding: 3rem;
+    padding-top: 0.5rem;
+    @include breakpoint-down(medium) {
+      padding: 0;
+      width: 100%;
+    }
+    &_footer {
+      max-width: 100%;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      bottom: 0;
+    }
+    &_overlayform {
+      display: none;
+      position: fixed;
+      background-color: $white;
+      box-shadow: $shadow2;
+      border-radius: 0.5rem;
+      top: 4.5rem;
+      width: 50%;
+      height: 80vh;
+      left: 50%;
+      transform: translate(-50%);
+      padding: 1rem 0.5rem;
+      z-index: 99;
+      @include breakpoint-down(medium) {
+        width: 95%;
+      }
+      form {
+        overflow-y: auto;
+        overflow-x: auto;
+        height: 90%;
+        padding: 1rem;
+        padding-bottom: 2rem;
+      }
+      &_cross {
+        position: absolute;
+        display: block;
+        text-align: center;
+        height: 2rem;
+        width: 2rem;
+        top: 0.5rem;
+        border-radius: 50%;
+        right: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: bolder;
+        color: $lightPurple;
+        background-color: $white;
+        box-shadow: $shadow8;
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          background-color: $lightPurple;
+          color: $white;
+        }
+        &:active {
+          transform: scale(0.9);
+        }
+      }
+    }
+  }
+  &__form-section {
+    padding-top: 1rem;
+    width: 100%;
+    min-height: 60vh;
+  }
+
+  &__notifications-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 1rem;
+    width: 100%;
+  }
+  &__notification,
+  &__notification_header {
+    width: 100%;
+    background-color: $white;
+    box-shadow: $shadow5;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    height: max-content;
+    padding: 1rem;
+    border-radius: 0.4rem;
+    margin-bottom: 1rem;
+    &_left {
+      width: max-content;
+      .check-container {
+        display: block;
+        top: -0.4rem;
+        padding-right: 1rem;
+      }
+    }
+    &_middle {
+      flex: 8;
+      font-size: 1rem;
+      @include breakpoint-down(medium) {
+        font-size: 0.9rem;
+      }
+      a {
+        color: $dark;
+      }
+    }
+    &_right {
+      flex: 2;
+      @include breakpoint-down(medium) {
+        text-align: end;
+        font-size: 0.8rem;
+        flex: none;
+        margin-top: 0.5rem;
+        width: 100%;
+      }
+    }
+  }
+  &__notification_header {
+    .main__notification_middle {
+      display: flex;
+      flex-flow: row wrap;
+    }
+  }
+  &__availability {
+    &_container {
+      width: 100%;
+      display: flex;
+      flex-flow: row wrap;
+    }
+    &_form,
+    &_calendar {
+      background-color: $white;
+      box-shadow: $shadow1;
+      flex: 1;
+      border-radius: 0.4rem;
+      padding: 1rem 1rem 2rem;
+    }
+    &_form {
+      margin-right: 2rem;
+    }
+  }
+  &__dashboard-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: max-content;
+    min-height: 75vh;
+    .table-wrapper {
+      width: 100%;
+      box-shadow: $shadow5;
+      background-color: $white;
+      padding: 1rem;
+      border-radius: 0.4rem;
+    }
+    table {
+      padding: 1rem;
+      box-shadow: none;
+      width: 100%;
+      tbody {
+        width: 100%;
+        tr {
+          background: $white;
+          margin: 0.5rem 0;
+        }
+      }
+    }
+  }
+  &__big-tile {
+    width: 48%;
+    background-color: $white;
+    height: max-content;
+    min-height: 15rem;
+    padding: 1rem;
+    box-shadow: $shadow1;
+    margin-top: 2rem;
+    border-radius: 0.4rem;
+    p {
+      text-align: center;
+    }
+  }
+  &__tile {
+    background-color: $white;
+    box-shadow: $shadow1;
+    border-radius: 0.4rem;
+    display: flex;
+    flex-flow: row wrap;
+    width: 30%;
+    &_title {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
+    }
+    &_img {
+      width: 25%;
+      padding: 1rem;
+      background-color: $lightBlue;
+      border-radius: 50%;
+      margin: 0 0 1rem 1rem;
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    &_number {
+      width: 63%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      margin: 0 1rem 1rem 0;
+      span {
+        display: block;
+        font-size: 1.6rem;
+        width: 100%;
+        padding-left: 1rem;
+        text-align: center;
+      }
+    }
+  }
+  &__wallet {
+    &__tile {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      .main__tile_img {
+        width: 4rem;
+        flex: none;
+        margin: 1rem;
+        margin-right: 0;
+        padding: 0.5rem;
+        background-color: $lightBlue;
+      }
+      &_balance {
+        width: 10rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      &_title,
+      &_num {
+        width: 100%;
+        display: block;
+        text-align: left;
+        padding-left: 1rem;
+      }
+      &_num {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+      &_btnunit {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: max-content;
+        margin-left: 1rem;
+        label {
+          padding: 0 1rem 0 0.5rem;
+          cursor: pointer;
+          color: $darkBlue;
+        }
+        button {
+          height: 3rem;
+          width: 3rem;
+        }
+      }
+    }
+  }
+  &__lesson {
+    &_tile {
+      width: 100%;
+      display: flex;
+      flex-flow: row-reverse wrap;
+      justify-content: space-between;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    &_schedule {
+      flex: 1;
+      line-height: 1.4;
+      &_time {
+        font-weight: 600;
+      }
+      &_timer{
+        color: $lightPurple;
+        font-style: italic;
+      }
+    }
+    &_info {
+      flex: 1.5;
+      &_text {
+        display: block;
+        font-weight: 600;
+        width: 100%;
+      }
+      &_tag {
+        margin-top: 0.5rem;
+        margin-right: 0.25rem;
+        font-size: 0.8rem;
+        display: inline-block;
+        padding: 0.1rem 0.5rem;
+        background-color: $lightBlue;
+        color: $darkBlue;
+        border-radius: 1rem;
+        width: max-content;
+      }
+    }
+    &_profile {
+      flex: 1;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      &_img {
+        img {
+          display: block;
+          max-height: 5rem;
+          width: auto;
+        }
+      }
+      &_info {
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: space-between;
+        align-content: space-between;
+        padding-left: 0.5rem;
+      }
+      &_name {
+        display: block;
+        width: 100%;
+        span {
+          font-weight: 600;
+          display: block;
+        }
+      }
+      &_buttons {
+        display: flex;
+        width: 100%;
+        flex-flow: row wrap;
+        a{
+          margin-left: 0.5rem;
+        }
+        button {
+          display: block;
+          height: 2rem;
+          width: 2rem;
+          padding: 0.2rem;
+          border-radius: 0.4rem;
+          background: $white;
+          position: relative;
+          border: 1.5px solid $dark;
+          box-shadow: $shadow5;
+          &:not(:first-child) {
+            margin-left: 0.5rem;
+          }
+          &:hover {
+            background: $lightPurple;
+            border-color: $lightPurple;
+            img {
+              filter: invert(1);
+            }
+          }
+          &:active {
+            background-color: $darkBlue;
+            border-color: $darkBlue;
+          }
+          img {
+            display: block;
+            max-width: 100%;
+            border-radius: 0.4rem;
+          }
+        }
+      }
+    }
+    &__overlay {
+        height: 85vh;
+        padding-bottom: 0;
+        form{
+            padding-bottom: 0;
+        }
+      &_avail {
+        display: flex;
+        flex-flow: column nowrap;
+        overflow-x: auto;
+        max-height: 12rem;
+        padding: 0.5rem 0;
+        .avail_unit {
+          margin-left: 4.5rem;
+          flex: 1;
+          font-size: 0.75rem;
+          color: $dark;
+          min-height: 2rem;
+          min-width: 2rem;
+          position: relative;
+          padding: 0.5rem;
+          font-weight: 600;
+          border-bottom: 1.5px solid $lightPurple;
+          &:last-child{
+            min-height: 0;
+            padding: 0;
+            border: none;
+          }
+          &:first-child{
+            border-top: 1.5px solid $lightPurple;
+          }
+          span{
+            position: absolute;
+            top: -0.55rem;
+            left: -4.5rem;
+            width: 3.5rem;
+            text-align: right;
+            background:linear-gradient(to right,$kindaPink,$lightPurple);
+            padding: 0rem 0.2rem;
+            border-top-left-radius: 0.2rem;
+            border-bottom-left-radius: 0.2rem;
+            color: $white;
+            z-index: 5;
+            &::after{
+              content: "";
+              width: 0;
+              height: 0;
+              position: absolute;
+              right: -1.01rem;
+              top: 0;
+              border-top: 0.5rem solid transparent;
+              border-left: 1rem solid $lightPurple;
+              border-bottom: 0.5rem solid transparent;
+            }
+          }
+        }
+      }
+      &_label{
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-between;
+          label{
+              max-width: max-content;
+          }
+      }
+    }
+  }
+}
+.dot {
+  display: inline-block;
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 50%;
+  background-color: $lightBlue;
+}
+.green_unit {
+  background-color: $greenish;
+  color: $white;
+  cursor: pointer;
+}
+.red_unit {
+  background-color: $lightRed;
+  color: $white;
+  cursor: not-allowed;
+}
+.selected_unit{
+  background: linear-gradient(to right,#b3c6fd,#a2b7f7);
+}
+#finalMsg {
+  display: none;
+}
+.grey-container {
+  height: 100%;
+  min-height: 95vh;
+  background-color: #eeeff2;
+  margin-top: -0.5rem;
+  padding: 1.5rem;
+  @include breakpoint-down(medium) {
+    padding: 0;
+  }
 }

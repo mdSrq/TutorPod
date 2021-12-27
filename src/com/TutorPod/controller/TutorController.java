@@ -22,16 +22,19 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.TutorPod.dao.AddressDAO;
+import com.TutorPod.dao.AvailabilityDAO;
 import com.TutorPod.dao.ExperienceDAO;
 import com.TutorPod.dao.FeesDAO;
 import com.TutorPod.dao.NotificationDAO;
 import com.TutorPod.dao.TutorDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.model.Address;
+import com.TutorPod.model.Availability;
 import com.TutorPod.model.Experience;
 import com.TutorPod.model.Fees;
 import com.TutorPod.model.Notification;
 import com.TutorPod.model.Tutor;
+import com.TutorPod.model.TutorBasicInfo;
 import com.TutorPod.model.TutorInfo;
 import com.TutorPod.model.User;
 import com.google.gson.Gson;
@@ -48,6 +51,7 @@ public class TutorController extends HttpServlet {
     private FeesDAO feesDAO;
     private UserDAO userDAO;
     private NotificationDAO notificationDAO;
+    private AvailabilityDAO availabilityDAO;
 	public void init() throws ServletException {
 		super.init();
 		try {
@@ -57,6 +61,7 @@ public class TutorController extends HttpServlet {
 			feesDAO = new FeesDAO(dataSource);
 			userDAO = new UserDAO(dataSource);
 			notificationDAO = new NotificationDAO(dataSource);
+			availabilityDAO = new AvailabilityDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -88,6 +93,16 @@ public class TutorController extends HttpServlet {
 					}
 				}
 			    out.write(responseJSON);
+				break;
+			case"loadBasicTutorInfo":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				List<TutorBasicInfo> tutorInfo = new ArrayList<>();
+				ListIterator<Tutor> itr = tutorDAO.getTutors().listIterator();
+				while(itr.hasNext())
+					tutorInfo.add(tutorDAO.getTutorBasicInfo(itr.next().getTutor_id()));
+				responseJSON = new Gson().toJson(tutorInfo);
+				out.write(responseJSON);
 				break;
 			case "loadAddress":
 				responseJSON = "[]";
@@ -151,8 +166,16 @@ public class TutorController extends HttpServlet {
 				responseJSON = new Gson().toJson(tutorDAO.getTutorApplicantsBasicInfo());
 				out.write(responseJSON);
 				break;
-			case "loadAppliedTutorInfo":
-				
+			case "loadAllTutors":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				ListIterator<Tutor> tutors = tutorDAO.getApprovedTutors().listIterator();
+				List<TutorInfo> tutorsInfo = new ArrayList<>();
+				while(tutors.hasNext()) {
+					tutorsInfo.add(getTutorInfo(tutors.next()));
+				}
+				responseJSON = new Gson().toJson(tutorsInfo);
+				out.write(responseJSON);
 				break;
 			default:
 				response.getWriter().write("Invalid Request");
@@ -270,10 +293,6 @@ public class TutorController extends HttpServlet {
 				else
 					out.write(successCounter+"/"+languages.length+" languages Saved");
 				break;
-			case"saveExperience":
-				session.setAttribute("EXPERIENCES_SAVED", "TRUE");
-				response.sendRedirect("./TutorApplication?tab=4");
-				break;
 			case"addExperience":
 				String experience_type = request.getParameter("experience_type");
 				String title = request.getParameter("title");
@@ -301,15 +320,17 @@ public class TutorController extends HttpServlet {
 						out.write("{'msg':'Failed to add experience'}");
 				}
 				break;
-			case"savePrice":
-				session.setAttribute("FEES_SAVED", "TRUE");
-				response.sendRedirect("./TutorApplication?tab=5");
-				break;
 			case"addPrice":
 				double fee = Double.parseDouble(request.getParameter("fee"));
 				int subject_id = Integer.parseInt(request.getParameter("subject_id"));
 				tutor = (Tutor)session.getAttribute("TUTOR");
 				response.setContentType("application/json");
+				Fees fees = feesDAO.getDuplicateFees(subject_id, tutor.getTutor_id());
+				if(fees!=null) {
+					fees.setFee(fee);
+					if(feesDAO.updateFees(fees))
+						out.write("{\"msg\": \"Updated\",\"fees_id\":"+fees.getFees_id()+"}");
+				}else
 				if(feesDAO.addFees(new Fees(tutor.getTutor_id(),subject_id,fee))) {
 					int fees_id = feesDAO.getMostRecentFees(tutor.getTutor_id()).getFees_id();
 					out.write("{\"msg\": \"Added\",\"fees_id\":"+fees_id+"}");
@@ -343,11 +364,8 @@ public class TutorController extends HttpServlet {
 				int tutor_id = Integer.parseInt(request.getParameter("tutor_id"));
 				String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 				if(tutorDAO.updateTutorField("profile_status","Tutor", false, tutor_id) && tutorDAO.updateTutorField("approval_date", date, false, tutor_id)) {
-					if(sendNotification(tutor_id,"Your Application is approved now you will apear in the search results."
-							+ " Make sure you add your availabiltiy, Click to add availability","./Availability"))
-						out.write("Notification Sent ");
-					else
-						out.write("Failed to add notification ");
+					sendNotification(tutor_id,"Your Application is approved now you will apear in the search results."
+							+ " Make sure you add your availabiltiy, Click to add availability","./Availability");
 					out.write("Application Approved");
 				}
 				else
@@ -360,8 +378,9 @@ public class TutorController extends HttpServlet {
 				if(tutorDAO.updateTutorField("profile_status","Dismissed", false, tutor_id) && tutorDAO.updateTutorField("approval_date", null, false, tutor_id)) {
 					if(sendNotification(tutor_id,message,link))
 						out.write("Notification Sent ");
-					else
-						out.write("Failed to add notification ");
+					tutor = tutorDAO.getTutor(tutor_id);
+					tutor.setProfile_status("Dismissed");
+					session.setAttribute("TUTOR", tutor);
 					out.write("Application Dismissed");
 				}
 				else
@@ -369,7 +388,7 @@ public class TutorController extends HttpServlet {
 				break;
 			case"searchTutor":
 				subject_id=0;
-				if(request.getParameter("subject_id")!=null)
+				if(! request.getParameter("subject_id").isBlank())
 					subject_id = Integer.parseInt(request.getParameter("subject_id"));
 				String[] avail = request.getParameterValues("avail_days");
 				List<Integer> avail_days = new ArrayList<Integer>();
@@ -401,9 +420,10 @@ public class TutorController extends HttpServlet {
 		List<String[]> languages = tutorDAO.getLanguages(tutor.getTutor_id());
 		List<Experience> experiences = experienceDAO.getExperiencesByTutorId(tutor.getTutor_id());
 		List<Fees> fees = feesDAO.getFeesByTutorID(tutor.getTutor_id());
+		List<Availability> avail = availabilityDAO.getAllAvailability(tutor.getTutor_id());
 		return new TutorInfo(user.getUser_id(), user.getFname(), user.getLname(), user.getUsername(), user.getEmail_id(), user.getMobile_no(),
 				user.getGender(), user.getPhoto(),user.getJoining_date(), tutor.getTutor_id(), tutor.getBio(), tutor.getApproval_date(),
-				tutor.getProfile_status(),address,languages,experiences,fees);
+				tutor.getProfile_status(),address,languages,experiences,fees,avail);
 	}
 	private boolean sendNotification(int tutor_id,String message,String link)throws Exception{
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());

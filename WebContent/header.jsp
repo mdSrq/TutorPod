@@ -81,7 +81,7 @@ User user = null;
                         <img src="./images/user.png" alt="profile-pic">
                         <%}else{ %>
                         <img src="<%= pageContext.getServletContext().getInitParameter("usersphoto.location")
-									+ user.getPhoto()%>" alt="profile pic">
+									+ user.getPhoto()+".jpg"%>" alt="profile pic">
                         <%}%>
 					</div>
 					<div class="header-controls__user-profile_dropdown" tabindex="98">
@@ -100,7 +100,7 @@ User user = null;
                         <%}else{%>
                         <a href="#">My Teachers</a>
                         <%} %>
-                        <a href="#">Lessons</a>
+                        <a href="./Lessons">Lessons</a>
                         <a href="./AccountSettings">Settings</a>
                         <a href="./UserController?cmd=logout">Logout</a>
                     </div>
@@ -124,7 +124,7 @@ User user = null;
         </nav>
         <div class="overlay toggle-on"></div>
         <div class="header__overlay_menu hide-for-desktop toggle-on">
-            <a href="./TutorApplication">Apply to Teach</a> <a href="#">Search Tutors</a> <a href="#">Study Resources</a>
+            <a href="./TutorApplication">Apply to Teach</a> <a href="./SearchTutor">Search Tutors</a> <a href="./Contact Us">Contact Us</a>
             <%
 			if (session.getAttribute("USER") == null) {
 			%>
@@ -220,7 +220,7 @@ User user = null;
         var mostRecentNotificationID; 
         <%if (session.getAttribute("USER") != null) { %>
             loadNotifications();
-            setInterval(loadNotifications, 1000 * 60); 
+            setInterval(loadNotifications, 1000 * 5); 
         <%}%>
         function showSubjectsDropdown() {
                     $(".nav-dd").css("display", "block");
@@ -322,8 +322,12 @@ User user = null;
                         if (unSeenNotifications > 0) {
                             if ($(".notification_badge") != null)
                                 $(".notification_badge").remove();
+                            if(unSeenNotifications>9)
                             $("<span>").addClass("notification_badge").appendTo($(".notification_bell"))
-                                .append($("<span>").html(unSeenNotifications));
+                                .append($("<span>").html("9+"));
+                            else
+                             $("<span>").addClass("notification_badge").appendTo($(".notification_bell"))
+                                 .append($("<span>").html(unSeenNotifications));
                         }
                     }
                 });
@@ -539,19 +543,11 @@ User user = null;
                         }
                         $.each(courses.courseSubjects, function (j, subjects) {
                             $("<li>").addClass("nav-dd_subject nav-dd_subject_" +
-                                    subjects
-                                    .course_id + "_" + subjects.duration_no)
-                                .appendTo($(
-                                    ".nav-dd_subjects"))
+                                    subjects.course_id + "_" + subjects.duration_no)
+                                .appendTo($(".nav-dd_subjects"))
                                 .append($("<a>").attr({
-                                    href: "./TutorController?cmd=searchBySubject&course_id=" +
-                                        subjects.course_id +
-                                        "&duration_no=" + subjects
-                                        .duration_no + "&subject_id=" +
-                                        subjects
-                                        .subject_id,
-                                }).text(subjects.subject_code + " - " + subjects
-                                    .subject_name));
+                                    href: "./SearchTutor?searchBy=subject&subject_id="+subjects.subject_id,
+                                }).text(subjects.subject_code + " - " + subjects.subject_name));
                         });
                     });
                 }

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.sql.DataSource;
 
@@ -28,6 +29,32 @@ public class TutorDAO {
 			Conn = dataSource.getConnection();
 			
 			String sql = "select * from tutor order by tutor_id desc";
+			
+			Stmt = Conn.createStatement();
+			
+			Rs = Stmt.executeQuery(sql);
+			
+			while (Rs.next()) {
+				
+				Tutor tempTutor = createTutor(Rs);
+				tutors.add(tempTutor);				
+			}
+			return tutors;
+		}
+		finally {
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public List<Tutor> getApprovedTutors() throws Exception{
+		List<Tutor> tutors = new ArrayList<>();
+		
+		Connection Conn = null;
+		Statement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			
+			String sql = "select * from tutor where profile_status like 'Tutor'";
 			
 			Stmt = Conn.createStatement();
 			
@@ -74,7 +101,7 @@ public class TutorDAO {
 		List<Tutor> tutors = new ArrayList<>();
 		
 		Connection Conn = null;
-		Statement Stmt = null;
+		PreparedStatement Stmt = null;
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
@@ -93,33 +120,63 @@ public class TutorDAO {
 			}
 			if(!keyword.isEmpty()) {
 				sql+="inner join user on user.user_id=tutor.user_id ";
+				if(filterSubject)
+					sql+="inner join subject on fees.subject_id= subject.subject_id ";
+				else
+					sql+="inner join fees on fees.tutor_id = tutor.tutor_id inner join subject on fees.subject_id= subject.subject_id ";
 				filterKeyword = true;
 			}
+			sql+="where tutor.profile_status like 'Tutor' ";
 			if(filterSubject)
-				sql += "where fees.subject_id="+subject_id+" ";
+				sql += "and fees.subject_id=? ";
 			if(filterAvailability) {
-			  if(filterSubject)
-				  sql += "and ";
-			  else
-				  sql += "where ";
+			  sql += "and availability.day_of_week in(";
 			  for(int i=0;i<avail.size();i++){
-				  int avail_day = avail.get(i);
-				  sql += "availability.day_of_week="+avail_day+" ";
+				  sql += "?";
 				  if(!(i==avail.size()-1))
-					  sql+="and ";
+					  sql+=", ";
+				  else
+					  sql+=") ";
 			  }
 			}
 			if(filterKeyword) {
-				if(filterSubject||filterAvailability)
-					sql+="and ";
-				else
-					sql+="where ";
-				sql+="( user.fname like "+keyword+" or user.lname like "+keyword+") ";
+				keyword = keyword.toUpperCase();
+				sql+="and MATCH(user.fname,user.lname) AGAINST(? IN NATURAL LANGUAGE MODE) or MATCH(subject.subject_name) AGAINST(";
+				for(int i=0;i<keyword.split(" ").length;i++) {
+					sql+="+? ";
+				}
+				sql+=" IN BOOLEAN MODE)  "
+					+"or subject.subject_code = ? ";
 			}
-				
-			Stmt = Conn.createStatement();
+			sql+="group by tutor.tutor_id ";
+			if(filterAvailability)
+				sql+=" having count(*)="+avail.size();
+			Stmt = Conn.prepareStatement(sql);
 			
-			Rs = Stmt.executeQuery(sql);
+			int paramIndex = 1;
+			
+			if(filterSubject) {
+				Stmt.setInt(paramIndex, subject_id);
+				paramIndex++;
+			}
+			if(filterAvailability) {
+				ListIterator<Integer> itr = avail.listIterator();
+				while(itr.hasNext()) {
+					Stmt.setInt(paramIndex, itr.next());
+					paramIndex++;
+				}
+			}
+			if(filterKeyword) {
+				keyword = keyword.toUpperCase();
+				Stmt.setString(paramIndex, keyword);
+				paramIndex++;
+				for(String word : keyword.split(" ")) {
+					Stmt.setString(paramIndex, word);
+					paramIndex++;
+				}
+				Stmt.setString(paramIndex, keyword);
+			}
+			Rs = Stmt.executeQuery();
 			
 			while (Rs.next()) {
 				

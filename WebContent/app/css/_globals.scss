@@ -207,7 +207,7 @@ button,
       $darkBlue 100%);
 }
 .green-button{
-  background-image: linear-gradient(to right,green 0%,$greenish 50%,green 100%);
+  background-image: linear-gradient(to right,rgb(39, 209, 39) 0%,$greenish 50%,rgb(39, 209, 39)  100%);
 }
 .red-button{
   background-image: linear-gradient(to right,red 0%,$lightRed 50%,red 100%);
@@ -270,6 +270,9 @@ button,
   background-color: transparent;
   border: 1.5px solid $darkBlue;
   box-shadow: none;
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
   &:hover{
     box-shadow: none;
   }
@@ -292,7 +295,19 @@ select {
     box-shadow: $shadow3;
   }
 }
-
+input[type="text"],input[type="number"],input[type="time"]{
+  &:read-only{
+    box-shadow: none;
+    cursor: not-allowed;
+    outline-width: 1.5px;
+    &:focus{
+      box-shadow: none;
+    }
+  }
+}
+input[type="time"]{
+  padding-right: 0;
+}
 .input-with-icon {
   font-size: 1rem;
   padding: 1rem;
@@ -352,7 +367,7 @@ textarea {
     display: block;
     width: 100%;
     font-size: 1rem;
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.3rem;
   }
 }
 
@@ -362,7 +377,11 @@ textarea {
 
 .form-unit-half {
   width: 48%;
-
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
   @include breakpoint-down(medium) {
     width: 100%;
   }
@@ -538,6 +557,11 @@ td {
 
 td {
   text-align: center;
+  img{
+    display: block;
+    width: 5rem;
+    height: 5rem;
+  }
 }
 
 tbody tr:nth-child(even) {
@@ -571,6 +595,9 @@ tbody tr:nth-child(even) {
   }
   tr:nth-child(even){
     background: $white;
+  }
+  tbody{
+    background-color: $white;
   }
   td {
     border: solid $lightBlue;
@@ -1235,6 +1262,40 @@ tbody tr:nth-child(even) {
   width: 100%;
   overflow-x: auto;
 }
+.location_icon{
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 5px solid $lightPurple;
+    border-radius: 100%;
+    &::after{
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin: 1px 0 0 -6px;
+    display: block;
+    content: '';
+    border: 6px solid transparent;
+    border-top: 10px solid $lightPurple;
+    border-bottom: none;
+    }
+}
+.float-right{
+  position: absolute;
+  right: 11rem;
+  padding: 0.61rem 1rem;
+  border-radius: 0.2rem;
+  box-shadow: none;
+  cursor: pointer;
+  &:focus,&:hover{
+    box-shadow: $shadow5;
+  }
+  @include breakpoint-down(medium) {
+    position: static;
+    margin: 0 auto 0.5rem auto;
+  }
+}
 
 .reveal {
   animation: reveal ease-in-out 0.3s forwards;
@@ -1274,6 +1335,9 @@ tbody tr:nth-child(even) {
 
 .grow{
   animation: grow ease-in-out 0.4s forwards;
+}
+.grow-limitless{
+  animation: grow-limitless ease-in-out 0.4s forwards;
 }
 .flip{
   &::after{

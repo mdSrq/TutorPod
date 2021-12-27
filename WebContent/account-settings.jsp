@@ -38,7 +38,7 @@ if (session.getAttribute("USER") == null) {
 						<%}%>
 						<div class="main__container_inner_photo_img">
 						<img src="<%= pageContext.getServletContext().getInitParameter("usersphoto.location")
-									+ currentUser.getPhoto()%>" 
+									+ currentUser.getPhoto()+".jpg"%>" 
 							 alt="Photo of user">
 						</div>
 						<%}%>
@@ -1052,6 +1052,18 @@ function changeTab(tabNo) {
                     $("#priceTable tbody").append(tableRow);
                     $("#snackbar").html("Price Added");
                     $("#tab-selector_tab5").addClass("tab-selector_completed");
+                    showToast();
+                }else if(response.msg.includes("Updated")){
+					const tr = $("#price_"+response.fees_id);
+                    tr.empty();
+                    tableRow=
+                        '<td>' + formData.subject_name + '</td>' +
+                        '<td> &#8377;' + formData.fee + '</td>' +
+                        '<td>' +
+                            '<a href="#" class="button small-round-button delete-button" onclick="deleteFees('+response.fees_id+')">Delete</a>' +
+                        '</td>'
+                    tr.append(tableRow);
+                    $("#snackbar").html("Price Updated");
                     showToast();
                 } else {
                     $("#snackbar").html(response);

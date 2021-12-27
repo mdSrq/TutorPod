@@ -33,9 +33,11 @@ public class UserDAO {
 			
 			Rs = Stmt.executeQuery(sql);
 			
-			while (Rs.next())
-				users.add(createUser(Rs));				
-			
+			while (Rs.next()) {
+				User user = createUser(Rs);
+				user.setPassword("*******");
+				users.add(user);
+			}				
 			return users;		
 		}
 		finally {
@@ -52,6 +54,26 @@ public class UserDAO {
 			String sql = "select * from user where user_id=?";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, user_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				user = createUser(Rs);
+			}
+			return user;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
+	public User getUserByTutorID(int tutor_id)throws Exception{
+		User user=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from user where tutor_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, tutor_id);
 			Rs = Stmt.executeQuery();
 			if(Rs.next()) {
 				user = createUser(Rs);

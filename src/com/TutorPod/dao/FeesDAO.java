@@ -63,6 +63,27 @@ public class FeesDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public Fees getDuplicateFees(int subject_id,int tutor_id)throws Exception{
+		Fees fees=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from fees where subject_id=? and tutor_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, subject_id);
+			Stmt.setInt(2, tutor_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				fees = createFees(Rs);
+			}
+			return fees;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	public Fees getMostRecentFees(int tutor_id)throws Exception{
 		Connection Conn = null;
 		PreparedStatement Stmt = null;

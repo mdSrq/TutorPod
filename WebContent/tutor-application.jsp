@@ -554,6 +554,8 @@
                 $("#acc_no").val(response.acc_no);
                 $("#holder_name").val(response.holder_name);
                 $("#ifsc_code").val(response.ifsc_code);  
+                if(response.acc_no!=null)
+                    $("#tab-selector_tab6").addClass("tab-selector_completed");
             }
         });
     }
@@ -886,7 +888,20 @@
                     $("#snackbar").html("Price Added");
                     $("#tab-selector_tab5").addClass("tab-selector_completed");
                     showToast();
-                } else {
+                }else if(response.msg.includes("Updated")){
+                    const tr = $("#price_"+response.fees_id);
+                    tr.empty();
+                    tableRow=
+                        '<td>' + formData.subject_name + '</td>' +
+                        '<td> &#8377;' + formData.fee + '</td>' +
+                        '<td>' +
+                            '<a href="#" class="button small-round-button delete-button" onclick="deleteFees('+response.fees_id+')">Delete</a>' +
+                        '</td>'
+                    tr.append(tableRow);
+                    $("#snackbar").html("Price Updated");
+                    showToast();
+                }
+                 else {
                     $("#snackbar").html(response);
                     showToast();
                     console.log(response);
@@ -1023,6 +1038,10 @@
         });
         $("#subject_id").change(function (event) {
             $("#subject_name").val($("#subject_id option:selected").text());
+        });
+        $(".tab-selector").on("click",".tab-selector_completed",function(event){
+            var id = parseInt($(this).prop("id").substring(16));
+            changeTab(id);
         });
     });
 </script>
