@@ -31,6 +31,7 @@ import com.TutorPod.model.Notification;
 import com.TutorPod.model.Tutor;
 import com.TutorPod.model.User;
 import com.TutorPod.model.Wallet;
+import com.google.gson.Gson;
 
 
 @WebServlet("/UserController")
@@ -98,7 +99,14 @@ public class UserController extends HttpServlet {
 				else
 					response.sendRedirect("./Dashboard");
 				break;
-				
+			case"loadUsers":
+				if(session.getAttribute("ADMIN")!=null) {
+					String responseJSON="[]";
+					response.setContentType("application/json");
+					responseJSON = new Gson().toJson(userDAO.getUsers());
+					out.write(responseJSON);
+				}
+				break;
 			default:
 				out.write("Invalid Request");
 			}

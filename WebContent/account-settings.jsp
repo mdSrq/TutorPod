@@ -38,7 +38,7 @@ if (session.getAttribute("USER") == null) {
 						<%}%>
 						<div class="main__container_inner_photo_img">
 						<img src="<%= pageContext.getServletContext().getInitParameter("usersphoto.location")
-									+ currentUser.getPhoto()%>" 
+									+ currentUser.getPhoto()+".jpg"%>" 
 							 alt="Photo of user">
 						</div>
 						<%}%>

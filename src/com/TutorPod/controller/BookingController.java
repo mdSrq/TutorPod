@@ -84,7 +84,6 @@ public class BookingController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
-		if(session.getAttribute("USER")!=null) {
 			try {
 				if(request.getParameter("cmd")==null)
 					out.write("request has no command");
@@ -129,14 +128,28 @@ public class BookingController extends HttpServlet {
 					responseJSON = new Gson().toJson(bookingDetails);
 					out.write(responseJSON);
 					break;
+				case"loadAllBookingDetails":
+					bookingItr=bookingDAO.getBookings().listIterator();
+					bookingDetails= new ArrayList<>();
+					tempBooking=null;
+					while(bookingItr.hasNext()) {
+						tempBooking = bookingItr.next();
+						User tutorUser = userDAO.getUser(tempBooking.getTutor_id());
+						user = userDAO.getUser(tempBooking.getUser_id());
+						Subject subject = subjectDAO.getSubject(tempBooking.getSubject_id());
+						bookingDetails.add(new BookingDetails(tempBooking,user,tutorUser,subject));
+					}
+					responseJSON="[]";
+					response.setContentType("application/json");
+					responseJSON = new Gson().toJson(bookingDetails);
+					out.write(responseJSON);
+					break;
 				default:
 					out.write("Invalid Request");
 				}
 			}catch(Exception e) {
 				e.printStackTrace(out);
 			}
-		}else
-			out.write("User Session Expired");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

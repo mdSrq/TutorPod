@@ -34,6 +34,7 @@ import com.TutorPod.model.Experience;
 import com.TutorPod.model.Fees;
 import com.TutorPod.model.Notification;
 import com.TutorPod.model.Tutor;
+import com.TutorPod.model.TutorBasicInfo;
 import com.TutorPod.model.TutorInfo;
 import com.TutorPod.model.User;
 import com.google.gson.Gson;
@@ -92,6 +93,16 @@ public class TutorController extends HttpServlet {
 					}
 				}
 			    out.write(responseJSON);
+				break;
+			case"loadBasicTutorInfo":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				List<TutorBasicInfo> tutorInfo = new ArrayList<>();
+				ListIterator<Tutor> itr = tutorDAO.getTutors().listIterator();
+				while(itr.hasNext())
+					tutorInfo.add(tutorDAO.getTutorBasicInfo(itr.next().getTutor_id()));
+				responseJSON = new Gson().toJson(tutorInfo);
+				out.write(responseJSON);
 				break;
 			case "loadAddress":
 				responseJSON = "[]";
@@ -353,11 +364,8 @@ public class TutorController extends HttpServlet {
 				int tutor_id = Integer.parseInt(request.getParameter("tutor_id"));
 				String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 				if(tutorDAO.updateTutorField("profile_status","Tutor", false, tutor_id) && tutorDAO.updateTutorField("approval_date", date, false, tutor_id)) {
-					if(sendNotification(tutor_id,"Your Application is approved now you will apear in the search results."
-							+ " Make sure you add your availabiltiy, Click to add availability","./Availability"))
-						out.write("Notification Sent ");
-					else
-						out.write("Failed to add notification ");
+					sendNotification(tutor_id,"Your Application is approved now you will apear in the search results."
+							+ " Make sure you add your availabiltiy, Click to add availability","./Availability");
 					out.write("Application Approved");
 				}
 				else

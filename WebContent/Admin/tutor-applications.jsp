@@ -32,9 +32,7 @@ if (session.getAttribute("ADMIN") == null) {
 		<form action="../TutorController" method="post" class="scrollable" id="dimissForm">
 			<div class="form-unit form-unit-full">
 				<label for="message">Dismiss Message</label>
-				<textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Enter reasons for dismissing application" required>
-					
-				</textarea>
+				<textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Enter reasons for dismissing application" required></textarea>
 			</div>
 			<div class="form-unit form-unit-full">
 				<label for="link">Link</label>

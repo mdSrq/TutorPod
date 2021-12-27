@@ -256,11 +256,11 @@
         $(".search__results_container").empty().append($("<h1>").addClass("main__heading").text(tutors.length +
             " Tutors Found"));
         $.each(tutors, function (i, tutor) {
-            $("<div>").addClass("search__result").appendTo($(".search__results_container"))
+            let result = $("<div>").addClass("search__result").appendTo($(".search__results_container"))
                 .append($("<div>").addClass("search__result_profile")
                     .append($("<div>").addClass("search__result_profile_img")
                         .append($("<img>").prop({
-                            "src": "/TutorPod_Photos/Users/" + tutor.photo,
+                            "src": "/TutorPod_Photos/Users/" + tutor.photo+".jpg",
                             "alt": tutor.fname + " " + tutor.lname + "'s Photo"
                         })))
                     .append($("<p>").addClass("search__result_profile_price").prop("id", "price_tutor_" + tutor
@@ -332,32 +332,32 @@
                                 .append($("<td>").addClass("dynamic").prop("id", "time_to_day_7_tutor_" + tutor
                                     .tutor_id).text("NA")))
                         )));
-            if(tutor.photo==null)
-                $(".search__result_profile_img > img").prop("src","./images/user.png");
-            var min_fees = tutor.fees[0].fee;
-            var max_fees = 0;
-            var feesMap = new Map();
+            if(tutor.photo===undefined){
+                result.find(".search__result_profile_img > img").prop("src","./images/user.png");
+            }
             <%if(session.getAttribute("USER")!=null){%>
             if(tutor.tutor_id===<%=((User)session.getAttribute("USER")).getTutor_id()%>)
             $("#bookBtn_tutor_"+tutor.tutor_id).prop("disabled",true).css("cursor", "not-allowed");
             <%}%>
+            var min_fees = tutor.fees[0].fee;
+            var max_fees = 0;
+            var feesMap = new Map();
             if(tutor.fees.length>3)
-               var moreSubjects = $('<a href="#" onclick="viewTutor(' + tutor.tutor_id + ')"> ' + (tutor.fees.length - 3) +' More Subjects</a>');
+               var moreSubjects = $('<a href="#" onclick="viewTutor(' + tutor.tutor_id + ')"> ' + (tutor.fees.length - 4) +' More Subjects</a>');
             $.each(tutor.fees, function (i, fee) {
                 feesMap.set(fee.subject_id,fee);
                 if (i > 3) {
                     let title = moreSubjects.prop("title");
-                    title+=fee.subject_code+"-"+fee.subject_name+" ";
+                    title+=fee.subject_name+" ";
                     moreSubjects.prop("title",title);
-                    if(i===tutor.fees.length-3)
+                    if(i===tutor.fees.length-1)
                         $("#subjects_tutor_" + tutor.tutor_id).append('and ').append(moreSubjects);
-                    return;
-                }
+                }else
+                    $("#subjects_tutor_" + tutor.tutor_id).append(fee.subject_name + "<br>");
                 if (fee.fee < min_fees)
                     min_fees = fee.fee;
                 if (fee.fee > max_fees)
                     max_fees = fee.fee;
-                $("#subjects_tutor_" + tutor.tutor_id).append(fee.subject_name + "<br>");
             });
             tutor.feesMap = feesMap;
             $("#price_tutor_" + tutor.tutor_id).html("&#8377; " + min_fees + " - &#8377; " + max_fees);
@@ -410,7 +410,7 @@
                     showToast();
                     return;
                 }
-                const balance = response;
+                const balance = response.balance;
                 const price = parseFloat($("#pay_price").val());
                 const duration = parseFloat($("#pay_duration").val());
                 const no_of_lesson = parseInt($("#pay_no_of_lesson").val());
@@ -444,10 +444,10 @@
     function bookTutor(tutor_id) {
     	<%if(session.getAttribute("USER")!=null){%>
         var tutor = tutorsMap.get(tutor_id);
-        if(tutor.photo==null)
+        if(tutor.photo===undefined)
             $(".search__booking_tutor_img > img").prop("src","./images/user.png");
         else
-            $(".search__booking_tutor_img > img").prop("src","/TutorPod_Photos/Users/"+tutor.photo);
+            $(".search__booking_tutor_img > img").prop("src","/TutorPod_Photos/Users/"+tutor.photo+".jpg");
         $("#tutor_id").val(tutor_id);
         $(".search__booking_tutor_info_name").text(tutor.fname+" "+tutor.lname);
         $("#booking_subject_id").empty().append('<option value="default" selected disabled>Select Subject</option>');

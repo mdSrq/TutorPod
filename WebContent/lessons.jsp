@@ -139,16 +139,16 @@
                         <div class="form-unit-half-container">
                             <div class="form-unit  form-unit-half">
                                 <label for="date">Select Date</label>
-                                <input type="date" name="date" id="date" class="input-with-icon input-with-icon_no-icon">
+                                <input type="date" name="date" id="date" class="input-with-icon input-with-icon_no-icon" required>
                             </div>
                             <div class="form-unit  form-unit-half">
                                 <div class="form-unit  form-unit-half">
                                     <label for="time_from">From</label>
-                                    <input type="time" name="time_from" readonly id="time_from" class="input-with-icon input-with-icon_no-icon">
+                                    <input type="time" name="time_from" readonly id="time_from" class="input-with-icon input-with-icon_no-icon" required>
                                 </div>
                                 <div class="form-unit form-unit-half">
                                     <label for="time_to">To</label>
-                                    <input type="time" name="time_to" readonly id="time_to" class="input-with-icon input-with-icon_no-icon">
+                                    <input type="time" name="time_to" readonly id="time_to" class="input-with-icon input-with-icon_no-icon" required>
                                 </div>
                             </div>
                             <div class="form-unit form-unit-full" id="scheduleDiv">
@@ -223,7 +223,6 @@
                             );
                             let ongoing =false;
                             let timePassed = false;
-                            
                             if(lesson.status==="Scheduled"||lesson.status==="Completed"){
                                 let dateParts = lesson.date.split('-');
                                 let timeParts1 = lesson.time_from.split(':');
@@ -252,6 +251,13 @@
                                         if(diff<=0){
                                             tile.find(".main__lesson_schedule_timer").text("Lesson Time Has Passed");
                                             timePassed=true;
+                                            tile.find(".main__lesson_profile_buttons").empty();
+                                            tile.find(".main__lesson_profile_buttons")
+                                                .append($("<button>").addClass("tickBtn").prop("title","Mark As Completed").attr("onclick","showMarkAsCompletedForm("+lesson.lesson_id+")")
+                                                .append('<img src="./images/check.png" alt="">'));
+                                            tile.find(".main__lesson_profile_buttons")
+                                                .append($("<button>").addClass("issueBtn").prop("title","Report Issue").attr("onclick","showReportIssueForm("+lesson.lesson_id+")")
+                                                .append('<img src="./images/exclamation.png" alt="">'));
                                             clearInterval(interval);
                                         }
                                     }else{
@@ -276,7 +282,7 @@
                                     .append('<img src="./images/user.png" alt="Student Photo">');
                             else
                             	tile.find(".main__lesson_profile_img")
-                                    .append('<img src="/TutorPod_Photos/Users/"'+lesson.user.photo+' alt='+lesson.user.fname+" "+lesson.user.lname+"'s Photo>");
+                                    .append('<img src="/TutorPod_Photos/Users/'+lesson.user.photo+'.jpg" alt='+lesson.user.fname+" "+lesson.user.lname+"'s Photo>");
                             tile.find(".main__lesson_profile_name")
                                 .append("<span>"+lesson.user.fname+" "+lesson.user.lname+"</span>");
                             if(!timePassed && lesson.status!=="Cancelled" && lesson.status!=="Completed")
@@ -290,13 +296,19 @@
                                     .append($("<button>").addClass("scheduleBtn").prop("title","Re-Schedule")
                                     .attr("onclick","showReScheduleForm("+lesson.lesson_id+")") 
                                     .append('<img src="./images/clock.png" alt="">'));
+                            if(lesson.meeting_link!==undefined ){
+                                if(lesson.meeting_link.search("meet.google")>-1)
+                                    tile.find(".main__lesson_info").append($("<span>").addClass("main__lesson_info_tag").text("On: Google Meet"));
+                                if(lesson.meeting_link.search("zoom")>-1)
+                                    tile.find(".main__lesson_info").append($("<span>").addClass("main__lesson_info_tag").text("On: Zoom"));
+                            }
                             <%}else{%>
                             if(lesson.tutorUser.photo===undefined)
                             	tile.find(".main__lesson_profile_img")
                                     .append('<img src="./images/user.png" alt="Tutor Photo">');
                             else
                             	tile.find(".main__lesson_profile_img")
-                                    .append('<img src="/TutorPod_Photos/Users/"'+lesson.tutorUser.photo+' alt='+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"'s Photo>");
+                                    .append('<img src="/TutorPod_Photos/Users/'+lesson.tutorUser.photo+'.jpg" alt='+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"'s Photo>");
                             tile.find(".main__lesson_profile_name")
                                 .append("<span>"+lesson.tutorUser.fname+" "+lesson.tutorUser.lname+"</span>");
                             if(!ongoing)
@@ -306,7 +318,7 @@
                                     .append($("<button>").addClass("scheduleBtn").prop("title",title)
                                     .attr("onclick","showScheduleLessonForm("+lesson.tutor_id+","+lesson.lesson_id+")") 
                                     .append('<img src="./images/clock.png" alt="">'));
-                                }
+                            }
                             if(timePassed){
                                 tile.find(".main__lesson_profile_buttons")
                                     .append($("<button>").addClass("tickBtn").prop("title","Mark As Completed").attr("onclick","showMarkAsCompletedForm("+lesson.lesson_id+")")
@@ -315,12 +327,19 @@
                                     .append($("<button>").addClass("issueBtn").prop("title","Report Issue").attr("onclick","showReportIssueForm("+lesson.lesson_id+")")
                                     .append('<img src="./images/exclamation.png" alt="">'));
                             }
+                            if(lesson.meeting_link!==undefined && !timePassed && ongoing){
+                                if(lesson.meeting_link.search("meet.google")>-1)
+                                    tile.find(".main__lesson_info").append($("<span>").addClass("main__lesson_info_tag").text("On: Google Meet"));
+                                if(lesson.meeting_link.search("zoom")>-1)
+                                    tile.find(".main__lesson_info").append($("<span>").addClass("main__lesson_info_tag").text("On: Zoom"));
+                            }
                             <%}%>
                             if(lesson.meeting_link!==undefined && !timePassed && ongoing)
                                 tile.find(".main__lesson_profile_buttons")
                                     .append($("<a>").prop({"href":lesson.meeting_link,"target":"_blank"})
                                         .append($("<button>").addClass("joinBtn").prop("title","Join Meeting")
                                         .append('<img src="./images/enter.png" alt="">')));
+
                             if(lesson.status!=="Completed" && lesson.status!=="Cancelled" && !ongoing && !timePassed)
                                 tile.find(".main__lesson_profile_buttons")
                                     .append($("<button>").addClass("cancelBtn").prop("title","Cancel Lesson").attr("onclick","showCancelForm("+lesson.lesson_id+")")

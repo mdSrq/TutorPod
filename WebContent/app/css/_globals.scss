@@ -207,7 +207,7 @@ button,
       $darkBlue 100%);
 }
 .green-button{
-  background-image: linear-gradient(to right,green 0%,$greenish 50%,green 100%);
+  background-image: linear-gradient(to right,rgb(39, 209, 39) 0%,$greenish 50%,rgb(39, 209, 39)  100%);
 }
 .red-button{
   background-image: linear-gradient(to right,red 0%,$lightRed 50%,red 100%);
@@ -557,6 +557,11 @@ td {
 
 td {
   text-align: center;
+  img{
+    display: block;
+    width: 5rem;
+    height: 5rem;
+  }
 }
 
 tbody tr:nth-child(even) {

@@ -141,6 +141,10 @@ public class NotificationController extends HttpServlet {
 						}
 					}else {
 						String[] notification_ids = request.getParameterValues("notification_ids");
+						if(notification_ids==null) {
+							out.write("Select notifications to delete");
+							return;
+						}
 						int deleteCount=0;
 						for(String notification_id : notification_ids) {
 							if(notifDAO.deleteNotification(Integer.parseInt(notification_id)))

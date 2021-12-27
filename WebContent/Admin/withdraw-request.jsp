@@ -29,15 +29,13 @@ if (session.getAttribute("ADMIN") == null) {
 	<div class="main_overlayform" tabindex="-1">
 		<a href="#" class="main_overlayform_cross" onclick="hideOverlayForm()">X</a>
 		<h2 class="main__sub-heading">Dismiss Request</h2>
-		<form action="../TutorController" method="post" class="scrollable" id="dimissForm">
+		<form action="../WalletController" method="post" class="scrollable" id="dimissForm">
 			<div class="form-unit form-unit-full">
 				<label for="message">Dismiss Message</label>
-				<textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Enter reasons for dismissing request" required>
-					
-				</textarea>
+				<textarea name="message" id="message" class="input-with-icon input-with-icon_no-icon" placeholder="Enter reason for dismissing request" required></textarea>
 			</div>
-			<input type="hidden" name="cmd" value="dismissWithdrawRequests">
-			<input type="hidden" name="user_id" id="user_id">
+			<input type="hidden" name="cmd" value="dismissWithdrawRequest">
+			<input type="hidden" name="request_id" id="request_id">
 			<input type="submit" class="button flat-wide-button red-button" value="Dismiss Request">
 		</form>
 	</div>
@@ -52,10 +50,6 @@ if (session.getAttribute("ADMIN") == null) {
         $(".main_overlayform").removeAttr("style");
         $(".overlay-background").remove();
     }
-	function dismissRequest(user_id){
-		showOverlayForm();
-		$("#user_id").val(user_id);
-	}
 	function loadWithdrawRequests(){
 		showLoading();
 		$.ajax({
@@ -92,11 +86,11 @@ if (session.getAttribute("ADMIN") == null) {
 							.append($("<span>").html("&nbsp;&nbsp; &#10004; &nbsp;&nbsp;").prop({
 								"class":"button small-round-button green-button",
 								"title":"Approve"
-							}).attr("onclick","approveRequest("+rqst.request_id+")"))
+							}).click(()=>{approveRequest(rqst.request_id)}))
 							.append($("<span>").html("&nbsp;&nbsp; &#10006; &nbsp;&nbsp;").prop({
 								"class":"button small-round-button delete-button",
-								"title":"Dimiss"
-							}).attr("onclick","dismissRequest("+rqst.request_id+")"));
+								"title":"Dismiss"
+							}).click(()=>{dismissRequest(rqst.request_id)}));
 					}else{
 						$("#actionTh").remove();
 					}
@@ -104,11 +98,12 @@ if (session.getAttribute("ADMIN") == null) {
             }
         });
 	}
-	function approveTutor(tutor_id){
-		$.post("../TutorController","cmd=approveApplication&tutor_id="+tutor_id,function(response){
+	function approveRequest(request_id){
+		if(!confirm("Are you sure to approve this withdrawal request?"))
+			return;
+		$.post("../WalletController","cmd=approveWithdrawRequest&request_id="+request_id,function(response){
 			if(response.includes("Approved")){
-				loadTutorApplied();
-				loadAppliedTutors();
+				loadWithdrawRequests();
 				$("#snackbar").html(response);
 				showToast();
 			}else{
@@ -117,6 +112,10 @@ if (session.getAttribute("ADMIN") == null) {
 				console.log(response);
 			}
 		});
+	}
+	function dismissRequest(request_id){
+		$("#request_id").val(request_id);
+		showOverlayForm();
 	}
 	$(document).ready(()=>{
 		loadWithdrawRequests();
@@ -143,8 +142,7 @@ if (session.getAttribute("ADMIN") == null) {
                 }
                 if (response.includes("Dismissed")) {
                    hideOverlayForm();
-				   loadTutorApplied();
-				   loadAppliedTutors();
+				   loadWithdrawRequests();
 				   $("#snackbar").html(response);
 				   showToast();
                 } else {

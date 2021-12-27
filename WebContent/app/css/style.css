@@ -609,7 +609,7 @@ button:active,
 }
 
 .green-button {
-  background-image: linear-gradient(to right, green 0%, #5ce49a 50%, green 100%);
+  background-image: linear-gradient(to right, #27d127 0%, #5ce49a 50%, #27d127 100%);
 }
 
 .red-button {
@@ -992,6 +992,11 @@ td {
 
 td {
   text-align: center;
+}
+td img {
+  display: block;
+  width: 5rem;
+  height: 5rem;
 }
 
 tbody tr:nth-child(even) {
@@ -2741,6 +2746,7 @@ tbody tr:nth-child(even) {
   flex-flow: column wrap;
   justify-content: space-between;
   align-content: space-between;
+  padding-left: 0.5rem;
 }
 .main__lesson_profile_name {
   display: block;

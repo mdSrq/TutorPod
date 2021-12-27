@@ -103,7 +103,7 @@ public class WithdrawRequestDAO {
 		try {
 			Conn = dataSource.getConnection();
 			String sql = "select sum(withdraw_request.amount) as requested_amount from withdraw_request inner join wallet on withdraw_request.wallet_id = wallet.wallet_id"
-					+ " inner join user on wallet.user_id=user.user_id  where user.user_id = ? group by user.user_id";
+					+ " inner join user on wallet.user_id=user.user_id  where user.user_id = ? and withdraw_request.status='Pending' group by user.user_id";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, user_id);
 			Rs = Stmt.executeQuery();
@@ -122,7 +122,7 @@ public class WithdrawRequestDAO {
 		ResultSet Rs = null;
 		try {
 			Conn = dataSource.getConnection();
-			String sql = "select sum(calc) as amount from (select booking.price * booking.duration as calc from booking inner join lesson on lesson.booking_id = booking.booking_id where booking.tutor_id=? and lesson.status!='Completed' ) as t";
+			String sql = "select sum(calc) as amount from (select booking.price * booking.duration * 0.975 as calc from booking inner join lesson on lesson.booking_id = booking.booking_id where booking.tutor_id=? and lesson.status!='Completed' ) as t";
 			Stmt = Conn.prepareStatement(sql);
 			Stmt.setInt(1, tutor_id);
 			Rs = Stmt.executeQuery();

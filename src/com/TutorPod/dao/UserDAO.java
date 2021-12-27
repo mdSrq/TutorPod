@@ -33,9 +33,11 @@ public class UserDAO {
 			
 			Rs = Stmt.executeQuery(sql);
 			
-			while (Rs.next())
-				users.add(createUser(Rs));				
-			
+			while (Rs.next()) {
+				User user = createUser(Rs);
+				user.setPassword("*******");
+				users.add(user);
+			}				
 			return users;		
 		}
 		finally {

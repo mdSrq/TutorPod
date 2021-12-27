@@ -11,7 +11,11 @@
                     </div>
                     <div class="main__wallet__tile_balance">
                         <span class="main__wallet__tile_title">Wallet Balance</span>
-                        <span class="main__wallet__tile_num"></span>
+                        <span class="main__wallet__tile_num" id="walletBalance"></span>
+                    </div>
+                    <div class="main__wallet__tile_balance">
+                        <span class="main__wallet__tile_title">Withdrawable</span>
+                        <span class="main__wallet__tile_num" id="walletWithdrawable"></span>
                     </div>
                     <div class="main__wallet__tile_btnunit">
                         <button class=" button round-single-button addBtn" id="addBtn">+</button>
@@ -71,16 +75,8 @@
         $.ajax({
             url:"./WalletController?cmd=loadBalance",
             success:function(response){
-                if (response.includes("Exception")) {
-                    $("<pre>").addClass("overlay-background").css({
-                        "display": "block",
-                        "background-color": "rgba(0, 0, 0, 0.85)"
-                    }).html(response).appendTo("body");
-                    $(".overlay-background").click(() => {
-                        $(".overlay-background").remove();
-                    });
-                }else
-                    $(".main__wallet__tile_num").html("&#8377; "+response);
+                $("#walletBalance").html("&#8377; "+response.balance);
+                $("#walletWithdrawable").html("&#8377; "+response.withdrawable);
             }
         });
     }

@@ -172,6 +172,26 @@ public class WalletDAO {
 			close(Conn,Stmt,Rs);
 		}	
 	}
+	public WalletTransaction getWalletTransaction(int wallet_transaction_id)throws Exception{
+		WalletTransaction wallet=null;
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		ResultSet Rs = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "select * from wallet_transaction where wallet_transaction_id=?";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, wallet_transaction_id);
+			Rs = Stmt.executeQuery();
+			if(Rs.next()) {
+				wallet = createWalletTransaction(Rs);
+			}
+			return wallet;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,Rs);
+		}	
+	}
 	public WalletTransaction getRecentWalletTransaction()throws Exception{
 		WalletTransaction wallet=null;
 		Connection Conn = null;
@@ -201,6 +221,31 @@ public class WalletDAO {
 			Stmt.setInt(1, wallet.getWallet_id());
 			Stmt.setDouble(2, wallet.getBalance());
 			Stmt.setInt(3, wallet.getUser_id());
+			if(Stmt.executeUpdate()>0)
+				return true;
+			else
+				return false;
+		}finally {
+			// close JDBC objects
+			close(Conn,Stmt,null);
+		}	
+	}
+	public boolean updateWalletTransaction(WalletTransaction txn)throws Exception{
+		Connection Conn = null;
+		PreparedStatement Stmt = null;
+		try {
+			Conn = dataSource.getConnection();
+			String sql = "update wallet_transaction set wallet_id=?,amount=?,credit=?,debit=?,balance=?,comment=?,status=?,datetime=? where wallet_transaction_id=? ";
+			Stmt = Conn.prepareStatement(sql);
+			Stmt.setInt(1, txn.getWallet_id());
+			Stmt.setDouble(2, txn.getAmount());
+			Stmt.setBoolean(3, txn.isCredit());
+			Stmt.setBoolean(4, txn.isDebit());
+			Stmt.setDouble(5, txn.getBalance());
+			Stmt.setString(6, txn.getComment());
+			Stmt.setString(7, txn.getStatus());
+			Stmt.setString(8, txn.getDatetime());
+			Stmt.setInt(9, txn.getWallet_transaction_id());
 			if(Stmt.executeUpdate()>0)
 				return true;
 			else

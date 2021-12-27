@@ -71,7 +71,6 @@ public class LessonController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
-		if(session.getAttribute("USER")!=null) {
 			try {
 				if(request.getParameter("cmd")==null)
 					out.write("request has no command");
@@ -100,6 +99,17 @@ public class LessonController extends HttpServlet {
 					responseJSON = new Gson().toJson(lessons);
 					out.write(responseJSON);
 					break;
+				case"loadAllLessons":
+					selector = request.getParameter("filter");
+					responseJSON="[]";
+					response.setContentType("application/json");
+					itr=lessonDAO.getLessons(selector).listIterator();
+					lessons = new ArrayList<>();
+					while(itr.hasNext())				
+						lessons.add(createLessonDetails(itr.next()));
+					responseJSON = new Gson().toJson(lessons);
+					out.write(responseJSON);
+					break;
 				case "loadScheduledLessons":
 					int tutor_id = Integer.parseInt(request.getParameter("tutor_id"));
 					responseJSON="[]";
@@ -113,8 +123,6 @@ public class LessonController extends HttpServlet {
 			}catch(Exception e) {
 				e.printStackTrace(out);
 			}
-		}else
-			out.write("User Session Expired");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
