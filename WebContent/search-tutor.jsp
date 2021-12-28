@@ -267,8 +267,7 @@
                         .tutor_id))
                     .append($("<div>").addClass("search__result_profile_buttons")
                         .append($("<button>").addClass("flat-button-filled").text("Book Now").attr({"onclick":"bookTutor(" + tutor.tutor_id + ")","id":"bookBtn_tutor_"+tutor.tutor_id})))
-                    .append($("<button>").addClass("flat-button-hallow").text("View Profile").attr("onclick",
-                        "viewTutor(" + tutor.tutor_id + ")")))
+                    .append($("<button>").addClass("flat-button-hallow").text("View Profile").attr("onclick","window.location.href ='./TutorProfile?tutor_id="+tutor.tutor_id+"';")))
                 .append($("<div>").addClass("search__result_about")
                     .append($("<p>").addClass("search__result_about_name").text(tutor.fname + " " + tutor
                         .lname))
@@ -367,14 +366,7 @@
                 $("#time_to_day_" + avail.day_of_week + "_tutor_" + tutor.tutor_id).text(avail.time_to);
             });
             $.each(tutor.languages, function (i, lang) {
-                $("#langs_tutor_" + tutor.tutor_id).append(lang[1]);
-                if (i == lang.length - 1) {
-                    $("#langs_tutor_" + tutor.tutor_id).append(" and ");
-                    return;
-                }
-                if (i == lang.length)
-                    return;
-                $("#langs_tutor_" + tutor.tutor_id).append(", ");
+                $("#langs_tutor_" + tutor.tutor_id).append(lang[1]+" ");
             });
             tutorsMap.set(tutor.tutor_id,tutor);
         });

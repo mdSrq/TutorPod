@@ -176,6 +176,24 @@
 	</servlet-mapping>
 	
 	<servlet>
+    	<servlet-name>withdraw-request</servlet-name>
+     	<jsp-file>/Admin/withdraw-request.jsp</jsp-file>
+ 	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>withdraw-request</servlet-name>
+	    <url-pattern>/Admin/WithdrawRequest</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+   		<servlet-name>tutor-applications</servlet-name>
+    	<jsp-file>/Admin/tutor-applications.jsp</jsp-file>
+	</servlet>	
+	<servlet-mapping>
+	    <servlet-name>tutor-applications</servlet-name>
+	    <url-pattern>/Admin/TutorApplications</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
    		<servlet-name>dashboard</servlet-name>
     	<jsp-file>/dashboard.jsp</jsp-file>
 	</servlet>	
@@ -200,15 +218,6 @@
 	<servlet-mapping>
 	    <servlet-name>tutor-application</servlet-name>
 	    <url-pattern>/TutorApplication</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-   		<servlet-name>tutor-applications</servlet-name>
-    	<jsp-file>/Admin/tutor-applications.jsp</jsp-file>
-	</servlet>	
-	<servlet-mapping>
-	    <servlet-name>tutor-applications</servlet-name>
-	    <url-pattern>/Admin/TutorApplications</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -266,11 +275,11 @@
 	</servlet-mapping>
 	
 	<servlet>
-    	<servlet-name>withdraw-request</servlet-name>
-     	<jsp-file>/Admin/withdraw-request.jsp</jsp-file>
+    	<servlet-name>tutor-profile</servlet-name>
+     	<jsp-file>/tutor-profile.jsp</jsp-file>
  	</servlet>	
 	<servlet-mapping>
-	    <servlet-name>withdraw-request</servlet-name>
-	    <url-pattern>/Admin/WithdrawRequest</url-pattern>
+	    <servlet-name>tutor-profile</servlet-name>
+	    <url-pattern>/TutorProfile</url-pattern>
 	</servlet-mapping>
 </web-app>

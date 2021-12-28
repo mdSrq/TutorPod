@@ -1,0 +1,83 @@
+.profile{
+    width: 70%;
+    &__container{
+        padding: 2rem;
+    }
+    &__header{
+        display: flex;
+        flex-flow: row nowrap;
+        .search__result_profile{
+            padding: 0;
+        }
+        .search__result_about_name{
+            font-size: 2rem;
+        }
+    }
+    &__buttons{
+        position: sticky;
+        top: 7rem;
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 30%;
+        border: 1.5px solid $lightBlue;
+        border-radius: 0.4rem;
+        padding: 1rem 0;
+        height: 16rem;
+        button{
+            width: 80%;
+            padding: 1.25rem;
+            font-family: inherit;
+            font-size: 1.15rem;
+        }
+    }
+    &__body{
+        padding-right: 2rem;
+        section{
+            padding: 2rem 0;
+            border-bottom: 2px solid $lightBlue;
+        }
+        h2,h3{
+            font-weight: normal;
+        }
+        table{
+            margin-bottom: 2rem;
+            min-width: max-content;
+            width: 20rem;
+            max-width: 100%;
+            padding: 2rem;
+        }
+        &_exps{
+            &_title{
+                margin: 0;
+            }
+            p{
+                margin: 0;
+                margin-bottom: 1rem;
+            }
+            span{
+                display: block;
+            }
+        }
+    }
+}
+.scheduleOverlay{
+    padding: 2rem;
+    .form-unit-half{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-flow: row nowrap;
+        label{
+            width: max-content;
+            padding: 1rem;
+        }
+        input{
+            width: 15rem;
+        }
+    }
+    .main__lesson__overlay_avail{
+        max-height: 18rem;
+    }
+}
