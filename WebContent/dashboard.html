@@ -246,79 +246,71 @@
             </div>
         </aside>
         <main class="main">
-            <h1 class="main__heading">Account Settings</h1>
-            <div class="main__acc-forms-container">
-                <div class="tab-selector scrollable">
-                    <span href="#" class="tab-selector_tab tab-selector_selected">Personal Info</span>
-                    <span href="#" class="tab-selector_tab">Password</span>
-                    <span href="#" class="tab-selector_tab tab-selector_exclamation">Bank Account</span>
-                    <span href="#" class="tab-selector_tab tab-selector_error">Bio</span>
-                </div>
-                <div class="main__container_inner">
-                    <div class="main__container_inner_photo">
-                        <div class="main__container_inner_photo_img">
-                            <img src="./images/user.png" alt="Photo of user" />
-                        </div>
-                        <form action="#" method="post" class="main__container_inner_photo_buttons">
-                            <input type="file" name="photo" id="photo" style="display: none" />
-                            <button type="submit" name="submit" class="button flat-wide-button">
-                                Change Photo
-                            </button>
-                            <button href="#" class="button flat-wide-button delete-button" id="removePhotoBtn">
-                                Remove Photo
-                            </button>
-                        </form>
+            <h1 class="main__heading">Dashboard</h1>
+            <div class="main__dashboard-container">
+                <div class="main__tile">
+                    <div class="main__tile_img">
+                        <img src="./images/calendar.png" alt="">
                     </div>
-                    <div class="main__form-container">
-                        <h2 class="main__sub-heading">Account Details</h2>
-                        <form action="./UserController" method="post" class="main__form"
-                            id="personal-info-form">
-                            <div class="form-unit form-unit-full">
-                                <label for="username">Username</label>
-                                <input type="text" class="input-with-icon user_id" name="username" id="username"
-                                    placeholder="Enter Username" required />
-                            </div>
-                            <div class="form-unit-half-container">
-                                <div class="form-unit form-unit-half">
-                                    <label for="fname">First Name</label>
-                                    <input type="text" class="input-with-icon user_name user_fname" name="fname"
-                                        id="fname" placeholder="Enter First Name" required />
-                                </div>
-                                <div class="form-unit form-unit-half">
-                                    <label for="lname">Last Name</label>
-                                    <input type="text" class="input-with-icon user_name user_lname" name="lname"
-                                        id="lname" placeholder="Enter Last Name" required />
-                                </div>
-                            </div>
-                            <div class="form-unit form-unit-full">
-                                <label for="gender">Gender</label>
-                                <select name="gender" id="gender" class="input-with-icon user_gender">
-                                    <option value="default" selected disabled>
-                                        Select Gender
-                                    </option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-unit form-unit-full">
-                                <label for="email_id">Email ID</label>
-                                <input type="text" class="input-with-icon user_email" name="email_id" id="email_id"
-                                    placeholder="Enter Email Adderss" required />
-                            </div>
-                            <div class="form-unit form-unit-full">
-                                <label for="mobile_no">Mobile Number</label>
-                                <input type="tel" class="input-with-icon user_tel" name="mobile_no" id="mobile_no"
-                                    placeholder="Enter Mobile Number" required />
-                            </div>
-                            <input type="hidden" name="cmd" id="cmd" value="signup" />
-                            <input type="submit" class="button flat-wide-button" value="Save Changes" />
-                        </form>
+                    <div class="main__wallet__tile_balance">
+                        <span class="main__wallet__tile_title">Lessons Scheduled</span>
+                        <span class="main__wallet__tile_num" id="">5</span>
+                    </div>
+                </div>
+                <div class="main__tile">
+                    <div class="main__tile_img">
+                        <img src="./images/document.png" alt="">
+                    </div>
+                    <div class="main__wallet__tile_balance">
+                        <span class="main__wallet__tile_title">Total Lessons</span>
+                        <span class="main__wallet__tile_num" id="">10</span>
+                    </div>
+                </div>
+                <div class="main__tile">
+                    <div class="main__tile_img main__tile_img_wallet">
+                        <img src="./images/wallet.png" alt="">
+                    </div>
+                    <div class="main__wallet__tile_balance">
+                        <span class="main__wallet__tile_title">Wallet</span>
+                        <span class="main__wallet__tile_num" id="">&#8377;1500</span>
+                    </div>
+                </div>
+                <div class="main__big-tile">
+                    <h2 class="main__sub-heading">Upcoming Lessons</h2>
+                    <div class="main__big-tile_lesson">
+                        <div class="main__big-tile_info">
+                            <span class="main__big-tile_subject">Basic Mathematics</span>
+                            <span class="main__big-tile_tutor">Tutor: Mohd Shariq</span>
+                        </div>
+                        <div class="main__big-tile_schedule">
+                            <span class="main__big-tile_time">6:00PM to 8:00PM</span>
+                            <span class="main__big-tile_date">Sat Jan 01 2022</span>
+                        </div>
+                    </div>
+                    <div class="main__big-tile_lesson">
+                        <div class="main__big-tile_info">
+                            <span class="main__big-tile_subject">Basic Mathematics</span>
+                            <span class="main__big-tile_tutor">Tutor: Mohd Shariq</span>
+                        </div>
+                        <div class="main__big-tile_schedule">
+                            <span class="main__big-tile_time">6:00PM to 8:00PM</span>
+                            <span class="main__big-tile_date">Sat Jan 01 2022</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="main__big-tile">
+                    <h2 class="main__sub-heading">Recent Lessons</h2>
+                    <div class="main__big-tile_lesson">
+                        <div class="main__big-tile_info">
+                            <span class="main__big-tile_subject">Basic Mathematics</span>
+                            <span class="main__big-tile_tutor">Tutor: Mohd Shariq</span>
+                        </div>
+                        <span>Completed</span>
                     </div>
                 </div>
             </div>
         </main>
-    </div>
+</div>
 </body>
 
 </html>
