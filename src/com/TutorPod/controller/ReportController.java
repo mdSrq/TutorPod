@@ -21,9 +21,11 @@ import com.TutorPod.dao.LessonDAO;
 import com.TutorPod.dao.SubjectDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.dao.WalletDAO;
+import com.TutorPod.model.Booking;
 import com.TutorPod.model.DashboardInfo;
 import com.TutorPod.model.LessonDetails;
 import com.TutorPod.model.User;
+import com.google.gson.Gson;
 
 
 @WebServlet("/ReportController")
@@ -87,7 +89,35 @@ public class ReportController extends HttpServlet {
 								recent_lessons.add(createLessonDetails(itr.next()));
 							}
 							dashboardInfo = new DashboardInfo(totalEarning,totalLesson,completedLesson,balance,upcoming_lessons,recent_lessons);
+						}else {
+							ListIterator<Booking> itr = bookingDAO.getBookings(user.getUser_id()).listIterator();
+							totalEarning=0;
+							while(itr.hasNext()) {
+								Booking bkn = itr.next();
+								double subTotal = bkn.getPrice()*bkn.getDuration()*bkn.getNo_of_lesson();
+								double total = subTotal - (subTotal/100)*2.5;
+								totalEarning+=total;
+							}
+							totalLesson = lessonDAO.getLessonByTutorID(user.getTutor_id(), "All", -1).size();
+							List<LessonDetails> upcoming_lessons = new ArrayList<>();
+							List<LessonDetails> recent_lessons = new ArrayList<>();
+							ListIterator<LessonDetails> itr1 = lessonDAO.getLessonByTutorID(user.getTutor_id(), "Scheduled", -1).listIterator();
+							while(itr.hasNext()) {
+								upcoming_lessons.add(createLessonDetails(itr1.next()));
+							}
+							recent_lessons = lessonDAO.getLessonByTutorID(user.getTutor_id(), "Completed", -1);
+							completedLesson = recent_lessons.size();
+							itr1 = recent_lessons.listIterator();
+							recent_lessons = new ArrayList<>();
+							while(itr.hasNext()) {
+								recent_lessons.add(createLessonDetails(itr1.next()));
+							}
+							dashboardInfo = new DashboardInfo(totalEarning,totalLesson,completedLesson,balance,upcoming_lessons,recent_lessons);
 						}
+						String responseJSON="[]";
+						response.setContentType("application/json");
+						responseJSON = new Gson().toJson(dashboardInfo);
+						out.write(responseJSON);
 					}
 					break;
 				default:

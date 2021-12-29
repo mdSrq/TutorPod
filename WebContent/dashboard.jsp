@@ -15,7 +15,7 @@
                         <img src="./images/calendar.png" alt="">
                     </div>
                     <div class="main__tile_number">
-                        <span>15</span>
+                        <span id="upcoming_lessons"></span>
                     </div>
                 </div>
                 <div class="main__tile">
@@ -24,7 +24,7 @@
                         <img src="./images/document.png" alt="">
                     </div>
                     <div class="main__tile_number">
-                        <span>15</span>
+                        <span id="total_lessons"></span>
                     </div>
                 </div>
                 <div class="main__tile">
@@ -33,7 +33,7 @@
                         <img src="./images/wallet.png" alt="">
                     </div>
                     <div class="main__tile_number">
-                        <span>&#8377;1530</span>
+                        <span id="wallet_balance"></span>
                     </div>
                 </div>
                 <div class="main__big-tile">
@@ -53,7 +53,7 @@
                         <img src="./images/income.png" alt="">
                     </div>
                     <div class="main__tile_number">
-                        <span>&#8377;500</span>
+                        <span id="total_earning"></span>
                     </div>
                 </div>
                 <div class="main__tile">
@@ -62,7 +62,7 @@
                         <img src="./images/document.png" alt="">
                     </div>
                     <div class="main__tile_number">
-                        <span>15</span>
+                        <span id="total_lessons"></span>
                     </div>
                 </div>
                 <div class="main__tile">
@@ -71,7 +71,7 @@
                         <img src="./images/wallet.png" alt="">
                     </div>
                     <div class="main__tile_number">
-                        <span>&#8377;1530</span>
+                        <span id="wallet_balance"></span>
                     </div>
                 </div>
                 <div class="main__big-tile">
@@ -87,6 +87,19 @@
         </main>
 </div>
 <script type="text/javascript">
-
+    $.ajax({
+        url:"./ReportController",
+        data:"cmd=getUserDashboardData",
+        success:function(response){
+            $("#upcoming_lessons").text(response.upcoming_lessons.length);
+            $("#total_lessons").text(response.total_lessons);
+            $("#wallet_balance").html("&#8377; "+response.wallet_balance);
+            $("#total_earning").html("&#8377; "+response.total_earning);
+            for(let i=0;i<5;i++){
+                const lesson = response.upcoming_lessons[0];
+                
+            }
+        }
+    });
 </script>
 <%@include file="footer.jsp" %>
