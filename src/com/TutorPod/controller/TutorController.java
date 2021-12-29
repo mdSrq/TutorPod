@@ -177,6 +177,14 @@ public class TutorController extends HttpServlet {
 				responseJSON = new Gson().toJson(tutorsInfo);
 				out.write(responseJSON);
 				break;
+			case"loadTutor":
+				responseJSON="[]";
+				response.setContentType("application/json");
+				int tutor_id = Integer.parseInt(request.getParameter("tutor_id"));
+				TutorInfo tInfo = getTutorInfo(tutorDAO.getTutor(tutor_id));
+				responseJSON = new Gson().toJson(tInfo);
+				out.write(responseJSON);
+				break;
 			default:
 				response.getWriter().write("Invalid Request");
 			}
@@ -416,6 +424,7 @@ public class TutorController extends HttpServlet {
 	}
 	private TutorInfo getTutorInfo(Tutor tutor)throws Exception{
 		User user = userDAO.getUser(tutor.getUser_id());
+		user.setPassword("***********");
 		Address address = addressDAO.getAddressByTutorId(tutor.getTutor_id());
 		List<String[]> languages = tutorDAO.getLanguages(tutor.getTutor_id());
 		List<Experience> experiences = experienceDAO.getExperiencesByTutorId(tutor.getTutor_id());

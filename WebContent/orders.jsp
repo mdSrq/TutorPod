@@ -56,9 +56,9 @@
                         .append($("<td>").text((i+1)))
                         .append($("<td>").text(bkn.booking.booking_id))
                         <%if(dashboardType.equals("USER")){%>
-                        .append($("<td>").text(bkn.user.fname+" "+bkn.user.lname))
-                        <%}else{%>
                         .append($("<td>").text(bkn.tutorUser.fname+" "+bkn.tutorUser.lname))
+                        <%}else{%>
+                        .append($("<td>").text(bkn.user.fname+" "+bkn.user.lname))
                         <%}%>
                         .append($("<td>").html("Subject: "+bkn.subject.subject_name+"<br>Duration: "+bkn.booking.duration+" Hr <br>No. of Lessons: "+bkn.booking.no_of_lesson))
                         <%if(dashboardType.equals("USER")){%>

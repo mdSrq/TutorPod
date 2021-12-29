@@ -306,6 +306,7 @@ public class UserController extends HttpServlet {
 				int wallet_id = walletDAO.getRecentWallet().getWallet_id();
 				if( userDAO.updateUserField("wallet_id", ""+wallet_id, true, user_id)) {
 					user.setPassword(null);
+					user.setWallet_id(wallet_id);
 					request.getSession().setAttribute("USER", user);
 					request.getSession().setAttribute("DASHBOARD_TYPE", "USER");
 					userDAO.Commit();

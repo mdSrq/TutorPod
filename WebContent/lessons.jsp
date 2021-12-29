@@ -161,8 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="main__lesson__overlay_avail scrollable">
-                                    <div class="avail_unit green_unit" id="12"><span>12:00</span></div>
-                                    <div class="avail_unit red_unit" id="12.5"><span>12:30</span></div>
+                                    
                                 </div>
                             </div>
                             <input type="hidden" name="lesson_id" id="lesson_id">
@@ -375,7 +374,6 @@
                     days_of_week.push(daysObj[av.day_of_week]);
                     availMap.set(daysObj[av.day_of_week],av);
                 });
-                console.log(response);
             }
         });
         showLoading();
@@ -384,7 +382,6 @@
             data:"cmd=loadScheduledLessons&tutor_id="+tutor_id,
             success: function(response){    
                 hideLoading();
-                console.log(response);
                 $.each(response,function(i,schedule){
                     if(scheduleMap.has(schedule.date)){
                         const scheduleArray = scheduleMap.get(schedule.date);
@@ -396,7 +393,6 @@
                         scheduleMap.set(schedule.date,scheduleArray);
                     }
                 });
-                console.log(response);
             }
         });
         showOverlayForm("scheduleOverlay");
@@ -468,14 +464,15 @@
         $("#date").prop("min",date);
         $("#date").change(function(event){
             if(!validateDate($(this).val())){
-                $(this).val('');
-                let alertMsg = "Tutor is not available on this day. Choose a date on following days: ";
+            	$(this).val('');
+                let daysAvail = "";
                 $.each(days_of_week,function(i,day){
-                    alertMsg += day+" ";
+                    daysAvail += day+" ";
                 });
+                const alertMsg = "Tutor is not available on this day. Choose a date on following days: "+daysAvail;
+                daysAvail = "";
                 $("#scheduleDiv").hide();
                 alert(alertMsg);
-                alertMsg = "Tutor is not available on this day. Choose a date on following days: ";
             }else{
                 const parts = $(this).val().split('-');
                 const day = (new Date(parts[0], parts[1]-1, parts[2])).toLocaleDateString('en-US', { weekday: 'long' });

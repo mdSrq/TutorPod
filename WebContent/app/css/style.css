@@ -2740,6 +2740,7 @@ tbody tr:nth-child(even) {
   display: block;
   max-height: 5rem;
   width: auto;
+  border-radius: 0.4rem;
 }
 .main__lesson_profile_info {
   display: flex;
@@ -3107,6 +3108,7 @@ tbody tr:nth-child(even) {
   display: block;
   max-width: 100%;
   height: auto;
+  border-radius: 0.4rem;
 }
 .search__result_profile_price {
   font-weight: bold;
@@ -3131,6 +3133,7 @@ tbody tr:nth-child(even) {
 .search__result_about_name {
   font-size: 1.5rem;
   line-height: 0;
+  padding-top: 0.5rem;
 }
 .search__result_about_info {
   margin-bottom: 1rem;
@@ -3169,6 +3172,7 @@ tbody tr:nth-child(even) {
   width: 100%;
   height: auto;
   margin: 0 auto;
+  border-radius: 0.4rem;
 }
 .search__booking_tutor p {
   margin: 0;
@@ -3336,4 +3340,92 @@ tbody tr:nth-child(even) {
   justify-content: center;
   align-items: center;
   align-content: flex-start;
+}
+
+.profile {
+  width: 70%;
+}
+.profile__container {
+  padding: 2rem;
+}
+.profile__header {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.profile__header .search__result_profile {
+  padding: 0;
+}
+.profile__header .search__result_about_name {
+  font-size: 2rem;
+}
+.profile__buttons {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 7rem;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 30%;
+  border: 1.5px solid #d7e3f5;
+  border-radius: 0.4rem;
+  padding: 1rem 0;
+  height: 16rem;
+}
+.profile__buttons button {
+  width: 80%;
+  padding: 1.25rem;
+  font-family: inherit;
+  font-size: 1.15rem;
+}
+.profile__body {
+  padding-right: 2rem;
+}
+.profile__body section {
+  padding: 2rem 0;
+  border-bottom: 2px solid #d7e3f5;
+}
+.profile__body h2, .profile__body h3 {
+  font-weight: normal;
+}
+.profile__body table {
+  margin-bottom: 2rem;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  width: 20rem;
+  max-width: 100%;
+  padding: 2rem;
+}
+.profile__body_exps_title {
+  margin: 0;
+}
+.profile__body_exps p {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+.profile__body_exps span {
+  display: block;
+}
+
+.scheduleOverlay {
+  padding: 2rem;
+}
+.scheduleOverlay .form-unit-half {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-flow: row nowrap;
+}
+.scheduleOverlay .form-unit-half label {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 1rem;
+}
+.scheduleOverlay .form-unit-half input {
+  width: 15rem;
+}
+.scheduleOverlay .main__lesson__overlay_avail {
+  max-height: 18rem;
 }/*# sourceMappingURL=style.css.map */
