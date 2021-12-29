@@ -281,7 +281,7 @@
                     .append($("<p>").addClass("search__result_about_sub-heading").text("About"))
                     .append($("<p>").addClass("search__result_about_details").text(tutor.bio)))
                 .append($("<div>").addClass("search__result_availability")
-                    .append($("<h2>").addClass("main__sub-heading").text("Availability"))
+                    .append($("<h2>").addClass("main__sub-heading").text("Weekly Availability"))
                     .append($("<table>").addClass("white-table")
                         .append($("<thead>")
                             .append($("<th>").text("Day"))
