@@ -126,6 +126,10 @@ public class WalletController extends HttpServlet {
 				else
 				switch(request.getParameter("cmd")) {
 				case "addMoney":
+					if(adminBankAccDAO.getSelectedAdminBankAcc()==null) {
+						out.write("Error! Admin Bank Acc not configured");
+						return;
+					}
 					double amount = Double.parseDouble(request.getParameter("amount"));
 					User user  = (User)session.getAttribute("USER");
 					Wallet wallet = walletDAO.getWalletByUserID(user.getUser_id());
@@ -158,6 +162,10 @@ public class WalletController extends HttpServlet {
 						return;
 					}
 					user  = (User)session.getAttribute("USER");
+					if(user.getBank_acc_id()<1) {
+						out.write("Error! No bank acc details found");
+						return;
+					}
 					Tutor tutor  = (Tutor)session.getAttribute("TUTOR");
 					dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
 					instant = Instant.now();

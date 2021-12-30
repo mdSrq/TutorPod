@@ -250,6 +250,7 @@
                                         if(diff<=0){
                                             tile.find(".main__lesson_schedule_timer").text("Lesson Time Has Passed");
                                             timePassed=true;
+                                            <%if(dashboardType.equals("USER")){%>
                                             tile.find(".main__lesson_profile_buttons").empty();
                                             tile.find(".main__lesson_profile_buttons")
                                                 .append($("<button>").addClass("tickBtn").prop("title","Mark As Completed").attr("onclick","showMarkAsCompletedForm("+lesson.lesson_id+")")
@@ -257,6 +258,7 @@
                                             tile.find(".main__lesson_profile_buttons")
                                                 .append($("<button>").addClass("issueBtn").prop("title","Report Issue").attr("onclick","showReportIssueForm("+lesson.lesson_id+")")
                                                 .append('<img src="./images/exclamation.png" alt="">'));
+                                            <%}%>
                                             clearInterval(interval);
                                         }
                                     }else{

@@ -70,7 +70,7 @@
 						tr.append($("<td>").text(list.approval_date));
 					else
 						tr.append($("<td>").text("NA"));
-					tr.append($("<td>").append($("<a>").prop("href","./TutorProfile?tutor_id="+list.tutor_id).css("cursor","pointer").text("View Profile")));
+					tr.append($("<td>").append($("<a>").prop("href","../TutorProfile?tutor_id="+list.tutor_id).css("cursor","pointer").text("View Profile")));
 				});
 				$("td").css("text-align","left");
 			}

@@ -84,10 +84,7 @@ if (session.getAttribute("ADMIN") == null) {
 						.append($("<td>").text(tutor.bio))
 						.append($("<td>").text(tutor.profile_status))
 						.append($("<td>")
-							.append($("<a>").text("See Details").prop({
-								"href":"#",
-								"onlick":"showDetails("+tutor.tutor_id+")"
-							})))
+							.append($("<a>").text("See Details").prop("href","../TutorProfile?tutor_id="+tutor.tutor_id)))
 						.append($("<td>")
 							.append($("<a>").html("&nbsp;&nbsp; &#10004; &nbsp;&nbsp;").prop({
 								"href":"#",

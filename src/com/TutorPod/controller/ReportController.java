@@ -19,11 +19,15 @@ import javax.sql.DataSource;
 import com.TutorPod.dao.BookingDAO;
 import com.TutorPod.dao.LessonDAO;
 import com.TutorPod.dao.SubjectDAO;
+import com.TutorPod.dao.TutorDAO;
 import com.TutorPod.dao.UserDAO;
 import com.TutorPod.dao.WalletDAO;
+import com.TutorPod.model.AdminDashboardInfo;
 import com.TutorPod.model.Booking;
+import com.TutorPod.model.BookingDetails;
 import com.TutorPod.model.DashboardInfo;
 import com.TutorPod.model.LessonDetails;
+import com.TutorPod.model.Subject;
 import com.TutorPod.model.User;
 import com.google.gson.Gson;
 
@@ -38,6 +42,7 @@ public class ReportController extends HttpServlet {
 	SubjectDAO subjectDAO;
 	UserDAO userDAO;
 	BookingDAO bookingDAO;
+	TutorDAO tutorDAO;
     public ReportController() {
         super();
     }
@@ -49,6 +54,7 @@ public class ReportController extends HttpServlet {
 			 lessonDAO = new LessonDAO(dataSource);
 			 subjectDAO = new SubjectDAO(dataSource);
 			 userDAO = new UserDAO(dataSource);
+			 tutorDAO = new TutorDAO(dataSource);
 			 bookingDAO = new BookingDAO(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
@@ -90,7 +96,7 @@ public class ReportController extends HttpServlet {
 							}
 							dashboardInfo = new DashboardInfo(totalEarning,totalLesson,completedLesson,balance,upcoming_lessons,recent_lessons);
 						}else {
-							ListIterator<Booking> itr = bookingDAO.getBookings(user.getUser_id()).listIterator();
+							ListIterator<Booking> itr = bookingDAO.getBookingsForTutor(user.getTutor_id()).listIterator();
 							totalEarning=0;
 							while(itr.hasNext()) {
 								Booking bkn = itr.next();
@@ -102,14 +108,14 @@ public class ReportController extends HttpServlet {
 							List<LessonDetails> upcoming_lessons = new ArrayList<>();
 							List<LessonDetails> recent_lessons = new ArrayList<>();
 							ListIterator<LessonDetails> itr1 = lessonDAO.getLessonByTutorID(user.getTutor_id(), "Scheduled", -1).listIterator();
-							while(itr.hasNext()) {
+							while(itr1.hasNext()) {
 								upcoming_lessons.add(createLessonDetails(itr1.next()));
 							}
 							recent_lessons = lessonDAO.getLessonByTutorID(user.getTutor_id(), "Completed", -1);
 							completedLesson = recent_lessons.size();
 							itr1 = recent_lessons.listIterator();
 							recent_lessons = new ArrayList<>();
-							while(itr.hasNext()) {
+							while(itr1.hasNext()) {
 								recent_lessons.add(createLessonDetails(itr1.next()));
 							}
 							dashboardInfo = new DashboardInfo(totalEarning,totalLesson,completedLesson,balance,upcoming_lessons,recent_lessons);
@@ -120,23 +126,50 @@ public class ReportController extends HttpServlet {
 						out.write(responseJSON);
 					}
 					break;
-				default:
-					out.write("Invalid Request");
-				}
-			}catch(Exception e) {
-				e.printStackTrace(out);
-			}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession();
-			try {
-				if(request.getParameter("cmd")==null)
-					out.write("request has no command");
-				else
-				switch(request.getParameter("cmd")) {
-				
+				case"getAdminDashboardData":
+					if(session.getAttribute("ADMIN")!=null) {
+						double total_sales = 0;
+						double admin_profit = 0;
+						int total_users = userDAO.getUsers().size();
+						int total_tutors = tutorDAO.getTutors().size();
+						int total_bookings = 0;
+						int total_lessons = 0;
+						int scheduled_lessons = 0;
+						int completed_lessons = 0;
+						List<BookingDetails> recentBookings = new ArrayList<>();
+						List<LessonDetails> recentsLessons = new ArrayList<>();
+						ListIterator<Booking> itr = bookingDAO.getBookings().listIterator();
+						ListIterator<LessonDetails> l_itr = lessonDAO.getLessons("All").listIterator();
+						while(itr.hasNext()) {
+							total_bookings++;
+							Booking bkn = itr.next();
+							total_lessons += bkn.getNo_of_lesson();
+							total_sales += (bkn.getPrice()*bkn.getDuration()*bkn.getNo_of_lesson())*1.025;
+							admin_profit += (bkn.getPrice()*bkn.getDuration()*bkn.getNo_of_lesson())*0.05;
+							User tutorUser = userDAO.getUser(bkn.getTutor_id());
+							user = userDAO.getUser(bkn.getUser_id());
+							Subject subject = subjectDAO.getSubject(bkn.getSubject_id());
+							recentBookings.add(new BookingDetails(bkn,user,tutorUser,subject));
+						}
+						while(l_itr.hasNext()) {
+							LessonDetails tmpL = l_itr.next();
+							if(tmpL.getStatus().equals("Scheduled")) {
+								scheduled_lessons++;
+								continue;
+							}
+							if(tmpL.getStatus().equals("Completed")) {
+								completed_lessons++;
+								recentsLessons.add(createLessonDetails(tmpL));
+							}
+								
+						}
+						AdminDashboardInfo admininfo = new AdminDashboardInfo(total_sales, admin_profit, total_users, total_tutors, total_bookings, total_lessons, scheduled_lessons, completed_lessons, recentBookings, recentsLessons);
+						String responseJSON="[]";
+						response.setContentType("application/json");
+						responseJSON = new Gson().toJson(admininfo);
+						out.write(responseJSON);
+					}
+					break;
 				default:
 					out.write("Invalid Request");
 				}

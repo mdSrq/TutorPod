@@ -1,0 +1,91 @@
+.dashboard{
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-start;
+    flex-flow: row wrap;
+    background-color: $smoky;
+    width: 100%;
+    margin-top: -0.5rem;
+    min-height: 100vh;
+    padding: 2rem;
+    &__tile {
+        background-color: $white;
+        box-shadow: $shadow5;
+        border-radius: 0.4rem;
+        display: flex;
+        flex-flow: row wrap;
+        width: 23.66%;
+        margin: 0 1rem 1rem 0;
+    &_info{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    &_title,
+    &_num {
+        width: 100%;
+        display: block;
+        text-align: left;
+        padding-left: 1rem;
+      }
+    &_num {
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+    &_img {
+        width: 4rem;
+        flex: none;
+        margin: 1rem;
+        margin-right: 0;
+        padding: 0.5rem;
+        background-color: $lightBlue;
+        border-radius: 50%;
+      &_wallet{
+        padding: 0.25rem;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        padding: 0.25rem;
+      }
+    }
+    }
+    &__big-tile{
+        width: 48.5%;
+        .dashboard__tile_info{
+            flex-direction: row ;
+            align-items: center;
+            justify-content: flex-start;
+            width: calc(100% - 5rem);
+            div{
+                width: 45%;
+            }
+        }
+        &_block{
+            display: block;
+            padding: 1rem;
+            min-height: 10rem;
+            table{
+                box-shadow: none;
+                border: 1.5px solid $lightPurple;
+            }
+            th{
+                background-color: $lightPurple;
+                color: $white;
+            }
+            td,th{
+                text-align: left;
+            }
+            p{
+                text-align: center;
+            }
+            .caption{
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding-bottom: 1rem;
+            }
+        }
+    }
+}
