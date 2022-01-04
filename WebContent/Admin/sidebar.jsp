@@ -58,14 +58,14 @@
             <li><a href="./WithdrawRequest?status=Dimissed">Rejected Requests</a></li>
         </ul>
     </ul>
-    <ul class="sidebar__dropdown">
+    <!-- <ul class="sidebar__dropdown">
         <li class="sidebar__dropdown_title">Reports <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">
             <li><a href="#">Daily Report</a></li>
             <li><a href="#">Monthly Report</a></li>
             <li><a href="#">Yearly Report</a></li>
         </ul>
-    </ul>
+    </ul> -->
     <ul class="sidebar__dropdown acc_dropdown">
         <li class="sidebar__dropdown_title">Account Settings <span class="sidebar__dropdown_title_arrow">></span></li>
         <ul class="sidebar__dropdown_items">

@@ -2621,6 +2621,7 @@ tbody tr:nth-child(even) {
 }
 .main__big-tile_schedule span {
   font-size: 0.85rem;
+  text-align: right;
 }
 .main__big-tile_tutor {
   font-size: 0.8rem;

@@ -132,7 +132,7 @@ if (session.getAttribute("USER") == null) {
 				<div class="main__form-container">
 					<h2 class="main__sub-heading">Bank Account</h2>
 					<%if(user.getBank_acc_id()<1){ %>
-					<span class="form-info form-info_red">Bank Account is required to get refund in case of payment failure</span>
+					<span class="form-info form-info_red">Bank account details are required to withdraw money from wallet.</span>
 					<%}if(request.getParameter("msg")!=null){%>
 					<span class="form-info form-info_green"> <%=request.getParameter("msg")%> </span>
 					<%} %>
@@ -849,6 +849,8 @@ function changeTab(tabNo) {
                 if (response.includes("Saved")) {
 					$("#snackbar").html("Details Saved");
 					showToast();
+					loadBankAcc();
+					$(".form-info_red").remove();
 				}else{
 					$("#snackbar").html(response);
 					showToast();

@@ -52,7 +52,7 @@ create table bank_acc(bank_acc_id int auto_increment primary key,
 					);
 create table experience(experience_id int auto_increment primary key,
 					experience_type varchar(15) not null,
-                    title varchar(30) not null,
+                    title varchar(80) not null,
                     institution varchar(80),
                     location varchar(25),
                     description varchar(300),
