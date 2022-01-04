@@ -27,7 +27,7 @@
                     </div>
                     Lessons
                 </a>
-                <%if(!isUser){ %>
+<%--                 <%if(!isUser){ %>
                 <a href="#" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/group.png" alt="" />
@@ -42,7 +42,7 @@
                     </div>
                     Teachers
                 </a>
-                <%}%>
+                <%}%> --%>
                 <a href="./Notifications" class="sidebar__link">
                     <div class="sidebar__link_icon">
                         <img src="./images/bell.png" alt="" />

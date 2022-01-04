@@ -276,7 +276,7 @@ public class UserController extends HttpServlet {
 
         tempFile.delete();
 		if( userDAO.updateUserField("photo", filename, false, user.getUser_id()) ) {
-			user.setPhoto(filename+".jpg");
+			user.setPhoto(filename);
 			request.getSession().setAttribute("USER", user);
 			return " Photo Changed ";
 		}else {

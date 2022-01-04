@@ -483,7 +483,17 @@
     }
     $(document).ready(function (event) {
         var d = new Date();
-        var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        var date = d.getFullYear() + "-";
+        var tMonth = d.getMonth()+1;
+        var tDate = d.getDate();
+        if(tMonth < 10)
+            date += "0"+ tMonth + "-";
+        else
+            date += tMonth + "-";
+        if(tDate<10)
+            date += "0"+tDate;
+        else
+            date += tDate;
         $("#date").prop("min",date);
         $("#scheduleDiv").hide();
         loadTutorInfo();

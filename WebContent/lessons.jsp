@@ -270,7 +270,7 @@
                                         const hour = Math.floor(hours%60);
                                         if(hours>24){
                                             const days = Math.floor(hours/24);
-                                            tile.find(".main__lesson_schedule_timer").text(days+" Days "+hour+"Hr left");
+                                            tile.find(".main__lesson_schedule_timer").text(days+" Days "+hour%24+"Hr left");
                                         }else
                                             tile.find(".main__lesson_schedule_timer").text(hour+"Hr "+min+"min "+sec+"sec left");
                                     }
@@ -462,7 +462,17 @@
         });
         $("#scheduleDiv").hide();
         var d = new Date();
-        var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        var date = d.getFullYear() + "-";
+        var tMonth = d.getMonth()+1;
+        var tDate = d.getDate();
+        if(tMonth < 10)
+            date += "0"+ tMonth + "-";
+        else
+            date += tMonth + "-";
+        if(tDate<10)
+            date += "0"+tDate;
+        else
+            date += tDate;
         $("#date").prop("min",date);
         $("#date").change(function(event){
             if(!validateDate($(this).val())){

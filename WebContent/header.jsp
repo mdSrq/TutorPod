@@ -95,12 +95,9 @@ User user = null;
                         <%}else{%>
                         <a href="./UserController?cmd=switchToTutor">Switch to Tutor</a>
                         <%}}%>
-                        <%if(isTutor){ %>
-                        <a href="#">My Students</a>
-                        <%}else{%>
-                        <a href="#">My Teachers</a>
-                        <%} %>
+                        <a href="./Orders">Orders</a>
                         <a href="./Lessons">Lessons</a>
+                        <a href="./Lessons">Wallet</a>
                         <a href="./AccountSettings">Settings</a>
                         <a href="./UserController?cmd=logout">Logout</a>
                     </div>

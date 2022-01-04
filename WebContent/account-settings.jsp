@@ -849,6 +849,8 @@ function changeTab(tabNo) {
                 if (response.includes("Saved")) {
 					$("#snackbar").html("Details Saved");
 					showToast();
+					loadBankAcc();
+					$(".form-info_red").remove();
 				}else{
 					$("#snackbar").html(response);
 					showToast();
